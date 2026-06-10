@@ -13,7 +13,7 @@ const Layout = () => {
  
     return (
         <>
-        <div className={`flex duration-1000 transition-all flex-col min-h-screen ${theme === 'light' ? 'bg-[#ffff] text-gray-900 ' : 'bg-zinc-900 text-white'}`}>
+        <div className={`flex duration-1000 transition-all flex-col min-h-screen ${theme === 'light' ? 'bg-[#ffff] text-gray-900 ' : 'bg-zinc-800 text-white'}`}>
             <NavBar/>
             <div className="flex-1">
             <Outlet/>
