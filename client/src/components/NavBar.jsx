@@ -101,9 +101,20 @@ const NavBar = () => {
 
 
                   {/* left section logo :  */}
-                  <div className="">
-                  <h1 className='text-sm md:text-xl font-bold'>FoodieGo</h1>
-                  </div>
+               <div className="flex flex-col">
+                  <h1 className="text-lg md:text-2xl font-extrabold tracking-tight">
+                    <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-amber-500 bg-clip-text text-transparent">
+                      Dine
+                    </span>
+                    <span className={`${theme === 'light' ? 'text-zinc-800': 'text-white'}`}>
+                      Flow
+                    </span>
+                  </h1>
+
+                <span className="text-[10px] md:text-xs text-slate-500 tracking-widest uppercase">
+                  Food Delivery
+                </span>
+                </div>
 
                   {/* Middle Section 1 (city and search input ):  */}
                   <div className="">
@@ -149,12 +160,7 @@ const NavBar = () => {
                       {/* cart icon  :  */}
                       <div className="w-10 h-10 flex items-center justify-center relative">
                         <ShoppingCart className='cursor-pointer' size={21}/>
-                        <span className='border border-red-500 absolute left-5 bottom-6 rounded-full bg-red-500  font-semibold w-1/3 p-2 h-1/3 text-white flex items-center justify-center text-[9px]'>2</span>
-                      </div>
-
-                      {/* My Order :  */}
-                      <div className={` rounded-xs`}>
-                      <Label className='cursor-pointer md:text-xs text-xs'>Orders</Label>
+                        <span className='border border-[#ff8802] absolute left-5 bottom-6 rounded-full bg-[#ff8802]  font-semibold w-1/3 p-2 h-1/3 text-white flex items-center justify-center text-[9px]'>2</span>
                       </div>
 
                       {/* User account button or account button depending upon the current user  :  */}
@@ -163,12 +169,12 @@ const NavBar = () => {
                       userData ? (
                         <DropdownMenu >
                           <DropdownMenuTrigger asChild>
-                            <Button className="w-9 h-9 rounded-full border border-red-500 bg-red-500">
+                            <Button className="w-9 h-9 cursor-pointer rounded-full border border-[#ff8802] bg-[#ff8802]">
                               {userData?.fullname?.slice(0,1).toUpperCase()}
                             </Button>
                           </DropdownMenuTrigger>
 
-                          <DropdownMenuContent className={`${theme === 'light' ? 'bg-white text-zinc-800' : 'bg-zinc-800 text-zinc-100'}`}>
+                          <DropdownMenuContent className={`${theme === 'light' ? 'bg-white text-zinc-800' : 'bg-zinc-700 text-zinc-100'}`}>
                             <DropdownMenuGroup>
                               <DropdownMenuLabel>My Account</DropdownMenuLabel>
                               <DropdownMenuItem className={`cursor-pointer`}>Profile</DropdownMenuItem>
@@ -182,7 +188,7 @@ const NavBar = () => {
                                 Appearance
                               </DropdownMenuSubTrigger>
 
-                              <DropdownMenuSubContent className={`${theme === 'light' ? 'bg-white text-zinc-800' : 'bg-zinc-800 text-zinc-100'}`}>
+                              <DropdownMenuSubContent className={`${theme === 'light' ? 'bg-white text-zinc-800' : 'bg-zinc-700 text-zinc-100'}`}>
                                 <DropdownMenuItem className={`flex items-center`} onClick={()=>themeChangeHandle('light')} >
                                   <TiWeatherSunny size={20}/>
                                   Light
@@ -277,14 +283,14 @@ const NavBar = () => {
                         <span className='text-xs  md:text-sm'>Logout</span>
                   </div>
                 </AlertDialogTrigger>
-              <AlertDialogContent className={`${theme === 'light' ? 'bg-gray-200 text-zinc-700' : 'bg-zinc-800 text-white'}`}>
+              <AlertDialogContent className={`${theme === 'light' ? 'bg-gray-200 text-zinc-700' : 'bg-zinc-700 text-white'}`}>
                 <AlertDialogHeader>
                   <AlertDialogTitle>Are you sure you want to logout ?</AlertDialogTitle>
-                  <AlertDialogDescription className={`${theme === 'light' ? 'bg-gray-200 text-zinc-700' : 'bg-zinc-800 text-white'}`}>
+                  <AlertDialogDescription className={`${theme === 'light' ? 'bg-gray-200 text-zinc-700' : 'bg-zinc-700 text-white'}`}>
                     After logout you will be redirected to the login page.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
-                <AlertDialogFooter className={` ${theme === 'light' ? ' text-zinc-700' : ' text-white bg-zinc-800'}`}>
+                <AlertDialogFooter className={` ${theme === 'light' ? ' text-zinc-700' : ' text-white bg-zinc-700'}`}>
                   <AlertDialogCancel onClick={()=>setIsLogoutBtnClick(false)} className={`h-9 border-none rounded-sm px-5 ${theme ==='light' ? 'bg-zinc-200 text-zinc-700' : 'bg-zinc-700 text-white'}`}>Cancel</AlertDialogCancel>
                   <AlertDialogAction className={`h-9 border-none rounded-sm px-5 bg-red-500`} onClick={logoutHandler}>Logout</AlertDialogAction>
                 </AlertDialogFooter>
