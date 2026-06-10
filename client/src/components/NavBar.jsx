@@ -1,6 +1,5 @@
 import {useSelector, useDispatch} from 'react-redux';
 import { MapPin, Search, SearchIcon, ShoppingCart } from 'lucide-react';
-import { Label } from './ui/label';
 import { switchTheme } from '../redux/features/theme.slice';
 import {  useState } from 'react';
 import { Input } from './ui/input';
@@ -37,8 +36,8 @@ import {
 } from "../components/ui/dropdown-menu"; 
 import { TiWeatherSunny } from "react-icons/ti";
 import { BsMoonStars } from "react-icons/bs";
-
-
+import { FiPlus } from "react-icons/fi";
+import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 
 
  
@@ -101,20 +100,24 @@ const NavBar = () => {
 
 
                   {/* left section logo :  */}
-               <div className="flex flex-col">
+               <div className="flex items-center gap-3">
+                <div className="w-3 h-3 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.6)] shrink-0"></div>
+
+                <div className="flex flex-col">
                   <h1 className="text-lg md:text-2xl font-extrabold tracking-tight">
                     <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-amber-500 bg-clip-text text-transparent">
                       Dine
                     </span>
-                    <span className={`${theme === 'light' ? 'text-zinc-800': 'text-white'}`}>
+                    <span className={`${theme === 'light' ? 'text-zinc-800' : 'text-white'}`}>
                       Flow
                     </span>
                   </h1>
 
-                <span className="text-[10px] md:text-xs text-slate-500 tracking-widest uppercase">
-                  Food Delivery
-                </span>
+                  <span className="text-[10px] md:text-xs text-slate-500 tracking-widest uppercase">
+                    Food Delivery
+                  </span>
                 </div>
+              </div>
 
                   {/* Middle Section 1 (city and search input ):  */}
                   <div className="">
@@ -155,12 +158,34 @@ const NavBar = () => {
                    
                   </div>
 
+                  <div className="">
+                    {
+                      userData?.role === 'restaurantOwner' && 
+
+                      <div className="flex items-center gap-10">
+                        {/* Add food items btn :  */}
+                        <Button className={`bg-orange-50 text-orange-500 flex items-center gap-1 rounded text-[10px] font-semibold cursor-pointer`}>
+                          <span><FiPlus size={25}/></span> 
+                         <span >Add Food Item</span> 
+                        </Button>
+
+                      {/* My orders :  */}
+
+                      <Button  className={`bg-orange-50 text-orange-500 flex items-center gap-1 rounded text-[10px] font-semibold cursor-pointer`}>
+                        <span><VscGitPullRequestGoToChanges/></span>
+                        <span>My Orders</span>
+                      </Button>
+
+                      </div>
+                    }
+                  </div>
+
                   {/* Right Section :  (cart , my order and account ) */}
                   <div className="flex md:gap-10 gap-4 items-center">
                       {/* cart icon  :  */}
                       <div className="w-10 h-10 flex items-center justify-center relative">
                         <ShoppingCart className='cursor-pointer' size={21}/>
-                        <span className='border border-[#ff8802] absolute left-5 bottom-6 rounded-full bg-[#ff8802]  font-semibold w-1/3 p-2 h-1/3 text-white flex items-center justify-center text-[9px]'>2</span>
+                        <span className='border border-[#ff8802] absolute left-5 bottom-6 rounded-full bg-[#ff6900]  font-semibold w-1/3 p-2 h-1/3 text-white flex items-center justify-center text-[9px]'>2</span>
                       </div>
 
                       {/* User account button or account button depending upon the current user  :  */}
@@ -169,7 +194,7 @@ const NavBar = () => {
                       userData ? (
                         <DropdownMenu >
                           <DropdownMenuTrigger asChild>
-                            <Button className="w-9 h-9 cursor-pointer rounded-full border border-[#ff8802] bg-[#ff8802]">
+                            <Button className="w-9 h-9 cursor-pointer rounded-full border border-[#ff6900] bg-[#ff6900]">
                               {userData?.fullname?.slice(0,1).toUpperCase()}
                             </Button>
                           </DropdownMenuTrigger>
@@ -263,10 +288,21 @@ const NavBar = () => {
 
                 </div>
                 : 
-                // account navabr : 
-                <div className="h-20  flex items-center px-20">
-                  <h1 className="text-2xl font-medium">ACCOUNTS</h1>
+                // Navbavr for account page 
+              <div className="border-b bg-white px-6 py-4">
+                <div className="flex items-center gap-2">
+                  <div className="h-3 w-3 rounded-full bg-orange-500" />
+                  
+                  <h1 className="font-outfit text-2xl font-black tracking-tight">
+                    <span className="text-orange-500">Dine</span>
+                    <span className="text-slate-900">Flow</span>
+                  </h1>
                 </div>
+
+                <p className="mt-2 text-sm text-slate-500">
+                  Login or create an account to start ordering your favorite meals.
+                </p>
+              </div>
           }
         </div>
 
