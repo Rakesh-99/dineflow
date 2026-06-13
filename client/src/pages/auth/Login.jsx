@@ -114,7 +114,9 @@ const Login = () => {
     // firebase google auth api call :  
   const googleAuthApiCall = async(userData) => {
     try {
-      const {data} = await axios.post(`${URL}/google-auth`, userData); 
+      const {data} = await axios.post(`${URL}/google-auth`, userData, {
+        withCredentials: true
+      }); 
       const response = data
       if(response.success){
         dispatch(setCurrentUser(response?.user));   
