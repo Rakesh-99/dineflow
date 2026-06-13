@@ -4,6 +4,7 @@ import Layout from "./Layouts/Layout";
 import useGetCurrentUser from "./hooks/useGetCurrentUser";
 import useGetCurrentLocation from "./hooks/useGetCurrentLocation";
 import ProtectedRoutes from "./routes/ProtectedRoutes";
+import useGetShopsOfCurrentOwner from "./hooks/useGetShopsOfCurrentOwner";
 
 // lazy loading and code splitting :
 const Account = lazy(() => import("./pages/auth/Account"));
@@ -14,6 +15,7 @@ const App = () => {
   // some custom hooks :
   useGetCurrentUser();
   useGetCurrentLocation();
+  useGetShopsOfCurrentOwner();
 
   const routers = createBrowserRouter([
     {

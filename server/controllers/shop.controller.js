@@ -30,7 +30,7 @@ export const fetchOwnerRestaurants = expressAsyncHandler(async(req, res, next) =
     const getRestaurants = await shopModel.find({owner : userId}).populate('owner');
 
     if(getRestaurants.length < 0 ) { 
-        return next(new ErrorHandler(404, 'No restaurant found!')); 
+        return next(new ErrorHandler(404, 'No restaurant found, Please create one!')); 
     }; 
 
     return res.status(200).json( { 

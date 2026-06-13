@@ -164,14 +164,14 @@ const NavBar = () => {
 
                       <div className="flex items-center gap-10">
                         {/* Add food items btn :  */}
-                        <Button className={`bg-orange-50 text-orange-500 flex items-center gap-1 rounded text-[10px] font-semibold cursor-pointer`}>
+                        <Button className={` flex items-center gap-1 rounded font-bold text-[10px] cursor-pointer ${theme === 'light' ? 'bg-orange-100 text-orange-500' : 'bg-orange-400 text-orange-800'}`}>
                           <span><FiPlus size={25}/></span> 
                          <span >Add Food Item</span> 
                         </Button>
 
                       {/* My orders :  */}
 
-                      <Button  className={`bg-orange-50 text-orange-500 flex items-center gap-1 rounded text-[10px] font-semibold cursor-pointer`}>
+                      <Button  className={` flex items-center gap-1 rounded font-bold text-[10px] cursor-pointer ${theme === 'light' ? 'bg-orange-100 text-orange-500' : 'bg-orange-400 text-orange-800'}`}>
                         <span><VscGitPullRequestGoToChanges/></span>
                         <span>My Orders</span>
                       </Button>
