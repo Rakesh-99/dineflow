@@ -158,27 +158,7 @@ const NavBar = () => {
                    
                   </div>
 
-                  <div className="">
-                    {
-                      userData?.role === 'restaurantOwner' && 
-
-                      <div className="flex items-center gap-10">
-                        {/* Add food items btn :  */}
-                        <Button className={` flex items-center gap-1 rounded font-bold text-[10px] cursor-pointer ${theme === 'light' ? 'bg-orange-100 text-orange-500' : 'bg-orange-400 text-orange-800'}`}>
-                          <span><FiPlus size={25}/></span> 
-                         <span >Add Food Item</span> 
-                        </Button>
-
-                      {/* My orders :  */}
-
-                      <Button  className={` flex items-center gap-1 rounded font-bold text-[10px] cursor-pointer ${theme === 'light' ? 'bg-orange-100 text-orange-500' : 'bg-orange-400 text-orange-800'}`}>
-                        <span><VscGitPullRequestGoToChanges/></span>
-                        <span>My Orders</span>
-                      </Button>
-
-                      </div>
-                    }
-                  </div>
+                
 
                   {/* Right Section :  (cart , my order and account ) */}
                   <div className="flex md:gap-10 gap-4 items-center">
@@ -307,7 +287,7 @@ const NavBar = () => {
         </div>
 
 
-        {/* logout code snippet :  */}
+        {/* shadcn logout popup code snippet :  */}
 
           {
             isLogoutBtnClicked && 
