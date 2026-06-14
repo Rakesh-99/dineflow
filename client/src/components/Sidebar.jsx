@@ -1,14 +1,17 @@
 import sidebarItems from "@/constants/sidebarItems"
-import { useSelector } from "react-redux";
-import { FiSidebar } from "react-icons/fi";
+import {  useSelector } from "react-redux";
 import { useState } from "react";
 
 
 const Sidebar = () => {
 
     const {theme} = useSelector(state=> state.themeSlice);
-   const [showSidebarMenu, setShowSidebarMenu] = useState(false);
-    
+    const [showSidebarMenu, setShowSidebarMenu] = useState(false);
+
+
+
+  
+
   return (
     <>
     <div className="relative">
@@ -17,9 +20,11 @@ const Sidebar = () => {
         {
             sidebarItems.map((item)=> { 
                 const {label, icon : Icon } = item; 
+                console.log(label);
+                
 
                 return(
-                    <div  key={item.label} className={`flex  flex-col  py-4   cursor-pointer  duration-300 mx-2 rounded-xs  transition-all  items-center ${theme === 'light' ? 'hover:bg-orange-50 hover:text-orange-600' : 'hover:bg-zinc-700 hover:text-orange-200'}`}>
+                    <span key={item.label} className={`flex  flex-col  py-4   cursor-pointer  duration-300 mx-2 rounded-xs  transition-all  items-center ${theme === 'light' ? 'hover:bg-orange-50 hover:text-orange-600' : 'hover:bg-zinc-700 hover:text-orange-200'}`}>
                             <Icon size={13}/>
                             <span
                             className={`text-[10px] font-semibold transition-all duration-300 ${
@@ -30,7 +35,7 @@ const Sidebar = () => {
                             >
                             {label}
                             </span>
-                    </div>
+                    </span>
                 )
             })
         }

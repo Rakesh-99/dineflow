@@ -9,37 +9,37 @@ const sidebarItems = [
     {
         name : '',
         label : 'Dashboard', 
-        component : '',
+        path: '/', 
         icon : MdDashboard,
     },
     {
         name : '',
         label : 'Restaurants', 
-        component : '',
+        path : '/restaurants',
         icon :FaShop,
     },
     {
         name : '',
         label : 'Menu', 
-        component : '',
+        path : '/restaurant-menu', 
         icon :MdOutlineRestaurantMenu,
     },
     {
         name : '',
         label : 'Orders', 
-        component : '',
+        path : '/customer-orders', 
         icon :TiShoppingCart,
     }, 
     {
         name : '',
         label : 'Customers', 
-        component :'' ,
+        path :'customers' ,
         icon :FaUsers,
     },
     {
         name : '',
         label : 'Settings', 
-        component : '',
+        path : '/setting',
         icon :MdOutlineSettings,
     }
 ]; 
