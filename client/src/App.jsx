@@ -19,16 +19,16 @@ const Settings = lazy(()=> import("@/pages/Settings"));
 const CustomerOrders = lazy(()=> import("@/pages/CustomerOrders")); 
 const Dashboard = lazy(()=> import("@/components/Dashboard"));
 const OwnerRestaurant = lazy(()=> import("@/pages/OwnerRestaurant")); 
+const CustomerOrder = lazy(()=> import("@/pages/CustomerOrder")); 
+const CustomerListings = lazy(()=> import("@/pages/CustomerLIstings")); 
 
 const App = () => {
+
+
   // some custom hooks :
   useGetCurrentUser();
   useGetCurrentLocation();
   useGetShopsOfCurrentOwner();
-
-
-
-
 
   
   const routers = createBrowserRouter([
@@ -51,7 +51,7 @@ const App = () => {
           )
         }, 
         {
-          path : "/", 
+          path : "dashboard", 
           element : (
             <Suspense fallback={<>Loading ..</>}>
             <RestaurantOwnerRoutes>
@@ -67,6 +67,16 @@ const App = () => {
              <RestaurantOwnerRoutes>
                   <OwnerRestaurant/>
              </RestaurantOwnerRoutes>
+            </Suspense>
+          )
+        },
+        {
+          path : 'restaurant-menu',
+          element : ( 
+            <Suspense>
+              <RestaurantOwnerRoutes>
+                <RestaurantMenu/>
+              </RestaurantOwnerRoutes>
             </Suspense>
           )
         },
@@ -89,6 +99,16 @@ const App = () => {
           )
         }, 
         {
+            path : "customers",
+            element : (
+              <Suspense>
+                <RestaurantOwnerRoutes>
+                  <CustomerListings/>
+                </RestaurantOwnerRoutes>
+              </Suspense>
+            )
+        },
+        {
           path : "restaurant-menu", 
           element : ( 
             <Suspense fallback={<>Loading ..</>}>
@@ -99,7 +119,14 @@ const App = () => {
           )
         },
         {
-
+          path : "customer-order",
+          element : (
+            <Suspense>
+              <RestaurantOwnerRoutes>
+                <CustomerOrder/>
+              </RestaurantOwnerRoutes>
+            </Suspense>
+          )
         },
         {
           path: "account",

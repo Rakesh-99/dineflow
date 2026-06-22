@@ -1,10 +1,10 @@
-
+import DashboardStats from "@/pages/DashboardStats"
 
 const Dashboard = () => {
   return (
     <>
     <div className="">
-      <h1>Dashboard Page</h1>
+      <DashboardStats/>
     </div>
     </>
   )
