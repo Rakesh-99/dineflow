@@ -33,13 +33,13 @@ const sidebarItems = [
     {
         name : '',
         label : 'Customers', 
-        path :'customers' ,
+        path :'/customers' ,
         icon :FaUsers,
     },
     {
         name : '',
         label : 'Settings', 
-        path : '/setting',
+        path : '/settings',
         icon :MdOutlineSettings,
     }
 ]; 
