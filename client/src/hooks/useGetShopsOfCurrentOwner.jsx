@@ -10,15 +10,13 @@ const useGetShopsOfCurrentOwner = () => {
     const getCurrentOwnerShop = async () => { 
     try {
             const {data} = await axios.get(`${URL}/fetch-owner-restaurants`, {withCredentials: true});
+            
             if(data.success){ 
                 console.log(data.data);
-            }else{
-                console.log(data.message);
-            } 
+            }
         } catch (error) {
             toast.error(error.response.data.message);
             console.log(error.response.data.message);
-            
         }
     }
     getCurrentOwnerShop();
