@@ -17,8 +17,8 @@ const Account = () => {
     <div className="max-w-6xl m-auto md:flex-row flex-col justify-center flex">
         {/* left content :  */}
         <div className="max-w-2xl mt-20">
-           <h1 className="md:text-6xl md:px-0 px-5 text-3xl font-extralight">Foodigo Accounts</h1> 
-           <p className="md:text-xl text-lg md:px-0 px-5  mt-5 font-extralight">Foodigo Accounts allows you to create and manage an account for food, restaurant, and hotels.</p>
+           <h1 className="md:text-6xl md:px-0 px-5 text-3xl font-extralight"> Accounts</h1> 
+           <p className="md:text-xl text-lg md:px-0 px-5  mt-5 font-extralight mr-3">Create and manage an account for food, restaurant, and hotels.</p>
         </div>
 
         {/* right content :  */}

@@ -51,6 +51,7 @@ const NavBar = () => {
   const {city, userData } = useSelector(state => state.currentuserSlice); 
   
   
+  
   const [isShowSearchBar, setIsShowSearchBar] = useState(false); 
   const [searchFoodData , setSearchFoodData] = useState('');
   const [isLogoutBtnClicked, setIsLogoutBtnClick] = useState(false);
@@ -158,27 +159,7 @@ const NavBar = () => {
                    
                   </div>
 
-                  <div className="">
-                    {
-                      userData?.role === 'restaurantOwner' && 
-
-                      <div className="flex items-center gap-10">
-                        {/* Add food items btn :  */}
-                        <Button className={` flex items-center gap-1 rounded font-bold text-[10px] cursor-pointer ${theme === 'light' ? 'bg-orange-100 text-orange-500' : 'bg-orange-400 text-orange-800'}`}>
-                          <span><FiPlus size={25}/></span> 
-                         <span >Add Food Item</span> 
-                        </Button>
-
-                      {/* My orders :  */}
-
-                      <Button  className={` flex items-center gap-1 rounded font-bold text-[10px] cursor-pointer ${theme === 'light' ? 'bg-orange-100 text-orange-500' : 'bg-orange-400 text-orange-800'}`}>
-                        <span><VscGitPullRequestGoToChanges/></span>
-                        <span>My Orders</span>
-                      </Button>
-
-                      </div>
-                    }
-                  </div>
+                
 
                   {/* Right Section :  (cart , my order and account ) */}
                   <div className="flex md:gap-10 gap-4 items-center">
@@ -289,17 +270,17 @@ const NavBar = () => {
                 </div>
                 : 
                 // Navbavr for account page 
-              <div className="border-b bg-white px-6 py-4">
+              <div className={`w-full ${theme ==='dark' ? 'bg-zinc-800 text-zinc-300' : 'bg-white text-zinc-800'}`}>
                 <div className="flex items-center gap-2">
                   <div className="h-3 w-3 rounded-full bg-orange-500" />
                   
                   <h1 className="font-outfit text-2xl font-black tracking-tight">
                     <span className="text-orange-500">Dine</span>
-                    <span className="text-slate-900">Flow</span>
+                    <span>Flow</span>
                   </h1>
                 </div>
 
-                <p className="mt-2 text-sm text-slate-500">
+                <p className="ml-5">
                   Login or create an account to start ordering your favorite meals.
                 </p>
               </div>
@@ -307,7 +288,7 @@ const NavBar = () => {
         </div>
 
 
-        {/* logout code snippet :  */}
+        {/* shadcn logout popup code snippet :  */}
 
           {
             isLogoutBtnClicked && 
