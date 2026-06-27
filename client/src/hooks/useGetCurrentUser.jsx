@@ -20,7 +20,6 @@ const useGetCurrentUser = () => {
 
                     if(resposne?.success){ 
                         dispatch(setCurrentUser(resposne?.user));
-                        console.log(resposne.user);
                     }
                 } catch (error) {
                   dispatch(setCurrentUser(null))

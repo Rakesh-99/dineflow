@@ -5,7 +5,7 @@ import storage from 'redux-persist/lib/storage';
 import persistReducer from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
 const realStorage = storage?.default || storage;
-
+import currentOwnerRestaurants from '@/redux/features/currentOwnerRestaurants.slice'; 
  
 
 
@@ -17,7 +17,8 @@ const persistConfig = {
 
 const rootReducer = combineReducers ({
   currentuserSlice: currentuserSlice,
-  themeSlice : themeSlice
+  themeSlice : themeSlice, 
+  currentOwnerRestaurants : currentOwnerRestaurants
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer); 
