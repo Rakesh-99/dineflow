@@ -19,8 +19,11 @@ const useGetShopsOfCurrentOwner = () => {
                 dispatch(setRestaurants(data.data));
             }
         } catch (error) {
-            toast.error(error.response.data.message);
-            console.log(error.response.data.message);
+            if(error.status === 401){
+            toast.error('Session Expired!');
+            console.log(error.response);
+            }
+
         }
     }
     getCurrentOwnerShop();
