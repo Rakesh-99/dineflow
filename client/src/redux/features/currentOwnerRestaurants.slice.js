@@ -9,11 +9,14 @@ const currentOwnerRestaurants = createSlice({
     reducers : { 
         setRestaurants : (state, action) => { 
             state.restaurants = action.payload; 
+        },
+        addNewRestaurant : (state, action) => { 
+            state.restaurants.push(action.payload);
         }
     }
 });
 
 
 
-export const {setRestaurants} = currentOwnerRestaurants.actions; 
+export const {setRestaurants, addNewRestaurant} = currentOwnerRestaurants.actions; 
 export default currentOwnerRestaurants.reducer; 
