@@ -21,9 +21,10 @@ const RestaurantListings = () => {
         restaurants ? 
         <div className='grid grid-cols-2 gap-5'>
         {
-        restaurants.map((restaurant)=> (
+        restaurants.map((restaurant, idx)=> (
         
         <div 
+        key={idx}
         className={`max-w-5xl flex shadow-xs justify-between border rounded-md  m-auto ${theme === 'light' ? 'border-gray-100' : 'border-gray-700'}`}>
 
         <div className="flex gap-10">
