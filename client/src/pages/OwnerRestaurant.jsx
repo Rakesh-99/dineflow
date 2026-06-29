@@ -16,11 +16,82 @@ import { PiCityLight } from "react-icons/pi";
 import { GiModernCity } from "react-icons/gi";
 import { BiBuildingHouse } from "react-icons/bi";
 import { CiLocationOn } from "react-icons/ci";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
+import { toast } from "sonner";
+import axios from "axios";
+const URL = import.meta.env.VITE_BACKEND_SHOP_API_URL ; 
+import { addNewRestaurant } from "@/redux/features/currentOwnerRestaurants.slice";
+
+
+
+
 
 const OwnerRestaurant = () => {
 
   const {theme} = useSelector(state => state.themeSlice);
+  const dispatch = useDispatch() ; 
+
+  const [restaurantData, setRestaurantData] = useState({
+    shopName : "", 
+    city : "", 
+    state : "", 
+    address : "", 
+    image : null
+  })
+
+
+  const inputChangeHandler = (e) => { 
+    const {name, value} = e.target; 
+   
+    setRestaurantData({
+      ...restaurantData, 
+      [name] : value
+    })
+  }
+
+  const fileChangeHandler = (e) => { 
+    const file = e.target.files[0]; 
+
+    if(!file){ 
+      return false ; 
+    }    
+    setRestaurantData({
+      ...restaurantData , 
+      image : file
+    })
+  }
+
+  const formSubmitHandler = (restaurantData) => { 
+    
+    if(!restaurantData.shopName || !restaurantData.city || !restaurantData.address || !restaurantData.state || !restaurantData.image) {
+      toast.error('All fields are required!'); 
+      return false;
+    }
+    
+    const formData = new FormData(); 
+
+    // preparing the formdata : 
+    formData.append("shopName", restaurantData.shopName); 
+    formData.append("city", restaurantData.city); 
+    formData.append("address", restaurantData.address); 
+    formData.append("state", restaurantData.state); 
+    formData.append("image", restaurantData.image);
+ 
+
+    // api call :   
+    (async function createNewRestaurant () { 
+        try {
+          const {data} = await axios.post(`${URL}/create-shop`, formData, {withCredentials : true});
+          if(data.success) { 
+            dispatch(addNewRestaurant(data.shop));
+            toast.success('Restaurant has been created'); 
+          }
+        } catch (error) {
+          console.log(`Could not create restaurant ${error}`);
+        }
+    })(); 
+  }
 
 
   return (
@@ -37,7 +108,7 @@ const OwnerRestaurant = () => {
           </div>
 
           {/* All restaurants :  */}
-          <Button variant="outline" className={`text-orange-500 rounded flex items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer`}>
+          <span className={`text-orange-500 rounded flex items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer`}>
             <FaKitchenSet size={15}/>
 
             {/* button for adding new restaurant :   */}
@@ -57,7 +128,15 @@ const OwnerRestaurant = () => {
                     <Label className={`text-xs`} htmlFor="sheet-demo-name">Shop Name</Label>
                     <div className="relative flex items-center">
                         <BiBuildingHouse color="gray" className="absolute ml-2" />
-                        <Input  className={`rounded outline-none placeholder:text-xs px-8  ${theme === 'light' ? 'border-gray-200' : 'border-zinc-600'}`} placeholder='Enter your shop name'  id="sheet-demo-name"  />
+                        <Input  
+                        className={`rounded outline-none placeholder:text-xs px-8  ${theme === 'light' ? 'border-gray-200' : 'border-zinc-600'}`} 
+                        placeholder='Enter your shop name'  
+                        id="sheet-demo-name"  
+                        name='shopName'
+                        value={restaurantData.shopName}
+                        onChange={inputChangeHandler}
+                        />
+
                     </div>
               
                   </div>
@@ -65,7 +144,14 @@ const OwnerRestaurant = () => {
                     <Label className={`text-xs`} htmlFor="sheet-demo-username">City</Label>
                     <div className="relative flex items-center">
                       <PiCityLight color="gray" className="absolute ml-2" />
-                        <Input className={`rounded outline-none placeholder:text-xs px-8 ${theme === 'light' ? 'border-gray-200' : 'border-zinc-600'}` } placeholder='Enter City'  id="sheet-demo-username"  />
+                        <Input 
+                        className={`rounded outline-none placeholder:text-xs px-8 ${theme === 'light' ? 'border-gray-200' : 'border-zinc-600'}` } 
+                        placeholder='Enter City'  
+                        id="sheet-demo-username"  
+                        name='city'
+                        value={restaurantData.city}
+                        onChange = {inputChangeHandler}
+                        />
                     </div>
                  
                   </div>
@@ -74,7 +160,14 @@ const OwnerRestaurant = () => {
                     <Label className={`text-xs`} htmlFor="sheet-demo-username">State</Label>
                     <div className="relative flex items-center">
                       <GiModernCity color="gray" className="absolute ml-2" />
-                      <Input  className={`rounded outline-none placeholder:text-xs px-8 ${theme === 'light' ? 'border-gray-200' : 'border-zinc-600'}`} placeholder='Enter State' id="sheet-demo-username"  />
+                      <Input  
+                      className={`rounded outline-none placeholder:text-xs px-8 ${theme === 'light' ? 'border-gray-200' : 'border-zinc-600'}`} 
+                      placeholder='Enter State' 
+                      id="sheet-demo-username"  
+                      name='state'
+                      value={restaurantData.state}
+                      onChange = {inputChangeHandler}
+                      />
                     </div>
                     
                   </div>
@@ -84,25 +177,46 @@ const OwnerRestaurant = () => {
 
                     <div className="relative flex items-center">
                         <CiLocationOn color="gray" className="absolute ml-2" />
-                        <Input className={`rounded outline-none placeholder:text-xs px-8 ${theme === 'light' ? 'border-gray-200 ' : 'border-zinc-600'}`} placeholder='Enter the address'  id="sheet-demo-username"  />
+                        <Input 
+                        className={`rounded outline-none placeholder:text-xs px-8 ${theme === 'light' ? 'border-gray-200 ' : 'border-zinc-600'}`} 
+                        placeholder='Enter the address'  
+                        id="sheet-demo-username"  
+                        name='address'
+                        value={restaurantData.address}
+                        onChange={inputChangeHandler}
+                        />
                     </div>
                    
                   </div>
 
                     <div className="grid gap-2">
                     <Label className={`text-xs`} htmlFor="sheet-demo-username">Upload your Restaurant image</Label>
-                    <Input type={`file`} className={`rounded outline-none ${theme === 'light' ? 'border-gray-200' : 'border-zinc-600'}`} placeholder=''  id="sheet-demo-username"  />
+                    <Input 
+                    type={`file`} 
+                    className={`rounded outline-none ${theme === 'light' ? 'border-gray-200' : 'border-zinc-600'}`} 
+                     id="sheet-demo-username"  
+                     name='image'
+                     onChange={fileChangeHandler}
+                     />
                   </div>
                 </div>
                 <SheetFooter>
-                  <Button className={`bg-orange-500 rounded py-4`} type="submit">Save changes</Button>
+                  <Button 
+                  onClick={()=>formSubmitHandler(restaurantData)}
+                  className={`bg-orange-500 rounded py-4`} 
+                  type="submit">
+                    Save changes</Button>
                   <SheetClose asChild>
-                    <Button variant="outline" className={`rounded ${theme === 'dark' && 'bg-zinc-700 border-zinc-500'}`}>Close</Button>
+                    <Button v
+                    ariant="outline" 
+                    className={`rounded ${theme === 'dark' && 'bg-zinc-700 border-zinc-500'}`}>
+                      Close
+                    </Button>
                   </SheetClose>
                 </SheetFooter>
               </SheetContent>
           </Sheet>
-          </Button>
+          </span>
         </div>
 
         {/* main content :  */}
