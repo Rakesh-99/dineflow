@@ -21,6 +21,8 @@ const Dashboard = lazy(()=> import("@/components/Dashboard"));
 const OwnerRestaurant = lazy(()=> import("@/pages/OwnerRestaurant")); 
 const CustomerOrder = lazy(()=> import("@/pages/CustomerOrder")); 
 const CustomerListings = lazy(()=> import("@/pages/CustomerLIstings")); 
+const OwnerRestaurantDetails = lazy(()=> import("@/pages/OwnerRestaurantDetails")); 
+
 
 const App = () => {
 
@@ -70,6 +72,16 @@ const App = () => {
             </Suspense>
           )
         },
+        {
+          path : `restaurantinfo/:restaurantname/:id`,
+          element : ( 
+            <Suspense fallback={<>Loading ..</>}>
+              <RestaurantOwnerRoutes>
+                <OwnerRestaurantDetails/>
+              </RestaurantOwnerRoutes>
+            </Suspense>
+          )
+        }, 
         {
           path : 'restaurant-menu',
           element : ( 

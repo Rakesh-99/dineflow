@@ -6,6 +6,8 @@ import { FiUser } from "react-icons/fi";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { PiBuildingApartment } from "react-icons/pi";
 import { SlCalender } from "react-icons/sl";
+import { useNavigate } from "react-router";
+import { toast } from "sonner";
 
 
 
@@ -13,7 +15,15 @@ import { SlCalender } from "react-icons/sl";
 const RestaurantListings = () => {
 
       const {restaurants} = useSelector(state => state.currentOwnerRestaurants); 
-        const {theme} = useSelector(state=> state.themeSlice); 
+      const {theme} = useSelector(state=> state.themeSlice); 
+      const navigate = useNavigate(); 
+
+      const getRestaurantName = (restaurantName) => { 
+        return restaurantName.toLowerCase().replaceAll(' ','').trim();
+      }
+      
+      console.log(restaurants);
+      
         
   return (
     <>
@@ -22,6 +32,7 @@ const RestaurantListings = () => {
         <div className='grid grid-cols-2 gap-5'>
         {
         restaurants.map((restaurant, idx)=> (
+        
         
         <div 
         key={idx}
@@ -74,9 +85,13 @@ const RestaurantListings = () => {
             </div>
         </div>
         </div>
-        {/* div for arrow btn :  */}
+        {/* div of arrow btn to navigate to the restaurant details page :  */}
         <div className="flex items-center mr-10">
-            <IoIosArrowDropright size={25} color='orange'/>
+            <IoIosArrowDropright 
+            size={25} 
+            color='orange'
+            onClick={() => navigate(`/restaurantinfo/${getRestaurantName(restaurant.shopName)}/${restaurant._id}`)}
+            />
         </div>
         </div>
             ))
