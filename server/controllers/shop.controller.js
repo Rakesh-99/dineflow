@@ -131,3 +131,23 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
         data : shop
     })
 }); 
+
+
+export const getOwnerRestaurantByID = expressAsyncHandler(async(req, res, next) => { 
+    const {shopId} = req.params; 
+
+    if(!mongoose.Types.ObjectId.isValid(shopId)){
+        return next(new ErrorHandler(401, 'Invalid shop Id!'))
+    }; 
+    const userId = req.userId; 
+
+    const shop = await shopModel.findOne({owner : userId, _id : shopId}); 
+    if(!shop) { 
+        return next(new ErrorHandler(404, 'Shop not found!'))
+    }; 
+    return res.status(200).json({
+        success : true,
+        message : 'Restaurant has been fetched',
+        data : shop
+    })
+});
