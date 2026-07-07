@@ -25,6 +25,11 @@ const itemSchema = new mongoose.Schema({
         type : String,
         enum : ["Veg", "Non Veg"]
     },
+    status : { 
+        type : Boolean,
+        required : [true, 'Status is required!'],
+        default : true
+    },
     category : { 
         type : String , 
         enum : ["Snacks", "Main Course", "Desserts", "Pizza", "Burgers", "Sandwiches", "East Indian", "South India", "North Indian", "Chinies", "Fast Food", "Other" ], 

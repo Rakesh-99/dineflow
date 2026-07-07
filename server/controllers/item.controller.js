@@ -15,10 +15,10 @@ import userModel from "../models/user.model.js";
 // create Item : 
 export const createItem = expressAsyncHandler(async(req, res, next) => { 
 
-    const {name, foodType, category, price} = req.body; 
+    const {name, foodType, category, price, status} = req.body; 
     
     const userId = req.userId; 
-    if(!name || !foodType || !price || !category) { 
+    if(!name || !foodType || !price || !category || !status) { 
         return next(new ErrorHandler(400, 'All fields are required!')); 
     }
 
@@ -52,6 +52,7 @@ export const createItem = expressAsyncHandler(async(req, res, next) => {
         foodType, 
         price ,
         category,
+        status,
         image : cloudinaryImgUrl,
         shop : restaurant._id
     })
@@ -69,7 +70,7 @@ export const createItem = expressAsyncHandler(async(req, res, next) => {
 // Update item : 
 export const updateItem = expressAsyncHandler(async(req, res, next)=> { 
 
-    const {name, price, category, foodType} = req.body; 
+    const {name, price, category, foodType, status} = req.body; 
     const userId = req.userId; 
     const file = req.file ; 
     const itemId = req.params.itemId; 
@@ -102,6 +103,7 @@ export const updateItem = expressAsyncHandler(async(req, res, next)=> {
     if(category) updatedItemData.category = category; 
     if(foodType) updatedItemData.foodType = foodType; 
     if(cloudinaryImgUrl) updatedItemData.image = cloudinaryImgUrl;
+    if(status) updatedItemData.status = status;
     
 
     const updateItem  = await itemModel.findOneAndUpdate(
