@@ -16,6 +16,15 @@ const shopSchema = new mongoose.Schema({
         type : Schema.Types.ObjectId,
         ref : 'User'
     }, 
+    description : { 
+        type : String,
+        required : [true, 'Description is required!']
+    },
+    status : { 
+        type : Boolean,
+        required : [true, 'Status is required!'], 
+        default : true
+    },
     item : [{ 
         type : Schema.Types.ObjectId,
         ref : 'Item'

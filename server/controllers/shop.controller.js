@@ -43,13 +43,13 @@ export const fetchOwnerRestaurants = expressAsyncHandler(async(req, res, next) =
 // Create Shop : 
 export const createShop = expressAsyncHandler(async(req, res, next)=> { 
 
-    const {shopName, city, state, address} = req.body; 
+    const {shopName, city, state, address, description, status} = req.body; 
     
     const userId = req.userId ; 
 
     const image = req.file ;
 
-    if(!shopName || !city || !state || !address || !image) {
+    if(!shopName || !city || !state || !address || !image || !description || !status) {
         return next(new ErrorHandler(400, 'All fields are required!'));
     }
 
@@ -70,6 +70,8 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
         city,
         state, 
         address, 
+        description,
+        status,
         image : cloudinaryImgURL,
         owner : user._id
     }); 
@@ -86,7 +88,7 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
 // edit shop controller :  
 export const updateShop = expressAsyncHandler(async(req, res, next)=> { 
 
-    const { shopName , address, city, state, } = req.body ; 
+    const { shopName , address, city, state, description, status} = req.body ; 
 
     const userId = req.userId; 
     const {shopId} = req.params; 
@@ -114,12 +116,14 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
     if(city) updatedData.city = city; 
     if(state) updatedData.state = state; 
     if(file) updatedData.image = cloudinaryImgURL 
+    if(description) updatedData.description = description; 
+    if(status) updatedData.status = status
 
     const shop = await shopModel.findOneAndUpdate(
         {_id: shopId, owner : user._id},
         {$set : updatedData},
         {new : true, runValidators : true}
-    ).populate('owner');
+    ).populate('owner').select('- password');
     
     if(!shop) { 
         return next(new ErrorHandler(401, `Either the requested shop does't exist or you are unauthorized`))
