@@ -22,8 +22,9 @@ import { toast } from "sonner";
 import axios from "axios";
 const URL = import.meta.env.VITE_BACKEND_SHOP_API_URL ; 
 import { addNewRestaurant } from "@/redux/features/currentOwnerRestaurants.slice";
-
-
+import { ShieldCheck, ShieldX } from "lucide-react"
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
+import { Textarea } from "@/components/ui/textarea"
 
 
 
@@ -31,14 +32,19 @@ const OwnerRestaurant = () => {
 
   const {theme} = useSelector(state => state.themeSlice);
   const dispatch = useDispatch() ; 
+  const [loading, setLoading] = useState(false); 
 
   const [restaurantData, setRestaurantData] = useState({
     shopName : "", 
     city : "", 
     state : "", 
     address : "", 
+    description : "",
+    status : true,
     image : null
-  })
+  }); 
+
+  
 
 
   const inputChangeHandler = (e) => { 
@@ -62,6 +68,22 @@ const OwnerRestaurant = () => {
     })
   }
 
+
+  // status tab change handler : 
+  const statusTabChangeHandler = (e) => {     
+   if(e === 'active'){   
+    setRestaurantData({
+      ...restaurantData,
+      status : true
+    })
+   }else {     
+    setRestaurantData({
+      ...restaurantData, 
+      status : false
+    })
+   }
+  }
+
   const formSubmitHandler = (restaurantData) => { 
     
     if(!restaurantData.shopName || !restaurantData.city || !restaurantData.address || !restaurantData.state || !restaurantData.image) {
@@ -76,6 +98,8 @@ const OwnerRestaurant = () => {
     formData.append("city", restaurantData.city); 
     formData.append("address", restaurantData.address); 
     formData.append("state", restaurantData.state); 
+    formData.append("description", restaurantData.description);
+    formData.append("status", restaurantData.status);
     formData.append("image", restaurantData.image);
  
 
@@ -83,12 +107,17 @@ const OwnerRestaurant = () => {
     (async function createNewRestaurant () { 
         try {
           const {data} = await axios.post(`${URL}/create-shop`, formData, {withCredentials : true});
+          setLoading(true);
           if(data.success) { 
+            setLoading(false);
             dispatch(addNewRestaurant(data.shop));
             toast.success('Restaurant has been created'); 
           }
         } catch (error) {
+          setLoading(false);
           console.log(`Could not create restaurant ${error}`);
+        }finally { 
+          setLoading(false);
         }
     })(); 
   }
@@ -125,7 +154,7 @@ const OwnerRestaurant = () => {
                 </SheetHeader>
                 <div className="grid flex-1 auto-rows-min gap-4 px-4">
                   <div className="grid gap-1"> 
-                    <Label className={`text-xs`} htmlFor="sheet-demo-name">Shop Name</Label>
+                    <Label className={`text-xs`} htmlFor="sheet-demo-name">Shop Name *</Label>
                     <div className="relative flex items-center">
                         <BiBuildingHouse color="gray" className="absolute ml-2" />
                         <Input  
@@ -141,7 +170,7 @@ const OwnerRestaurant = () => {
               
                   </div>
                   <div className="grid gap-1">
-                    <Label className={`text-xs`} htmlFor="sheet-demo-username">City</Label>
+                    <Label className={`text-xs`} htmlFor="sheet-demo-username">City *</Label>
                     <div className="relative flex items-center">
                       <PiCityLight color="gray" className="absolute ml-2" />
                         <Input 
@@ -157,7 +186,7 @@ const OwnerRestaurant = () => {
                   </div>
 
                     <div className="grid gap-1">  
-                    <Label className={`text-xs`} htmlFor="sheet-demo-username">State</Label>
+                    <Label className={`text-xs`} htmlFor="sheet-demo-username">State *</Label>
                     <div className="relative flex items-center">
                       <GiModernCity color="gray" className="absolute ml-2" />
                       <Input  
@@ -173,7 +202,7 @@ const OwnerRestaurant = () => {
                   </div>
 
                     <div className="grid gap-1">
-                    <Label className={`text-xs`} htmlFor="sheet-demo-username">Address</Label> 
+                    <Label className={`text-xs`} htmlFor="sheet-demo-username">Address *</Label> 
 
                     <div className="relative flex items-center">
                         <CiLocationOn color="gray" className="absolute ml-2" />
@@ -189,8 +218,44 @@ const OwnerRestaurant = () => {
                    
                   </div>
 
+                  <div className="grid gap-1">
+                    <Label className={`text-xs`} htmlFor="sheet-demo-username">About Your Resturant *</Label> 
+
+                    <div className="relative flex">
+                   
+                        <Textarea placeholder="Write about your restaurant" 
+                         className={`rounded outline-none placeholder:text-xs px- ${theme === 'light' ? 'border-gray-200 ' : 'border-zinc-600'}`} 
+                          name='description'
+                          value={restaurantData.description}
+                          onChange={inputChangeHandler}
+                        />
+                    </div>
+                   
+                  </div>
+
+                  <div className="grid gap-1">
+                    <Label className={`text-xs`} htmlFor="sheet-demo-username">Status *</Label> 
+
+                    <div className="relative flex items-center">
+                        <CiLocationOn color="gray" className="absolute ml-2" />
+                        <Tabs defaultValue="active" onValueChange={statusTabChangeHandler} >
+                            <TabsList className={`${theme === 'dark' ? 'bg-zinc-700' : 'bg-zinc-200'}`}>
+                              <TabsTrigger value= "active">
+                                <ShieldCheck />
+                                Active
+                              </TabsTrigger>
+                              <TabsTrigger value="inactive">
+                                <ShieldX />
+                                InActive
+                              </TabsTrigger>
+                            </TabsList>
+                        </Tabs>
+                    </div>
+                   
+                  </div>
+
                     <div className="grid gap-2">
-                    <Label className={`text-xs`} htmlFor="sheet-demo-username">Upload your Restaurant image</Label>
+                    <Label className={`text-xs`} htmlFor="sheet-demo-username">Upload your Restaurant image *</Label>
                     <Input 
                     type={`file`} 
                     className={`rounded outline-none ${theme === 'light' ? 'border-gray-200' : 'border-zinc-600'}`} 
@@ -202,12 +267,13 @@ const OwnerRestaurant = () => {
                 </div>
                 <SheetFooter>
                   <Button 
-                  onClick={()=>formSubmitHandler(restaurantData)}
-                  className={`bg-orange-500 rounded py-4`} 
-                  type="submit">
-                    Save changes</Button>
+                    onClick={()=>formSubmitHandler(restaurantData)}
+                    className={`bg-orange-500 rounded py-4`} 
+                    type="submit">
+                    {loading ? 'Loading ..' : 'Create Restaurant'}
+                  </Button>
                   <SheetClose asChild>
-                    <Button v
+                    <Button
                     ariant="outline" 
                     className={`rounded ${theme === 'dark' && 'bg-zinc-700 border-zinc-500'}`}>
                       Close
