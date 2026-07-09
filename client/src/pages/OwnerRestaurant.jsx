@@ -22,7 +22,7 @@ import { toast } from "sonner";
 import axios from "axios";
 const URL = import.meta.env.VITE_BACKEND_SHOP_API_URL ; 
 import { addNewRestaurant } from "@/redux/features/currentOwnerRestaurants.slice";
-import { ShieldCheck, ShieldX } from "lucide-react"
+import { Loader, ShieldCheck, ShieldX } from "lucide-react"
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
 
@@ -106,8 +106,8 @@ const OwnerRestaurant = () => {
     // api call :   
     (async function createNewRestaurant () { 
         try {
-          const {data} = await axios.post(`${URL}/create-shop`, formData, {withCredentials : true});
           setLoading(true);
+          const {data} = await axios.post(`${URL}/create-shop`, formData, {withCredentials : true});
           if(data.success) { 
             setLoading(false);
             dispatch(addNewRestaurant(data.shop));
@@ -116,8 +116,6 @@ const OwnerRestaurant = () => {
         } catch (error) {
           setLoading(false);
           console.log(`Could not create restaurant ${error}`);
-        }finally { 
-          setLoading(false);
         }
     })(); 
   }
@@ -266,12 +264,19 @@ const OwnerRestaurant = () => {
                   </div>
                 </div>
                 <SheetFooter>
-                  <Button 
+                  <Button  
+                    disabled = {loading}
                     onClick={()=>formSubmitHandler(restaurantData)}
-                    className={`bg-orange-500 rounded py-4`} 
+                    className={`bg-orange-500 rounded transition-all duration-200 py-4`} 
                     type="submit">
-                    {loading ? 'Loading ..' : 'Create Restaurant'}
+                    {loading ? 
+                    <div className="flex items-center gap-3">
+                      <Loader className="animate-spin"/>
+                      <span className="text-xs">Please wait!</span>
+                    </div>
+                    : 'Create Restaurant'}
                   </Button>
+                  
                   <SheetClose asChild>
                     <Button
                     ariant="outline" 

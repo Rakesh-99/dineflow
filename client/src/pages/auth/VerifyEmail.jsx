@@ -2,7 +2,7 @@ import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
 import { Button } from "../../components/ui/button";
 import { useState } from "react";
-import {Check} from 'lucide-react'
+import {Check, Loader} from 'lucide-react'
 import { toast } from "sonner";
 import axios from "axios";
 const URL = import.meta.env.VITE_BACKEND_AUTH_API_URL
@@ -10,8 +10,8 @@ const URL = import.meta.env.VITE_BACKEND_AUTH_API_URL
 
 
 const VerifyEmail = ({ setShowEmailVerifyComp, userSignupEmail}) => {
-console.log(userSignupEmail);
 
+  const [loading, setLoading] = useState(false); 
   const [userData, setUserData] = useState({
     email : userSignupEmail, 
     otp : ''
@@ -37,13 +37,16 @@ console.log(userSignupEmail);
 
   const verifyApi = async() => {
     try {
+      setLoading(true)
       const response = await axios.post(`${URL}/verify-otp`, userData); 
       const apiResponse = await response.data; 
       if(apiResponse){ 
+        setLoading(false); 
         setShowEmailVerifyComp(false);
         console.log(apiResponse.message);
       }
     } catch (error) {
+      setLoading(false);
       toast.error(error?.response?.data.message)
       console.log(error.response.data.message);
     }
@@ -73,7 +76,15 @@ console.log(userSignupEmail);
           <Input className='py-4 rounded text-center text placeholder:text-xs font-semibold text-gray-500' name='otp' onChange={inputChangeHandler}  type='text' value={userData.otp} placeholder='Enter your One Time Password'/>
           </div>
           <div className=" flex justify-center">
-          <Button  type='submit' className='bg-[#0071e3] rounded py-4 w-24'>Verify</Button>
+          <Button  
+          type='submit' 
+          disabled={loading}
+          className='bg-orange-500 rounded py-4 w-24'>{loading ? 
+          <div className="flex items-center gap-3">
+            <Loader className="animate-spin"/>
+            <span>Verifying ..</span>
+          </div>
+          : '' }</Button>
           </div>
         </form>
     </div>

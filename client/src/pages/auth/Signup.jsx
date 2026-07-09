@@ -1,6 +1,6 @@
 import { Label } from "../../components/ui/label";
 import { Input } from "../../components/ui/input";
-import { User2, HousePlugIcon, Bike } from "lucide-react"
+import { User2, HousePlugIcon, Bike, Loader } from "lucide-react"
 import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs"
 import { Button } from "../../components/ui/button";
 import { useState } from "react";
@@ -20,7 +20,7 @@ import { setCurrentUser } from "../../redux/features/currentUser.slice";
 
 const Signup = ({setShowEmailVerifyComp, setUserSignupEmail }) => {
 
-  
+  const [loading, setLoading] = useState(false); 
   const [userData, setUserData] = useState({
     fullname : '',
     email : '',
@@ -59,16 +59,17 @@ const Signup = ({setShowEmailVerifyComp, setUserSignupEmail }) => {
   const signupUserApiCall = async(userData) => {
     try {
 
-      
+      setLoading(true); 
       const {data} = await axios.post(`${URL}/sign-up` , userData); 
       const apiResponse = data ; 
 
       if(apiResponse.success){ 
-
+        setLoading(false); 
        toast.success(apiResponse.message);
        setShowEmailVerifyComp(true);
       }      
     } catch (error) {
+      setLoading(false); 
       toast.error(error?.response?.data.message);
       console.log("Ther error is -> ", error.response);
     }
@@ -218,7 +219,15 @@ const Signup = ({setShowEmailVerifyComp, setUserSignupEmail }) => {
                     </TabsList>
                   </Tabs>
               </div>
-              <Button  type='submit' className='bg-[#0071e3] rounded w-full py-5'>Create Account</Button>
+              <Button  
+              type='submit' 
+              disabled= {loading}
+              className='bg-orange-500 rounded w-full py-5'>{loading ? 
+              <div className="flex items-center gap-3">
+                <Loader className="animate-spin"/>
+                <span>Loading ..</span>
+              </div>
+              : 'Create an account'}</Button>
 
               <p className="text-center my-1">OR</p>
 

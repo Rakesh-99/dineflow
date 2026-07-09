@@ -5,12 +5,11 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "sonner";
 const URL = import.meta.env.VITE_BACKEND_AUTH_API_URL; 
-import {Eye} from 'lucide-react'
+import {Eye, Loader} from 'lucide-react'
 import { FcGoogle } from "react-icons/fc";
 import { FaGithub } from "react-icons/fa";
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
-import { useNavigate } from "react-router";
 import { useDispatch } from "react-redux";
 import { setCurrentUser } from "../../redux/features/currentUser.slice";
 
@@ -18,14 +17,13 @@ import { setCurrentUser } from "../../redux/features/currentUser.slice";
 const Login = () => {
 
   const dispatch = useDispatch(); 
-
+  const [loading, setLoading] = useState(false); 
   const [userData, setUserData] = useState({
     email : '',
     password : '',
   })
 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
-  const naviagte = useNavigate() ; 
   const inputChangeHandler = (e) => {
     const {name, value} = e.target;
     setUserData({
@@ -46,15 +44,18 @@ const Login = () => {
 
   const loginApiCall = async() => { 
       try {
+        setLoading(true); 
         const response = await axios.post(`${URL}/login-user`, userData, {
           withCredentials : true   // here i am including it otherwise i will not get thje cookie 
         }); 
         const apiResponse  = await response.data; 
         
         if(apiResponse?.success){ 
+          setLoading(false); 
           toast.success(apiResponse.message)
         }
       } catch (error) {
+        setLoading(false); 
         toast.error(error?.response?.data.message)
       }
   }
@@ -152,7 +153,15 @@ const Login = () => {
           </div>
           </div>
       
-          <Button  type='submit' className='bg-[#0071e3] w-full py-5'>Login</Button>
+          <Button 
+          disabled={loading}  
+          type='submit' 
+          className='bg-orange-500 w-full transition-all duration-200 py-5'>{loading ? 
+          <div className="flex gap-3 items-center">
+            <Loader className="animate-spin"/>
+            <span>Loading ..</span>
+          </div>
+          : 'Login'}</Button>
 
            <p className="text-center my-1">OR</p>
           
