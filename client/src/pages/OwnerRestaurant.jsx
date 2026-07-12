@@ -112,7 +112,14 @@ const OwnerRestaurant = () => {
             setLoading(false);
             dispatch(addNewRestaurant(data.shop));
             toast.success('Restaurant has been created'); 
-          }
+          setRestaurantData({shopName : "", 
+              city : "", 
+              state : "", 
+              address : "", 
+              description : "",
+              status : true,
+              image : null
+            })}
         } catch (error) {
           setLoading(false);
           console.log(`Could not create restaurant ${error}`);
