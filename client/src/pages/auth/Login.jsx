@@ -53,6 +53,7 @@ const Login = () => {
         if(apiResponse?.success){ 
           setLoading(false); 
           toast.success(apiResponse.message)
+           dispatch(setCurrentUser(apiResponse?.user));   
         }
       } catch (error) {
         setLoading(false); 
