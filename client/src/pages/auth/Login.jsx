@@ -157,7 +157,7 @@ const Login = () => {
           <Button 
           disabled={loading}  
           type='submit' 
-          className='bg-orange-500 w-full transition-all duration-200 py-5'>{loading ? 
+          className='bg-customOrange w-full transition-all duration-200 py-5'>{loading ? 
           <div className="flex gap-3 items-center">
             <Loader className="animate-spin"/>
             <span>Loading ..</span>

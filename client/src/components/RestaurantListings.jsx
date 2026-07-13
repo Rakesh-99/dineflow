@@ -48,8 +48,8 @@ const RestaurantListings = () => {
         <div className={`flex  flex-col justify-center gap-y-5`}>
             {/* restaurant icon and title :  */}
             <div className="flex gap-4 items-center">
-                <div className={`border rounded-full py-2 px-2 ${theme === 'light' ? 'bg-orange-50 border-orange-100' : 'bg-orange-500 border-orange-700'}`}>
-                    <GrRestaurant className={`${theme === 'light' ? 'text-orange-500' : 'text-orange-200'}`}/>
+                <div className={`border rounded-full py-2 px-2 ${theme === 'light' ? 'bg-orange-50 border-orange-100' : 'bg-customOrange border-orange-700'}`}>
+                    <GrRestaurant className={`${theme === 'light' ? 'text-customOrange' : 'text-orange-200'}`}/>
                 </div>
             <h2 className='font-semibold'>{restaurant?.shopName}</h2>
             </div>

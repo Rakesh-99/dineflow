@@ -222,7 +222,7 @@ const Signup = ({setShowEmailVerifyComp, setUserSignupEmail }) => {
               <Button  
               type='submit' 
               disabled= {loading}
-              className='bg-orange-500 rounded w-full py-5'>{loading ? 
+              className='bg-customOrange rounded w-full py-5'>{loading ? 
               <div className="flex items-center gap-3">
                 <Loader className="animate-spin"/>
                 <span>Loading ..</span>

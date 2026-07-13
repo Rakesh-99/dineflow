@@ -142,13 +142,13 @@ const OwnerRestaurant = () => {
           </div>
 
           {/* All restaurants :  */}
-          <span className={`text-orange-500 rounded flex items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer`}>
+          <span className={`text-customOrange rounded flex items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer`}>
             <FaKitchenSet size={15}/>
 
             {/* button for adding new restaurant :   */}
             <Sheet >
               <SheetTrigger asChild >
-                <Button className={`text-orange-500 rounded flex  items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer`}>Add Restaurant</Button>
+                <Button className={`text-customOrange rounded flex  items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer`}>Add Restaurant</Button>
               </SheetTrigger>
               <SheetContent className={`${theme === 'light' ? 'bg-gray-100' : 'bg-zinc-800 border-zinc-800 text-gray-100'}`}>
                 <SheetHeader>
@@ -274,7 +274,7 @@ const OwnerRestaurant = () => {
                   <Button  
                     disabled = {loading}
                     onClick={()=>formSubmitHandler(restaurantData)}
-                    className={`bg-orange-500 rounded transition-all duration-200 py-4`} 
+                    className={`bg-customOrange rounded transition-all duration-200 py-4`} 
                     type="submit">
                     {loading ? 
                     <div className="flex items-center gap-3">

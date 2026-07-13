@@ -79,7 +79,7 @@ const VerifyEmail = ({ setShowEmailVerifyComp, userSignupEmail}) => {
           <Button  
           type='submit' 
           disabled={loading}
-          className='bg-orange-500 rounded py-4 w-24'>{loading ? 
+          className='bg-customOrange rounded py-4 w-24'>{loading ? 
           <div className="flex items-center gap-3">
             <Loader className="animate-spin"/>
             <span>Verifying ..</span>

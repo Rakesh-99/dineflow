@@ -102,7 +102,7 @@ const NavBar = () => {
 
                   {/* left section logo :  */}
                <div className="flex items-center gap-3">
-                <div className="w-3 h-3 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.6)] shrink-0"></div>
+                <div className="w-3 h-3 rounded-full bg-customOrange shadow-[0_0_12px_rgba(249,115,22,0.6)] shrink-0"></div>
 
                 <div className="flex flex-col">
                   <h1 className="text-lg md:text-2xl font-extrabold tracking-tight">
@@ -272,10 +272,10 @@ const NavBar = () => {
                 // Navbavr for account page 
               <div className={`w-full ${theme ==='dark' ? 'bg-zinc-800 text-zinc-300' : 'bg-white text-zinc-800'}`}>
                 <div className="flex items-center gap-2">
-                  <div className="h-3 w-3 rounded-full bg-orange-500" />
+                  <div className="h-3 w-3 rounded-full bg-customOrange" />
                   
                   <h1 className="font-outfit text-2xl font-black tracking-tight">
-                    <span className="text-orange-500">Dine</span>
+                    <span className="text-customOrange">Dine</span>
                     <span>Flow</span>
                   </h1>
                 </div>
