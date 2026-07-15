@@ -196,11 +196,11 @@ const NavBar = () => {
 
                               <DropdownMenuSubContent className={`${theme === 'light' ? 'bg-white text-zinc-800' : 'bg-zinc-700 text-zinc-100'}`}>
                                 <DropdownMenuItem className={`flex items-center`} onClick={()=>themeChangeHandle('light')} >
-                                  <TiWeatherSunny size={20}/>
+                                  <TiWeatherSunny className='size-4'/>
                                   Light
                                 </DropdownMenuItem>
                                 <DropdownMenuItem onClick={()=>themeChangeHandle('dark')}>
-                                  <BsMoonStars />
+                                  <BsMoonStars className='size-3 ml-1' />
                                   Dark
                                 </DropdownMenuItem>
                               </DropdownMenuSubContent>

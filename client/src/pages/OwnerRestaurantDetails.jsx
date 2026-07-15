@@ -11,6 +11,10 @@ import { Button } from "@/components/ui/button"
 import { useSelector } from "react-redux"
 import { useEffect, useState } from "react"
 import axios from "axios"
+import {  Pen, Trash2 } from "lucide-react"
+import RestaurantOwnerBannerRes from "@/components/RestaurantOwnerBannerRes"
+import RestaurantDescription from "@/components/RestaurantDescription"
+import RestaurantOwnerBriefInfo from "@/components/RestaurantOwnerBriefInfo"
 const URL = import.meta.env.VITE_BACKEND_SHOP_API_URL;
 
 
@@ -40,6 +44,8 @@ const OwnerRestaurantDetails = () => {
   ]
   
   console.log(restaurantData);
+
+  
   
   useEffect(()=> { 
   const getRestaurantInfo = async() => { 
@@ -59,45 +65,74 @@ const OwnerRestaurantDetails = () => {
 
   return (
     <> 
-   <div className="">
+   <div className="max-w-7xl m-auto ">
 
+          <div className="flex items-center justify-around">
             {/* breadcrumbs  */}
-            <div className="mt-5">
-              <Breadcrumb className={``}>
-                <BreadcrumbList>
-                  {
-                    data.map((links)=> {
-                      const {path, label} = links ; 
-                      return (
-                        <div className="flex items-center" key={label}>
-                          <BreadcrumbItem >
-                            <BreadcrumbLink asChild>
-                                <Link to={`${path}`}>{label}</Link>
-                            </BreadcrumbLink>
-                          </BreadcrumbItem>
-                          <BreadcrumbSeparator />
-                        </div>
-                      )
-                    })
-                  }
-                  <BreadcrumbItem>
-                    <BreadcrumbPage className={`${theme === 'dark' ? 'text-white' : 'text-zinc-700'}`}>
-                    {location.pathname.split("/")[1]}
-                    </BreadcrumbPage>
-                  </BreadcrumbItem>
-                </BreadcrumbList>
-              </Breadcrumb>
-            </div>
+                      <div className=" flex justify-center mt-5">
+                        <Breadcrumb className={``}>
+                          <BreadcrumbList>
+                            {
+                              data.map((links)=> {
+                                const {path, label} = links ; 
+                                return (
+                                  <div className="flex items-center" key={label}>
+                                    <BreadcrumbItem >
+                                      <BreadcrumbLink asChild>
+                                          <Link to={`${path}`}>{label}</Link>
+                                      </BreadcrumbLink>
+                                    </BreadcrumbItem>
+                                    <BreadcrumbSeparator />
+                                  </div>
+                                )
+                              })
+                            }
+                            <BreadcrumbItem>
+                              <BreadcrumbPage className={`${theme === 'dark' ? 'text-white' : 'text-zinc-700'}`}>
+                              {location.pathname.split("/")[1]}
+                              </BreadcrumbPage>
+                            </BreadcrumbItem>
+                          </BreadcrumbList>
+                        </Breadcrumb>
+                      </div>
 
-            {/* img banner :  */}
-            <div className="w-full">
-                  <img 
-                  src={restaurantData?.image} 
-                  alt="restaurant image banner" 
-                  className="w-full h-full object-contain"
-                  />
+            {/* restaurant edit and delete buttons :  */}
+
+            <div className="flex items-center mt-5 gap-5">
+            {/* restaurant edit button :  */}
+
+                <Button className={`bg-customOrange flex hover:bg-amber-600 items-center rounded-sm `}>
+                  <Pen className="size-3"/>
+                  <span className="text-xs">Edit</span>
+                </Button>
+             {/* restaurant delete button :  */}
+                 <Button className={`bg-customOrange flex hover:bg-amber-600 items-center rounded-sm `}>
+                  <Trash2 className="size-3"/>
+                  <span className="text-xs">Delete</span>
+                </Button>
             </div>
+      
+             
+          </div>   
+
+            {/* img banner comp  :  */}
+           <RestaurantOwnerBannerRes restaurantImg = { restaurantData?.image}/>
+
+          <div className="flex justify-between">
+
+           {/* restaurant description componenent :  */}
+           <RestaurantDescription 
+           description={restaurantData?.description}
+           shopName = {restaurantData?.shopName}
+           status = {restaurantData?.status}
+           />
          
+         {/* restaurant brief info :  */}
+         <RestaurantOwnerBriefInfo
+            briefData = {[{"restaurantID" : restaurantData?._id, "createdAt" : restaurantData?.createdAt, "updatedAt" : restaurantData?.updatedAt, "status" : restaurantData?.status}]}
+         />
+      </div>
+        
     </div> 
     </>
   )
