@@ -17,7 +17,7 @@ const RestaurantDescription = ({description, shopName, status}) => {
                     ? 
                     <span className={`text-xs text-green-500 border  rounded-xl px-3  font-semibold  border-green-500 ${theme === 'dark' ? 'bg-green-950' : 'bg-green-50'}`}>Active</span>
                     : 
-                    <span className={`text-xs text-red-500 border-2 bg-red-950 rounded-xl px-3  font-semibold  border-red-500 ${theme === 'dark' ? 'bg-red-950' : 'bg-red-50'}`}>Inactive</span>
+                    <span className={`text-xs text-red-100  rounded-xl px-3 py-1  font-semibold  border-red-500 ${theme === 'dark' ? 'bg-red-950' : 'bg-red-50 text-red-700'}`}>Inactive</span>
                     }
                 </span>
                 </div>

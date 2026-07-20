@@ -1,12 +1,6 @@
-import { Blocks, Clock, ShieldCheck } from "lucide-react"
+import { Blocks, Clock, ShieldCheck, ShieldOff } from "lucide-react"
 import { Separator } from "@/components/ui/separator"
 import { useSelector } from "react-redux"
-import {
-  Table,
-  TableBody,
-  TableCaption,
-  TableCell,
-} from "@/components/ui/table"
 import { Label } from "./ui/label"
 
 
@@ -18,57 +12,55 @@ const RestaurantOwnerBriefInfo = ({briefData}) => {
 
   return (
     <>
-    <div className={`mt-5 rounded shadow-xs border w-sm ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'}`}>
-
-
-                
-           <Table>
-      <TableCaption className={`text-[10px]`}>Brief About your restaurant.</TableCaption>
-      <TableBody >
+    <div className={`mt-5 rounded flex items-center justify-center shadow-xs border w-fit h-fit p-5 ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'}`}>
+ 
         {briefData.map((data, idx) => (
 
-       <div className="flex flex-col px-4 text-gray-400" key={idx}>
+       <div className="flex flex-col px-4 text-gray-400 gap-2" key={idx}>
              <div className="flex gap-1 text-xs  items-center">
-                <Blocks size={15}/>
+                <Blocks size={15} className="text-customBlueViolet"/>
                 <Label className={`text-xs`}>Restaurant ID : </Label>
-                <TableCell>{data.restaurantID }</TableCell>
+                <span>{data.restaurantID }</span>
             </div>
-            <Separator />
+            <Separator className={`${theme === 'dark' ? 'bg-zinc-700' : 'bg-zinc-200'}`}/>
             <div className="flex gap-1 text-xs items-center">
-                <Clock size={15} />
+                <Clock size={15} className="text-customBlueViolet"/>
                 <Label className={`text-xs`}>Created At : </Label>
-                <TableCell>{new Date(data.createdAt).toLocaleString() }</TableCell>
+                <span>{new Date(data.createdAt).toLocaleString() }</span>
             </div>
-            <Separator />
+            <Separator className={`${theme === 'dark' ? 'bg-zinc-700' : 'bg-zinc-200'}`}/>
+
 
             <div className="flex gap-1 text-xs items-center">
-                <Clock size={15}/>
+                <Clock size={15} className="text-customBlueViolet"/>
                 <Label className={`text-xs`}>Updated At : </Label>
-                <TableCell>{new Date(data.updatedAt).toLocaleString() }</TableCell>
+                <span>{new Date(data.updatedAt).toLocaleString() }</span>
             </div>
-            <Separator />
+            <Separator className={`${theme === 'dark' ? 'bg-zinc-700' : 'bg-zinc-200'}`}/>
+
 
              <div className="flex gap-1 text-xs items-center">
-                <Blocks size={15}/>
+                <Blocks size={15} className="text-customBlueViolet"/>
                 <Label className={`text-xs`}>Status : </Label>
-                <TableCell>{data.status === true ? 
+                {data.status === true ? 
                     <span className={`text-xs text-green-500 border flex gap-1 py-1 items-center rounded-xl px-3  font-semibold  border-green-500 ${theme === 'dark' ? 'bg-green-950' : 'bg-green-50'}`}>
-                        <ShieldCheck size={16}/>
-                        <span className="text-xs">Active</span>
+                        <ShieldCheck size={12}/>
+                        <span className="text-[8px]">Active</span>
                     </span>
                     : 
-                     <span className={`text-xs text-red-500 border-2 bg-red-950 rounded-xl px-3  font-semibold  border-red-500 ${theme === 'dark' ? 'bg-red-950' : 'bg-red-50'}`}>Inactive</span>
+                     <span className={`text-xs text-red-100 flex gap-1 p-1 items-center  rounded-xl px-3  font-semibold  border-red-500 ${theme === 'dark' ? 'bg-red-950' : 'bg-red-50 text-red-700'}`}>
+                      <ShieldOff size={12}/>
+                      <span className="text-[8px]">Inactive</span>
+                     </span>
                     }
-                </TableCell>
+              
             </div>
    
        </div>
          
           
         ))}
-      </TableBody>
-    
-    </Table>
+   
     </div>
     </>
   )

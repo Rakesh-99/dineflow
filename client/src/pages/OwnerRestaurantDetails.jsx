@@ -15,6 +15,7 @@ import {  Pen, Trash2 } from "lucide-react"
 import RestaurantOwnerBannerRes from "@/components/RestaurantOwnerBannerRes"
 import RestaurantDescription from "@/components/RestaurantDescription"
 import RestaurantOwnerBriefInfo from "@/components/RestaurantOwnerBriefInfo"
+import RestaurantAndOwnerInfo from "@/components/RestaurantAndOwnerInfo"
 const URL = import.meta.env.VITE_BACKEND_SHOP_API_URL;
 
 
@@ -131,6 +132,13 @@ const OwnerRestaurantDetails = () => {
          <RestaurantOwnerBriefInfo
             briefData = {[{"restaurantID" : restaurantData?._id, "createdAt" : restaurantData?.createdAt, "updatedAt" : restaurantData?.updatedAt, "status" : restaurantData?.status}]}
          />
+      </div>
+
+      {/* Restaurant address & owner data componenent :  */}
+      <div className="mt-10">
+        <RestaurantAndOwnerInfo restaurantData = {restaurantData}/>
+        {/* <RestaurantAndOwnerInfo restaurantData = {restaurantData}/> */}
+
       </div>
         
     </div> 
