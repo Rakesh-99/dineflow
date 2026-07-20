@@ -145,7 +145,8 @@ export const getOwnerRestaurantByID = expressAsyncHandler(async(req, res, next) 
     }; 
     const userId = req.userId; 
 
-    const shop = await shopModel.findOne({owner : userId, _id : shopId}); 
+    const shop = await shopModel.findOne({owner : userId, _id : shopId}).populate({path:"owner", select : "-otpExpiration"});
+    
     if(!shop) { 
         return next(new ErrorHandler(404, 'Shop not found!'))
     }; 
