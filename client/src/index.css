@@ -4,10 +4,9 @@
 @import "@fontsource-variable/dm-sans";
 @import "@fontsource-variable/roboto";
 @import "@fontsource-variable/inter";
-/* *{
-  background: #000;
-  color: #fff;
-} */
+*{
+  box-sizing: border-box;
+}
 @custom-variant dark (&:is(.dark *));
 
 :root {

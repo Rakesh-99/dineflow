@@ -11,9 +11,9 @@ const RestaurantAndOwnerInfo = ({restaurantData}) => {
 
   return (
     <>
-    <div className=" text-zinc-400 flex justify-between">
+    <div className=" text-zinc-400 flex md:gap-5 gap-10 md:flex-row flex-col justify-between">
       {/* Restaurant Information  */}
-        <div className={`w-lg border flex flex-col gap-4  p-5 rounded ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'}`}>
+        <div className={`md:w-lg md:mx-0 mx-4 border flex flex-col gap-4  p-5 rounded ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'}`}>
           <h1 className={`text-lg font-medium`}>Restaurant Information</h1>
 
           <div className="flex flex-col gap-1">
@@ -48,10 +48,10 @@ const RestaurantAndOwnerInfo = ({restaurantData}) => {
         </div>
 
         {/* Owner Information :  */}
-        <div className={`flex-col border gap-4 p-5 w-xl flex rounded ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'}`}>
+        <div className={`md:w-xl md:mx-0 mx-4  border flex flex-col gap-4  p-5 rounded ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'}`}>
             <h1 className={`text-lg  font-medium`}>Owner Information</h1>
 
-            <div className={`flex justify-between gap-10`}>
+            <div className={`flex md:flex-row flex-col justify-between gap-10`}>
                   {/* group 1 :  */}
                   <div className="flex flex-col gap-1">
                             <div className="flex gap-2 items-center">

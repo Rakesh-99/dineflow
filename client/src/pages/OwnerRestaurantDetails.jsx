@@ -119,7 +119,7 @@ const OwnerRestaurantDetails = () => {
             {/* img banner comp  :  */}
            <RestaurantOwnerBannerRes restaurantImg = { restaurantData?.image}/>
 
-          <div className="flex justify-between">
+          <div className="flex md:flex-row flex-col justify-between">
 
            {/* restaurant description componenent :  */}
            <RestaurantDescription 

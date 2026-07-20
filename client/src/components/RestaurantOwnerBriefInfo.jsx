@@ -12,7 +12,7 @@ const RestaurantOwnerBriefInfo = ({briefData}) => {
 
   return (
     <>
-    <div className={`mt-5 rounded flex items-center justify-center shadow-xs border w-fit h-fit p-5 ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'}`}>
+    <div className={`mt-5 md:mx-2 mx-4 rounded flex items-center justify-center shadow-xs border  h-fit p-5 ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'}`}>
  
         {briefData.map((data, idx) => (
 

@@ -6,7 +6,7 @@ const RestaurantDescription = ({description, shopName, status}) => {
     const {theme} = useSelector(state => state.themeSlice)
     return (
         <>
-            <div className="mt-5">
+            <div className="mt-5 md:px-2 px-4">
                 <div className="flex items-center gap-5">
                 {/* restaurant name :  */}
                 <h2 className="text-3xl font-medium">{shopName}</h2>
