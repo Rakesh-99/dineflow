@@ -4,6 +4,7 @@ import itemModel from "../models/item.model.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
 import shopModel from "../models/shop.model.js";
 import userModel from "../models/user.model.js";
+import mongoose from "mongoose";
 
 
 
@@ -16,6 +17,12 @@ import userModel from "../models/user.model.js";
 export const createItem = expressAsyncHandler(async(req, res, next) => { 
 
     const {name, foodType, category, price, status} = req.body; 
+
+    const {restaurantID} = req.params; 
+
+    if(!mongoose.Types.ObjectId.isValid(restaurantID)){
+        return next(new ErrorHandler(401, 'Invalid resturant ID!')); 
+    }
     
     const userId = req.userId; 
     if(!name || !foodType || !price || !category || !status) { 
@@ -40,14 +47,14 @@ export const createItem = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(403, 'You are not authorized to create an Item!')); 
     }
 
-    const restaurant = await shopModel.findOne({owner : userId});
+    const restaurant = await shopModel.findOne({owner : userId, _id : restaurantID});
 
     if(!restaurant){ 
         return next(new ErrorHandler(404, 'Restaurant not found!'))
     }
 
 
-    const createItem = new itemModel({
+    const item = new itemModel({
         name, 
         foodType, 
         price ,
@@ -57,12 +64,17 @@ export const createItem = expressAsyncHandler(async(req, res, next) => {
         shop : restaurant._id
     })
 
-    await createItem.save(); 
+    await item.save(); 
+
+   restaurant.item.push(item._id);
+   await restaurant.save(); 
+    
+
 
     return res.status(201).json({
         success : true,
         message : `An Item has been created`,
-        data : createItem
+        data : item
     })
 });
 
