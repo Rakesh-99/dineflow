@@ -6,7 +6,7 @@ const itemRoutes = express.Router() ;
 
 
 
-itemRoutes.post('/add-item', isUserAuthenticated, multerFileUpload.single('image'), createItem)
+itemRoutes.post('/add-item/:restaurantID', isUserAuthenticated, multerFileUpload.single('image'), createItem)
           .put('/update-item/:itemId', isUserAuthenticated, multerFileUpload.single('image'), updateItem)
 
 export default itemRoutes; 
