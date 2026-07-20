@@ -27,7 +27,7 @@ export const fetchAllRestaurantsForUser = expressAsyncHandler(async(req, res, ne
 export const fetchOwnerRestaurants = expressAsyncHandler(async(req, res, next) => { 
     const userId = req.userId ; 
 
-    const getRestaurants = await shopModel.find({owner : userId}).populate('owner');
+    const getRestaurants = await shopModel.find({owner : userId}).populate("owner").populate("item");
 
     if(getRestaurants.length < 0 ) { 
         return next(new ErrorHandler(404, 'No restaurant found, Please create one!')); 
@@ -145,7 +145,7 @@ export const getOwnerRestaurantByID = expressAsyncHandler(async(req, res, next) 
     }; 
     const userId = req.userId; 
 
-    const shop = await shopModel.findOne({owner : userId, _id : shopId}).populate({path:"owner", select : "-otpExpiration"});
+    const shop = await shopModel.findOne({owner : userId, _id : shopId}).populate({path:"owner", select : "-otpExpiration"}).populate("item");
     
     if(!shop) { 
         return next(new ErrorHandler(404, 'Shop not found!'))
