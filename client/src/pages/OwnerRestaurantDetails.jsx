@@ -16,6 +16,7 @@ import RestaurantOwnerBannerRes from "@/components/RestaurantOwnerBannerRes"
 import RestaurantDescription from "@/components/RestaurantDescription"
 import RestaurantOwnerBriefInfo from "@/components/RestaurantOwnerBriefInfo"
 import RestaurantAndOwnerInfo from "@/components/RestaurantAndOwnerInfo"
+import MenuItems from "@/components/MenuItems"
 const URL = import.meta.env.VITE_BACKEND_SHOP_API_URL;
 
 
@@ -134,12 +135,13 @@ const OwnerRestaurantDetails = () => {
          />
       </div>
 
-      {/* Restaurant address & owner data componenent :  */}
-      <div className="mt-10">
+      {/* Restaurant address & owner data componenent :  */} 
         <RestaurantAndOwnerInfo restaurantData = {restaurantData}/>
-        {/* <RestaurantAndOwnerInfo restaurantData = {restaurantData}/> */}
+    
 
-      </div>
+      {/* menu items component :  */}
+        <MenuItems restaurantData={restaurantData}/>
+      
         
     </div> 
     </>
