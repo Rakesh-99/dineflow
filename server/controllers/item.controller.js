@@ -9,7 +9,22 @@ import mongoose from "mongoose";
 
 
 
-// Fetch Item : 
+// Fetch all Item (for restaurant owner only): 
+export const getAllItems = expressAsyncHandler(async(req, res, next) => { 
+    const user = req.userId; 
+    const items = await itemModel.find({owner: user}).populate("shop").populate("owner")
+
+    if(!items || items.length < 1){ 
+        return next(new ErrorHandler(404, 'No restaurant found with this account !'))
+    }; 
+
+    return res.status(200).json({
+        success : true, 
+        message : 'All items have been fetched',
+        data : items
+    })
+}); 
+
 
 
 
@@ -61,7 +76,8 @@ export const createItem = expressAsyncHandler(async(req, res, next) => {
         category,
         status,
         image : cloudinaryImgUrl,
-        shop : restaurant._id
+        shop : restaurant._id,
+        owner : user._id
     })
 
     await item.save(); 
