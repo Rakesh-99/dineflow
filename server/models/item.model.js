@@ -16,6 +16,10 @@ const itemSchema = new mongoose.Schema({
         type : Schema.Types.ObjectId , 
         ref : 'Shop'
     }, 
+    owner : { 
+        type : Schema.Types.ObjectId,
+        ref : 'User'
+    },
     price : { 
         type : Number, 
         min : 0, 
