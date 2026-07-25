@@ -10,9 +10,6 @@ const isRestaurantOwner = async( req, res, next) =>  {
     if(user.role !== 'restaurantOwner') { 
         return next(new ErrorHandler(401, 'Unauthorized Access !')); 
     }
-
-    console.log("Yooo middleware ran and you are an owner");
-    
     next(); 
 }; 
 

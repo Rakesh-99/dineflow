@@ -21,7 +21,6 @@ const RestaurantListings = () => {
         return restaurantName.toLowerCase().replaceAll(' ','').trim();
       }
       
-      console.log(restaurants);
       
         
   return (
