@@ -4,6 +4,7 @@ import shopModel from "../models/shop.model.js";
 import userModel from "../models/user.model.js";
 import uploadOnCloudinary from "../utils/cloudinary.js";
 import mongoose, { Mongoose, Schema } from "mongoose";
+import itemModel from "../models/item.model.js";
 
 
 
@@ -156,3 +157,26 @@ export const getOwnerRestaurantByID = expressAsyncHandler(async(req, res, next) 
         data : shop
     })
 });
+
+
+// delete shop along with its menus  : 
+export const deleteRestaurant = expressAsyncHandler(async(req, res, next) => { 
+    const userId = req.userId; 
+    const {shopId} = req.params; 
+
+    if(!mongoose.Types.ObjectId.isValid(shopId)){
+        return next(new ErrorHandler(401, 'Invalid shop id!'));
+    }; 
+
+    const restaurant = await shopModel.findOneAndDelete({owner : userId, _id: shopId}); 
+    if(!restaurant) { 
+        return next(new ErrorHandler(404, "Restaurant not found!")); 
+    }
+    const itemsAssociateWithShop = restaurant.item.map((item) => item);
+    const deleteItems = await itemModel.deleteMany({_id : {$in: itemsAssociateWithShop}}); 
+
+    return res.status(200).json({
+        success : true , 
+        message : "Restaurant has been deleted along with its menus"
+    })
+})
