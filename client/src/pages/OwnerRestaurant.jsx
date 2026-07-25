@@ -133,16 +133,16 @@ const OwnerRestaurant = () => {
     <div className="w-full flex flex-col">
        
        {/* header :  */}
-        <div className=" flex justify-around gap-7 mt-3">
+        <div className=" flex justify-around gap-7 mt-3 flex-col-reverse items-center lg:flex-row">
 
           {/* search bar :  */}
-          <div className="relative flex items-center ">
+          <div className="relative flex  items-center ">
             <BsSearch className="absolute left-3" size={15} color="gray"/>
-            <Input className={`w-80 rounded outline-none px-10 placeholder:text-xs placeholder:font-medium `} placeholder='Search Restaurants by name'/>
+            <Input className={`lg:w-80 w-60 rounded outline-none px-10 placeholder:text-xs placeholder:font-medium `} placeholder='Search Restaurants by name'/>
           </div>
 
-          {/* All restaurants :  */}
-          <span className={`text-customOrange rounded flex items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer`}>
+          
+          <div className={`text-customOrange rounded flex items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer w-fit`}>
             <FaKitchenSet size={15}/>
 
             {/* button for adding new restaurant :   */}
@@ -293,8 +293,8 @@ const OwnerRestaurant = () => {
                   </SheetClose>
                 </SheetFooter>
               </SheetContent>
-          </Sheet>
-          </span>
+            </Sheet>
+          </div>
         </div>
 
         {/* main content :  */}

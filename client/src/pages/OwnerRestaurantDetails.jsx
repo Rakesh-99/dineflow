@@ -69,7 +69,7 @@ const OwnerRestaurantDetails = () => {
     <> 
    <div className="max-w-7xl m-auto ">
 
-          <div className="flex items-center justify-around">
+          <div className="flex lg:flex-row flex-col items-center justify-around">
             {/* breadcrumbs  */}
                       <div className=" flex justify-center mt-5">
                         <Breadcrumb className={``}>
@@ -100,7 +100,7 @@ const OwnerRestaurantDetails = () => {
 
             {/* restaurant edit and delete buttons :  */}
 
-            <div className="flex items-center mt-5 gap-5">
+            <div className="flex  items-center mt-5 gap-5">
             {/* restaurant edit button :  */}
 
                 <Button className={`bg-customOrange flex hover:bg-amber-600 items-center rounded-sm `}>
