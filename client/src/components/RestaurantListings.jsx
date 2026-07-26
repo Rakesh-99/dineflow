@@ -38,7 +38,7 @@ const RestaurantListings = () => {
 
             {/* image container :  */}
             <div className="max-w-60 border md:max-h-52 rounded-md overflow-hidden ">
-                <img src={restaurant?.image} alt="restaurant img" className=" object-cover"/>
+                <img src={restaurant?.image.url} alt="restaurant img" className=" object-cover"/>
             </div>
 
             {/* restaurant glance data :  */}
