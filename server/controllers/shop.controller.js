@@ -179,7 +179,7 @@ export const deleteRestaurant = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(404, "Restaurant not found!")); 
     }
     // deleting restaurant image from cloudinry : 
-    await deleteAssestFromCloudinary(restaurant.image.public_id);
+    await deleteAssestFromCloudinary([restaurant.image.public_id]);
    
     const items = await itemModel.find({_id : {$in: restaurant.item}})
 
