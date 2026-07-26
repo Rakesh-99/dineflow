@@ -9,8 +9,9 @@ const shopSchema = new mongoose.Schema({
         required : [true, 'Shop name is required!']
     }, 
     image : { 
-        type : String,
-        required : [true, 'Shop image is required!']
+        url : String,
+        resources_type: String,
+        public_id : String
     }, 
     owner : { 
         type : Schema.Types.ObjectId,

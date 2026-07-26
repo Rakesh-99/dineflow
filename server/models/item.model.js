@@ -8,10 +8,11 @@ const itemSchema = new mongoose.Schema({
         type : String,
         required : [true, 'Item name is required !']
     }, 
-    image : { 
-        type : String,
-        required : [true, 'Image is required!']
-    },
+    image : {
+        url : String,
+        public_id : String,
+        resource_type: String
+        },
     shop : { 
         type : Schema.Types.ObjectId , 
         ref : 'Shop'
