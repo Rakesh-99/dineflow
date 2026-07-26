@@ -2,7 +2,7 @@ import expressAsyncHandler from "express-async-handler";
 import ErrorHandler from "../utils/ErrorHandler.js"; 
 import shopModel from "../models/shop.model.js";
 import userModel from "../models/user.model.js";
-import uploadOnCloudinary from "../utils/cloudinary.js";
+import {uploadOnCloudinary, deleteAssestFromCloudinary} from '../utils/cloudinary.js';
 import mongoose, { Mongoose, Schema } from "mongoose";
 import itemModel from "../models/item.model.js";
 
@@ -57,8 +57,6 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
 
     const user = await userModel.findById({_id : userId}); 
 
-    
-
     if(user?.role !== 'restaurantOwner') { 
        return next(new ErrorHandler(401, 'Only restaurant owner can create a Shop!'));
     }
@@ -73,7 +71,11 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
         address, 
         description,
         status,
-        image : cloudinaryImgURL,
+        image : {
+            url : cloudinaryImgURL.url,
+            public_id : cloudinaryImgURL.public_id,
+            resources_type: cloudinaryImgURL.resource_type
+        },
         owner : user._id
     }); 
 
@@ -116,7 +118,11 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
     if(address) updateShop.address = address; 
     if(city) updatedData.city = city; 
     if(state) updatedData.state = state; 
-    if(file) updatedData.image = cloudinaryImgURL 
+    if(file) updatedData.image = {
+        "url" : cloudinaryImgURL.url,
+        "resource_type" : cloudinaryImgURL.resource_type,
+        "public_id" : cloudinaryImgURL.public_id
+    } 
     if(description) updatedData.description = description; 
     if(status) updatedData.status = status
 
@@ -168,15 +174,25 @@ export const deleteRestaurant = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(401, 'Invalid shop id!'));
     }; 
 
-    const restaurant = await shopModel.findOneAndDelete({owner : userId, _id: shopId}); 
+    const restaurant = await shopModel.findOne({owner : userId, _id: shopId}); 
     if(!restaurant) { 
         return next(new ErrorHandler(404, "Restaurant not found!")); 
     }
-    const itemsAssociateWithShop = restaurant.item.map((item) => item);
-    const deleteItems = await itemModel.deleteMany({_id : {$in: itemsAssociateWithShop}}); 
+    // deleting restaurant image from cloudinry : 
+    await deleteAssestFromCloudinary(restaurant.image.public_id);
+   
+    const items = await itemModel.find({_id : {$in: restaurant.item}})
 
+    // deleting menu item images : 
+    const getItemImagePublicIDs = items.map((item)=> item.image.public_id);
+    await deleteAssestFromCloudinary(getItemImagePublicIDs);
+
+    
+    // deleteing items that are associated with restaurant :     
+    await itemModel.deleteMany({_id : {$in: items}}); 
+    
     return res.status(200).json({
-        success : true , 
-        message : "Restaurant has been deleted along with its menus"
+        success : true, 
+        message : "Restaurant and it's menu items have been deleted"
     })
 })

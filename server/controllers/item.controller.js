@@ -1,7 +1,7 @@
 import expressAsyncHandler from "express-async-handler";
 import ErrorHandler from "../utils/ErrorHandler.js";
 import itemModel from "../models/item.model.js";
-import uploadOnCloudinary from "../utils/cloudinary.js";
+import {uploadOnCloudinary, deleteAssestFromCloudinary} from '../utils/cloudinary.js';
 import shopModel from "../models/shop.model.js";
 import userModel from "../models/user.model.js";
 import mongoose from "mongoose";
@@ -75,11 +75,14 @@ export const createItem = expressAsyncHandler(async(req, res, next) => {
         price ,
         category,
         status,
-        image : cloudinaryImgUrl,
+        image : {
+            url : cloudinaryImgUrl.url,
+            public_id : cloudinaryImgUrl.public_id,
+            resource_type: cloudinaryImgUrl.resource_type
+        },
         shop : restaurant._id,
         owner : user._id
     })
-
     await item.save(); 
 
    restaurant.item.push(item._id);
