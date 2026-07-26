@@ -174,7 +174,7 @@ export const deleteRestaurant = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(401, 'Invalid shop id!'));
     }; 
 
-    const restaurant = await shopModel.findOne({owner : userId, _id: shopId}); 
+    const restaurant = await shopModel.findOneAndDelete({owner : userId, _id: shopId}); 
     if(!restaurant) { 
         return next(new ErrorHandler(404, "Restaurant not found!")); 
     }
@@ -187,9 +187,10 @@ export const deleteRestaurant = expressAsyncHandler(async(req, res, next) => {
     const getItemImagePublicIDs = items.map((item)=> item.image.public_id);
     await deleteAssestFromCloudinary(getItemImagePublicIDs);
 
+    const itemIDs = items.map((item)=> item._id); 
     
     // deleteing items that are associated with restaurant :     
-    await itemModel.deleteMany({_id : {$in: items}}); 
+    await itemModel.deleteMany({_id : {$in: itemIDs}}); 
     
     return res.status(200).json({
         success : true, 
