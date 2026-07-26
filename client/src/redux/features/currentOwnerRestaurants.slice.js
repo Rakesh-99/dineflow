@@ -12,11 +12,15 @@ const currentOwnerRestaurants = createSlice({
         },
         addNewRestaurant : (state, action) => { 
             state.restaurants.push(action.payload);
+        }, 
+        removeRestaurant: (state, action) => {
+            state.restaurants = state.restaurants.filter((restaurant)=> restaurant._id !== action.payload)
         }
+        
     }
 });
 
 
 
-export const {setRestaurants, addNewRestaurant} = currentOwnerRestaurants.actions; 
+export const {setRestaurants, addNewRestaurant, removeRestaurant} = currentOwnerRestaurants.actions; 
 export default currentOwnerRestaurants.reducer; 
