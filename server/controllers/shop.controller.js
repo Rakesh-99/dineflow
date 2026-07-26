@@ -194,6 +194,7 @@ export const deleteRestaurant = expressAsyncHandler(async(req, res, next) => {
     
     return res.status(200).json({
         success : true, 
-        message : "Restaurant and it's menu items have been deleted"
+        message : "Restaurant and it's menu items have been deleted",
+        deletedRestaurant : restaurant
     })
 })
