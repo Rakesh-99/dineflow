@@ -15,7 +15,7 @@ export const getAllItems = expressAsyncHandler(async(req, res, next) => {
     const items = await itemModel.find({owner: user}).populate("shop").populate("owner")
 
     if(!items || items.length < 1){ 
-        return next(new ErrorHandler(404, 'No restaurant found with this account !'))
+        return next(new ErrorHandler(404, 'No items found!'))
     }; 
 
     return res.status(200).json({
@@ -153,7 +153,26 @@ export const updateItem = expressAsyncHandler(async(req, res, next)=> {
 
 
 // Delete Item : 
+export const deleteItemById = expressAsyncHandler(async(req, res, next) => {
+    const {itemID} = req.params; 
+    console.log(itemID);
+    
+    const userId  = req.userId; 
 
+    if(!mongoose.Types.ObjectId.isValid(itemID)){ 
+        return next(new ErrorHandler(401, "Invalid Item id!"))
+    }
+
+    const item = await itemModel.findOneAndDelete({_id : itemID, owner : userId}); 
+    if(!item) { 
+        return next(new ErrorHandler(404, "Item not found!")); 
+    }; 
+
+    return res.status(200).json({
+        success : true, 
+        message : 'Item has been deleted'
+    })
+})
 
 
 
