@@ -137,33 +137,53 @@ const OwnerRestaurantDetails = () => {
                 </Button>
              {/* restaurant delete button :  */}
              
-              <AlertDialog>
-                  <AlertDialogTrigger open={isDeleteRestaurantBtnClick}>
-                    <Button  className={`bg-customOrange flex items-center rounded-sm `}>
-                  <Trash2 className="size-3"/>
+            <AlertDialog>
+              <AlertDialogTrigger asChild>
+                <Button className="bg-customOrange flex items-center rounded-sm">
+                  <Trash2 className="size-3" />
                   <span className="text-xs">Delete</span>
                 </Button>
               </AlertDialogTrigger>
 
-              <AlertDialogContent className={`${theme === "dark" ? 'bg-zinc-800 text-zinc-300' : "bg-zinc-100 text-zinc-700/50"}`}>
+              <AlertDialogContent
+                className={`${
+                  theme === "dark"
+                    ? "bg-zinc-800 text-zinc-300"
+                    : "bg-zinc-100 text-zinc-700/50"
+                }`}
+              >
                 <AlertDialogHeader>
                   <AlertDialogTitle>
                     Are you absolutely sure?
                   </AlertDialogTitle>
 
-                  <AlertDialogDescription className={`${theme === 'dark' ? 'text-zinc-400/95 bg-zinc-800': "text-zinc-700 bg-zinc-100"}`}>
+                  <AlertDialogDescription
+                    className={`${
+                      theme === "dark"
+                        ? "text-zinc-400/95 bg-zinc-800"
+                        : "text-zinc-700 bg-zinc-100"
+                    }`}
+                  >
                     This action cannot be undone. This will permanently delete your
-                    Restaurant along with its menu items that are associated with. 
+                    restaurant along with all associated menu items.
                   </AlertDialogDescription>
                 </AlertDialogHeader>
 
-                <AlertDialogFooter className={`${theme === 'dark' ? 'text-zinc-400/95 bg-zinc-800': "text-zinc-700 bg-zinc-100"}`}>
-                  <AlertDialogCancel className={`  rounded-sm`}>
+                <AlertDialogFooter
+                  className={`${
+                    theme === "dark"
+                      ? "bg-zinc-800"
+                      : "bg-zinc-100"
+                  }`}
+                >
+                  <AlertDialogCancel className="rounded-sm">
                     Cancel
-                </AlertDialogCancel>
+                  </AlertDialogCancel>
 
-                  <AlertDialogAction onClick = {() => deleteRestaurant(id)}
-                   className={`bg-customOrange! rounded-sm`}>
+                  <AlertDialogAction
+                    onClick={() => deleteRestaurant(id)}
+                    className="bg-customOrange rounded-sm"
+                  >
                     Continue
                   </AlertDialogAction>
                 </AlertDialogFooter>
