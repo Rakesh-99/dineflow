@@ -150,7 +150,7 @@ const OwnerRestaurant = () => {
               <SheetTrigger asChild >
                 <Button className={`text-customOrange rounded flex  items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer`}>Add Restaurant</Button>
               </SheetTrigger>
-              <SheetContent className={`${theme === 'light' ? 'bg-gray-100' : 'bg-zinc-800 border-zinc-800 text-gray-100'}`}>
+              <SheetContent className={`max-w-xl! overflow-y-scroll! ${theme === 'light' ? 'bg-gray-100' : 'bg-zinc-800 border-zinc-800 text-gray-100'}`}>
                 <SheetHeader>
                   <SheetTitle className={`${theme === 'dark' && 'text-zinc-300'}`}>Create a new Restaurant</SheetTitle>
                   <SheetDescription className={`text-xs ${theme === 'dark' && 'text-zinc-500'}`}>
