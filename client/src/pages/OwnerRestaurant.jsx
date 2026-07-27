@@ -76,16 +76,17 @@ const OwnerRestaurant = () => {
       return false;
     }
 
+    const {shopName,city,address,state,description,status,image} = restaurantData; 
+      
     const formData = new FormData();
-
     // preparing the formdata :
-    formData.append("shopName", restaurantData.shopName);
-    formData.append("city", restaurantData.city);
-    formData.append("address", restaurantData.address);
-    formData.append("state", restaurantData.state);
-    formData.append("description", restaurantData.description);
-    formData.append("status", restaurantData.status);
-    formData.append("image", restaurantData.image);
+    formData.append("shopName",shopName);
+    formData.append("city",city);
+    formData.append("address", address);
+    formData.append("state",state);
+    formData.append("description",description);
+    formData.append("status",status);
+    formData.append("image",image);
 
     // api call :
     (async function createNewRestaurant() {
