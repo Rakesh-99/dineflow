@@ -1,4 +1,5 @@
 import mongoose, { Schema } from "mongoose";
+import { categories, foodTypes } from "../constants/menuItem.js";
 
 
 
@@ -28,7 +29,7 @@ const itemSchema = new mongoose.Schema({
     }, 
     foodType : { 
         type : String,
-        enum : ["Veg", "Non Veg"]
+        enum : foodTypes
     },
     status : { 
         type : Boolean,
@@ -37,7 +38,7 @@ const itemSchema = new mongoose.Schema({
     },
     category : { 
         type : String , 
-        enum : ["Snacks", "Main Course", "Desserts", "Pizza", "Burgers", "Sandwiches", "East Indian", "South India", "North Indian", "Chinies", "Fast Food", "Other" ], 
+        enum : categories,
         required : [true, 'Category is required!']
     }
 }, {timestamps : true}); 

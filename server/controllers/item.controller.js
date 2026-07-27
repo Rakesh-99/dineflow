@@ -5,7 +5,7 @@ import {uploadOnCloudinary, deleteAssestFromCloudinary} from '../utils/cloudinar
 import shopModel from "../models/shop.model.js";
 import userModel from "../models/user.model.js";
 import mongoose from "mongoose";
-
+import { foodTypes, categories } from "../constants/menuItem.js";
 
 
 
@@ -176,6 +176,45 @@ export const deleteItemById = expressAsyncHandler(async(req, res, next) => {
         message : 'Item has been deleted'
     })
 })
+
+
+// get food categories : 
+export const getFoodCategories = (req, res, next) => { 
+
+    if(!categories || categories.length < 1) { 
+        return next(new ErrorHandler(404, "No food category found!"))
+    }; 
+   
+    let category =  []; 
+    for(let val of categories) { 
+        category.push(val); 
+    }; 
+
+    return res.status(200).json({ 
+        success : true, 
+        message : 'categories have been fetched', 
+        data : category
+    })
+};
+// get food types : 
+export const getFoodTypes = (req, res, next) => { 
+    
+    if(!foodTypes || foodTypes.length < 1) { 
+        return next(new ErrorHandler(404, "No food Type found !"))
+    }; 
+
+    let getTypes = []; 
+
+    for(let foodtype of foodTypes) { 
+        getTypes.push(foodtype); 
+    }
+
+    return res.status(200).json({
+        succes : true, 
+        message : 'foodTypes have been fetched',
+        data : getTypes
+    })
+}
 
 
 
