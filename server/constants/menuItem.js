@@ -1,4 +1,4 @@
-export const foodTypes = ["veg, non veg"]; 
+export const foodTypes = ["veg", "non veg"]; 
 
 export const categories = [
     "Snacks", 
