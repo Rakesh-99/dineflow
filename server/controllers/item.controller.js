@@ -178,43 +178,31 @@ export const deleteItemById = expressAsyncHandler(async(req, res, next) => {
 })
 
 
-// get food categories : 
-export const getFoodCategories = (req, res, next) => { 
+// get food category and types : 
+export const getFoodCategoriesAndTypes = (req, res, next) => { 
 
-    if(!categories || categories.length < 1) { 
-        return next(new ErrorHandler(404, "No food category found!"))
-    }; 
-   
-    let category =  []; 
-    for(let val of categories) { 
-        category.push(val); 
+    if( foodTypes.length < 1 ) { 
+        return next(new ErrorHandler(404, "No food types found!")); 
+    };
+
+    if( categories.length < 1) { 
+        return next(new ErrorHandler(404, 'No category found!'));
     }; 
 
-    return res.status(200).json({ 
-        success : true, 
-        message : 'categories have been fetched', 
-        data : category
-    })
-};
-// get food types : 
-export const getFoodTypes = (req, res, next) => { 
+    let getFoodTypes = [];  
+    let getFoodCategories = [];
     
-    if(!foodTypes || foodTypes.length < 1) { 
-        return next(new ErrorHandler(404, "No food Type found !"))
-    }; 
-
-    let getTypes = []; 
-
-    for(let foodtype of foodTypes) { 
-        getTypes.push(foodtype); 
-    }
+    getFoodTypes.push(...foodTypes); 
+    getFoodCategories.push(...categories); 
 
     return res.status(200).json({
-        succes : true, 
-        message : 'foodTypes have been fetched',
-        data : getTypes
+        success : true, 
+        message : 'menu optiions have been fetched',
+        getFoodTypes,
+        getFoodCategories
     })
 }
+
 
 
 

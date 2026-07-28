@@ -1,8 +1,7 @@
 import express from 'express'; 
-import {  createItem, deleteItemById, getAllItems, getFoodCategories, getFoodTypes, updateItem,  } from '../../controllers/item.controller.js';
+import {  createItem, deleteItemById, getAllItems, getFoodCategoriesAndTypes, updateItem  } from '../../controllers/item.controller.js';
 import isUserAuthenticated from '../../middlewares/auth.middleware.js';
 import multerFileUpload from '../../middlewares/multerFileupload.middleware.js';
-// import isRestaurantOwner from '../../middlewares/isRestaurantOwner.js';
 import isRestaurantOwner from '../../middlewares/isRestaurantOwner.js';
 const itemRoutes = express.Router() ; 
 
@@ -12,7 +11,6 @@ itemRoutes.post('/add-item/:restaurantID', isUserAuthenticated, isRestaurantOwne
           .put('/update-item/:itemId', isUserAuthenticated, isRestaurantOwner, multerFileUpload.single('image'), updateItem)
           .get('/all-items', isUserAuthenticated, isRestaurantOwner, getAllItems)
           .delete('/delete-item/:itemID', isUserAuthenticated, isRestaurantOwner, deleteItemById)
-          .get('/food-categories', isUserAuthenticated, isRestaurantOwner, getFoodCategories)
-          .get('/food-types', isUserAuthenticated, isRestaurantOwner, getFoodTypes)
+          .get('/category-and-types', isUserAuthenticated, isRestaurantOwner, getFoodCategoriesAndTypes)
 
 export default itemRoutes; 
