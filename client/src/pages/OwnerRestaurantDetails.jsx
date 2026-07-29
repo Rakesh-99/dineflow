@@ -48,7 +48,7 @@ const OwnerRestaurantDetails = () => {
   const restaurantDetails = restaurants.filter(restaurant => restaurant._id === id);
   const restaurantData = restaurantDetails[0];
 
-
+  // breadcrumbs : 
   const data = [
     {
       label: 'Home',
@@ -157,13 +157,13 @@ const OwnerRestaurantDetails = () => {
                       : "bg-zinc-100"
                     }`}
                 >
-                  <AlertDialogCancel className="rounded-sm">
+                  <AlertDialogCancel className={`rounded! ${theme === 'dark' ?  'bg-zinc-700 border-none text-white hover:text-customOrange! hover:bg-zinc-600' : ''}`}>
                     Cancel
                   </AlertDialogCancel>
 
                   <AlertDialogAction
                     onClick={() => deleteRestaurant(id)}
-                    className="bg-customOrange rounded-sm"
+                    className={`bg-customOrange! border-none hover:text-orange-200 rounded!`}
                   >
                     Continue
                   </AlertDialogAction>
