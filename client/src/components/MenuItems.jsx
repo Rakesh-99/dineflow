@@ -30,6 +30,7 @@ const MenuItems = ({ restaurantData }) => {
     const {foodType,foodCategory} = useGetFoodAndCategory(); 
     
     
+    
 
     
 
@@ -42,11 +43,6 @@ const MenuItems = ({ restaurantData }) => {
         image: null
     })
 
-    const items = [
-        { label: "Select Food Type", value: null },
-        { label: "Veg", value: "veg" },
-        { label: "Non Veg", value: "non veg" },
-    ];
 
 
     const menuInputChangeHandler = (e) => {
@@ -115,7 +111,6 @@ const MenuItems = ({ restaurantData }) => {
 
 
         // api call : 
-console.log("Before api call ==> ",formData);
 
        (async function createMenuItem () { 
          try{ 
@@ -127,8 +122,7 @@ console.log("Before api call ==> ",formData);
             }catch(error){ 
                 toast.error(error?.response.data.messsage);
             }
-       })(); 
-        
+       })();   
     }
 
 
@@ -201,7 +195,7 @@ console.log("Before api call ==> ",formData);
                                     <div className={`rounded relative flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
 
                                         <Utensils color="gray" className="absolute left-2 size-4" />
-                                        <Select items={items} onValueChange={foodTypeHandler}>
+                                        <Select  onValueChange={foodTypeHandler}>
                                             <SelectTrigger className="w-full  border-none">
                                                 <SelectValue placeholder="Select Type"/>
                                             </SelectTrigger>
@@ -235,7 +229,7 @@ console.log("Before api call ==> ",formData);
                                     </Label>
                                     <div className={`rounded relative flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
                                         <Utensils color="gray" className="absolute left-2 size-4" />
-                                        <Select items={items} onValueChange={foodCategoryHandler}>
+                                        <Select  onValueChange={foodCategoryHandler}>
                                             <SelectTrigger className="w-full  border-none">
                                                 <SelectValue  placeholder="Select Category"/>
                                             </SelectTrigger>
