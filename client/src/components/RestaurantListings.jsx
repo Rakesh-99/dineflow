@@ -101,11 +101,11 @@ const RestaurantListings = () => {
 
                                         <Button
 
-                                            className="mt-5 float-right mx-5 rounded bg-customOrange h-10 w-30"
+                                            className="mt-5 float-right mx-5 rounded bg-customOrange"
                                             onClick={() => navigate(`/restaurantinfo/${getRestaurantName(restaurant.shopName)}/${restaurant._id}`)}
                                         >
-                                            <span className="sm:text-xs text-sm! font-semibold">View</span>
-                                            <IoIosArrowDropright className="hover:cursor-pointer active:animate-ping size-5" />
+                                            <span className="text-xs font-semibold">View</span>
+                                            <IoIosArrowDropright className="hover:cursor-pointer active:animate-ping size-4" />
 
                                         </Button>
                                     </div>
