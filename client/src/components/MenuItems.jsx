@@ -1,6 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import { Button } from "./ui/button";
-import { CirclePlus, IndianRupee, Pencil, ShieldCheck, ShieldX, SquareMenu, Trash, Utensils } from "lucide-react";
+import { CirclePlus, IndianRupee, Loader, Pencil, ShieldCheck, ShieldX, SquareMenu, Trash, Utensils } from "lucide-react";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Label } from "./ui/label";
@@ -28,7 +28,7 @@ const MenuItems = ({ restaurantData }) => {
     const {restaurantname, id} = useParams(); 
     const dispatch = useDispatch(); 
     const {foodType,foodCategory} = useGetFoodAndCategory(); 
-    
+    const [loading, setLoading] = useState(false); 
     
     
 
@@ -114,12 +114,15 @@ const MenuItems = ({ restaurantData }) => {
 
        (async function createMenuItem () { 
          try{ 
+            setLoading(true); 
                 const {data} = await axios.post(`${URL}/add-item/${id}`,formData,{withCredentials: true}); 
                 if(data.success){ 
+                    setLoading(false); 
                     toast.success(`A menu item has been created`); 
                     dispatch(addMenuItemToRestaurant(data.data));
                 }
             }catch(error){ 
+                setLoading(false); 
                 toast.error(error?.response.data.messsage);
             }
        })();   
@@ -311,12 +314,23 @@ const MenuItems = ({ restaurantData }) => {
                                         Close
                                     </Button>
                                 </SheetClose>
-                                <Button
+                                {/* <Button
                                     type="submit"
                                     className={`bg-customOrange rounded font-medium `}
                                     onClick={() => submitHandler(menuData)}
                                 >
                                     Create Menu
+                                </Button> */}
+
+                                  <Button disabled={loading}     onClick={() => submitHandler(menuData)} className={`bg-customOrange rounded transition-all duration-200 py-4`} type="submit">
+                                        {loading ? (
+                                        <div className="flex items-center gap-3">
+                                            <Loader className="animate-spin" />
+                                            <span className="text-xs">Please wait!</span>
+                                        </div>
+                                        ) : (
+                                        "Create Menu"
+                                        )}
                                 </Button>
                             </SheetFooter>
                         </SheetContent>
