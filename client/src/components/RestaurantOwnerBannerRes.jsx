@@ -7,7 +7,7 @@ const RestaurantOwnerBannerRes = ({restaurantImg}) => {
                   <img 
                   src={restaurantImg} 
                   alt="restaurant image banner" 
-                  className="w-full h-72 rounded-sm object-cover"
+                  className="w-full h-72 rounded-xl object-cover"
                   />
             </div>
     </>

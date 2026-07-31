@@ -128,7 +128,7 @@ const MenuItems = ({ restaurantData }) => {
 
     return (
         <>
-            <div className={`mt-10 p-5 rounded border ${theme === "dark" ? "border-zinc-700" : "border-zinc-100"}`}>
+            <div className={`mt-10 p-5 rounded-xl border ${theme === "dark" ? "border-zinc-700" : "border-zinc-100"}`}>
                 <div className="flex items-center justify-between">
                     {/* header :  */}
                     <div className="">
