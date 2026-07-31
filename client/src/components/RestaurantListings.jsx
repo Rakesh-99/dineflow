@@ -43,19 +43,20 @@ const RestaurantListings = () => {
                                         </div>
 
                                         {/* restaurant glance data :  */}
-                                        <div className={`w-[95%] mt-5  mx-auto`}>
+                                        <div className={` mt-5  mx-2 p-3 rounded-md border py-4 ${theme === 'dark' ? 'bg-mauve-800 border-mauve-700' : 'bg-mauve-50 border-mauve-50'}`}>
+
                                             {/* restaurant icon and title :  */}
-                                            <div className={`flex gap-2 mb-3  w-full  rounded-md border-zinc-700 items-center`}>
+                                            <div className={`flex items-center gap-1`}>
                                                 <div className={`border rounded-full py-2 px-2 ${theme === 'light' ? 'bg-orange-50 border-orange-100' : 'bg-customOrange border-orange-700'}`}>
                                                     <GrRestaurant className={`${theme === 'light' ? 'text-customOrange' : 'text-orange-200'}`} />
                                                 </div>
-                                                <h2 className='font-semibold'>{restaurant?.shopName}</h2>
+                                                <h2 className='md:text-xl text-sm  font-semibold'>{restaurant?.shopName}</h2>
                                             </div>
 
-                                            <div className={`flex justify-around  ${theme === 'light' ? 'text-gray-500' : 'text-zinc-400'}`}>
+                                           
 
-                                                {/* group 1 :  */}
-                                                <div className="text-xs flex flex-col justify-start gap-5 md:gap-4">
+                                           
+                                                <div className="grid grid-cols-1 gap-2 text-[10px] md:text-xs mt-5 text-gray-400">
 
                                                     <div className='flex items-center gap-1'>
                                                         <UserRound className="size-4" />
@@ -64,49 +65,41 @@ const RestaurantListings = () => {
 
                                                     <div className='flex items-center gap-1 '>
                                                         <PiBuildingApartment className="size-4" />
-                                                        <span>{restaurant?.city}</span>
+                                                        <span>City : {restaurant?.city}</span>
                                                     </div>
 
-                                                    <div className='flex items-center gap-1 '>
-                                                        <SlCalender className="size-3.5" />
-                                                        <span>Updated : {new Date(restaurant.updatedAt).toLocaleDateString()}</span>
-                                                    </div>
-                                                </div>
-
-                                                {/* group 2 :  */}
-                                                <div className="text-xs flex flex-col justify-start gap-5  md:gap-4">
-
+                                                
                                                     <div className='flex items-center gap-1  '>
                                                         <MapPin className="size-4" />
-                                                        <span >{restaurant?.address}</span>
+                                                        <span >Address : {restaurant?.address}</span>
                                                     </div>
 
                                                     <div className='flex items-center gap-1 '>
                                                         <MdOutlinePhoneInTalk className="size-4" />
-                                                        <span>{restaurant?.owner.contact}</span>
+                                                        <span>Contact : {restaurant?.owner.contact}</span>
                                                     </div>
 
                                                     <div className='flex items-center gap-1  '>
                                                         <SlCalender className="size-3.5" />
                                                         <span>Created : {new Date(restaurant.createdAt).toLocaleDateString()}</span>
                                                     </div>
-                                                </div>
+
+                                                        <div className='flex items-center gap-1 '>
+                                                        <SlCalender className="size-3.5" />
+                                                        <span>Updated : {new Date(restaurant.updatedAt).toLocaleDateString()}</span>
+                                                    </div>
                                             </div>
-
-
                                         </div>
 
 
                                         {/* div of arrow btn to navigate to the restaurant details page :  */}
 
                                         <Button
-
                                             className="mt-5 float-right mx-5 rounded bg-customOrange"
                                             onClick={() => navigate(`/restaurantinfo/${getRestaurantName(restaurant.shopName)}/${restaurant._id}`)}
                                         >
                                             <span className="text-xs font-semibold">View</span>
                                             <IoIosArrowDropright className="hover:cursor-pointer active:animate-ping size-4" />
-
                                         </Button>
                                     </div>
 
