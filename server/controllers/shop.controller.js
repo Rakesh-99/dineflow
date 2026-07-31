@@ -100,13 +100,11 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
         return next(new ErrorHandler(400, 'Invalid Shop id!'))
     }
     const file = req.file; 
-
     let cloudinaryImgURL ; 
 
     if(file) { 
         cloudinaryImgURL = await uploadOnCloudinary(file.path);
     }
-    
     const user = await userModel.findById(userId); 
     
     if(user.role !== 'restaurantOwner') { 
@@ -115,7 +113,8 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
 
     const updatedData = {} ; 
     if(shopName) updatedData.shopName = shopName;
-    if(address) updateShop.address = address; 
+    if(address) updatedData.address = address; 
+    if(description) updatedData.description = description;
     if(city) updatedData.city = city; 
     if(state) updatedData.state = state; 
     if(file) updatedData.image = {
@@ -129,8 +128,8 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
     const shop = await shopModel.findOneAndUpdate(
         {_id: shopId, owner : user._id},
         {$set : updatedData},
-        {new : true, runValidators : true}
-    ).populate('owner').select('- password');
+        {returnDocument: 'after'}
+    ).populate('owner')
     
     if(!shop) { 
         return next(new ErrorHandler(401, `Either the requested shop does't exist or you are unauthorized`))
