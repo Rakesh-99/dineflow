@@ -10,7 +10,7 @@ const itemRoutes = express.Router() ;
 itemRoutes.post('/add-item/:restaurantID', isUserAuthenticated, isRestaurantOwner, multerFileUpload.single('image'), createItem)
           .put('/update-item/:itemId', isUserAuthenticated, isRestaurantOwner, multerFileUpload.single('image'), updateItem)
           .get('/all-items', isUserAuthenticated, isRestaurantOwner, getAllItems)
-          .delete('/delete-item/:itemID', isUserAuthenticated, isRestaurantOwner, deleteItemById)
+          .delete('/delete-item/:restaurantID/:itemID', isUserAuthenticated, isRestaurantOwner, deleteItemById)
           .get('/category-and-types', isUserAuthenticated, isRestaurantOwner, getFoodCategoriesAndTypes)
 
 export default itemRoutes; 

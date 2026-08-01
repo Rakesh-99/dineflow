@@ -158,15 +158,16 @@ export const updateItem = expressAsyncHandler(async(req, res, next)=> {
 // Delete Item : 
 export const deleteItemById = expressAsyncHandler(async(req, res, next) => {
     const {itemID} = req.params; 
+    const {restaurantID} = req.params;  
     console.log(itemID);
     
     const userId  = req.userId; 
 
-    if(!mongoose.Types.ObjectId.isValid(itemID)){ 
-        return next(new ErrorHandler(401, "Invalid Item id!"))
+    if(!mongoose.Types.ObjectId.isValid(itemID) && !mongoose.Types.ObjectId.isValid(restaurantID)){ 
+        return next(new ErrorHandler(401, "Shop or menu Item IDs are invalid!"))
     }
 
-    const item = await itemModel.findOneAndDelete({_id : itemID, owner : userId}); 
+    const item = await itemModel.findOneAndDelete({shop : restaurantID, _id : itemID, owner : userId}); 
     if(!item) { 
         return next(new ErrorHandler(404, "Item not found!")); 
     }; 
