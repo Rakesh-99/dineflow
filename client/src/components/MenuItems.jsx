@@ -361,16 +361,16 @@ const MenuItems = ({ restaurantData }) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody className={`text-xs`}>
-                        {restaurantData?.item.map((data, idx) => {
+                        {restaurantData && restaurantData?.item.map((data, idx) => {                            
                             return (
                                 <TableRow key={idx} className={` transition-all duration-200 ${theme === "dark" && "hover:bg-zinc-700 border-zinc-700 shadow"}`}>
                                     <TableCell className={`flex items-center gap-2`}>
-                                        <img src={data.image.url} className="w-14 rounded border-2" alt="" />
-                                        <span>{data.name}</span>
+                                        <img src={data?.image?.url} className="w-14 rounded border-2" alt="" />
+                                        <span>{data?.name}</span>
                                     </TableCell>
-                                    <TableCell className={`text-right`}>{data.category}</TableCell>
-                                    <TableCell className={`text-right`}>{data.foodType}</TableCell>
-                                    <TableCell className="text-right">{data.price}</TableCell>
+                                    <TableCell className={`text-right`}>{data?.category}</TableCell>
+                                    <TableCell className={`text-right`}>{data?.foodType}</TableCell>
+                                    <TableCell className="text-right">{data?.price}</TableCell>
                                     <TableCell className=" float-end">
                                         {data.status === true ? (
                                             <div className={`flex px-1  py-px rounded-full  items-center justify-center gap-1 ${theme === "dark" ? "bg-green-950 text-green-300 border-green-300" : "text-green-800 bg-green-100"}`}>
