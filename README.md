@@ -1,6 +1,6 @@
 # DineFlow 🍽️
 
-A modern full-stack restaurant management and food delivery platform built using the MERN stack. DineFlow connects customers, restaurant owners, and delivery agents through a seamless food ordering and delivery experience.
+A full-stack restaurant management and food delivery platform built using the MERN stack. "DineFlow",the name of the app🫣️, it connects customers, restaurant owners, and delivery agents through a seamless food ordering and delivery experience.
 
 > 🚧 **Project Status:** Under Active Development
 
@@ -8,9 +8,9 @@ A modern full-stack restaurant management and food delivery platform built using
 
 ## Overview
 
-DineFlow is a comprehensive restaurant management and food delivery platform designed to simplify the entire ordering workflow—from restaurant onboarding and menu management to order fulfillment and real-time delivery tracking.
+DineFlow is a comprehensive restaurant management and food delivery platform . It manages From restaurant onboarding and menu management to order fulfillment and delivery tracking.
 
-The platform supports multiple user roles, secure authentication, location-based restaurant discovery, online payments, and live order status updates.
+The platform supports multiple user roles( User, Delivery Agent, Restaurant Owner ), secure authentication, location based restaurant discovery, online payments, and live order status updates.
 
 ---
 
@@ -24,13 +24,13 @@ The platform supports multiple user roles, secure authentication, location-based
 * Live Delivery Tracking on Maps
 * Razorpay Payment Integration
 * JWT Authentication & Authorization
-* Google & GitHub Social Login
-* Cloudinary Media Storage
-* Lazy Loading & Code Splitting
-* Redux Toolkit State Management
-* Secure OTP Verification
+* Google, GitHub , traditional email and password signup/login 
+* Cloudinary is being used for storing files
+* Lazy Loading & Code Splitting for routes
+* Redux Toolkit for State Management
+* OTP Verification for signup and forget password
 * Role-Based Access Control (RBAC)
-* Custom Error Handling Architecture
+* Custom Error Handling 
 
 ---
 
@@ -41,14 +41,13 @@ The platform supports multiple user roles, secure authentication, location-based
 * User Registration & Login
 * Email OTP Verification
 * Secure JWT Authentication
-* Google Authentication
-* GitHub Authentication
+* Google & GitHub Authentication
 * Browse Nearby Restaurants Based on Current Location
 * Explore Restaurant Menus & Dishes
 * Add Items to Cart
 * Place Food Orders
 * Razorpay Payment Integration
-* Real-Time Order Status Updates
+* Order Status Updates
 * Live Delivery Tracking
 * View Order History
 * Manage User Profile
@@ -95,7 +94,7 @@ Delivered
 * Receive Delivery Requests
 * Accept or Reject Deliveries
 * View Assigned Deliveries
-* Real-Time Delivery Tracking
+* Delivery Tracking
 * Update Delivery Status
 * Manage Active Deliveries
 * Track Delivery Locations
@@ -124,8 +123,6 @@ Delivered
 * Optimized API Calls
 * Efficient Redux Toolkit State Management
 * Reusable Components
-* Modular Architecture
-* Optimized Asset Loading
 
 ---
 
@@ -136,7 +133,6 @@ Delivered
 * React.js
 * Redux Toolkit
 * React Router
-* Axios
 * Tailwind CSS
 * Shadcn UI
 
@@ -145,7 +141,7 @@ Delivered
 * Node.js
 * Express.js
 * MongoDB
-* Mongoose
+
 
 ### Authentication
 
@@ -166,8 +162,7 @@ Delivered
 ### Maps & Location Services
 
 * Geolocation API
-* Real-Time Location Tracking
-* Interactive Maps
+
 
 ---
 
@@ -200,8 +195,6 @@ Delivery agents can:
 
 * Receive delivery requests
 * Accept or reject deliveries
-* Manage active deliveries
-* Share live delivery location
 * Update delivery statuses
 
 ---
@@ -228,37 +221,6 @@ The application follows a scalable and modular architecture based on industry be
 * Lazy Loading
 * Reusable UI Components
 * Feature-Based Folder Structure
-
----
-
-## Folder Structure
-
-```text
-DineFlow
-│
-├── client
-│   ├── src
-│   │   ├── components
-│   │   ├── pages
-│   │   ├── hooks
-│   │   ├── redux
-│   │   ├── routes
-│   │   ├── layouts
-│   │   └── utils
-│   │
-│   └── public
-│
-├── server
-│   ├── controllers
-│   ├── models
-│   ├── routes
-│   ├── middleware
-│   ├── utils
-│   ├── config
-│   
-│
-└── README.md
-```
 
 ---
 
@@ -335,58 +297,6 @@ VITE_LOCATION_API_KEY=
 
 ---
 
-## API Features
-
-### Authentication APIs
-
-* Register User
-* Login User
-* Logout User
-* Verify OTP
-* Forgot Password
-* Reset Password
-* Google Login
-* GitHub Login
-
-### Restaurant APIs
-
-* Create Restaurant
-* Update Restaurant
-* Delete Restaurant
-* Get Restaurants
-* Get Nearby Restaurants
-
-### Menu APIs
-
-* Create Dish
-* Update Dish
-* Delete Dish
-* Fetch Menu
-
-### Order APIs
-
-* Place Order
-* Update Order Status
-* Get Order History
-* Track Order
-
----
-
-## Future Enhancements
-
-* Real-Time Notifications using WebSockets
-* Restaurant Analytics Dashboard
-* Ratings & Reviews
-* Coupons & Discounts
-* Advanced Search & Filters
-* Scheduled Orders
-* Push Notifications
-* Multi-Language Support
-* Admin Dashboard
-* Restaurant Insights & Reporting
-
----
-
 ## Screenshots
 
 Project screenshots and demo videos will be added soon.
@@ -416,18 +326,6 @@ This project is licensed under the MIT License.
 ## Author
 
 ### Rakesh Kumar Parida
-
-
-**Technologies**
-
-* React.js
-* Node.js
-* Express.js
-* MongoDB
-* TailwindCss
-* ShadcnUI
-* Redux Toolkit
-
 
 ---
 
