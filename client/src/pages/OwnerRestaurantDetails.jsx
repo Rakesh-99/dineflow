@@ -66,6 +66,9 @@ const OwnerRestaurantDetails = () => {
   const { restaurants } = useSelector(state => state.currentOwnerRestaurants);
   const restaurantDetails = restaurants.filter(restaurant => restaurant._id === id);
   const restaurantData = restaurantDetails[0];
+
+  console.log("Is the state mutated => ", restaurants);
+  
   const [loading , setLoading] = useState(false);
 
   const [shopData, setShopData] = useState({
@@ -160,7 +163,7 @@ const OwnerRestaurantDetails = () => {
           setLoading(true)
           const {data} = await axios.put(`${URL}/update-shop/${id}`, formData, {withCredentials : true}); 
           if(data.success) { 
-            dispatch(updateRestaurant(data));
+            dispatch(updateRestaurant(data.data));
             toast.success(data.message);
           }
         } catch (error) {
