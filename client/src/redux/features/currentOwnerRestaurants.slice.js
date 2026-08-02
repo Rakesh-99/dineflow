@@ -41,13 +41,20 @@ const currentOwnerRestaurants = createSlice({
             
             if(restaurantIdx !== -1 ){ 
                 state.restaurants[restaurantIdx].item = 
-                    state.restaurants[restaurantIdx].item.filter((getItem) => getItem._id !== _id);
+                    state.restaurants[restaurantIdx].item.filter(getItem => getItem._id !== _id);
             }
+        },
+        updateMenuItem : (state, action) => { 
+             const {_id , shop } = action.payload;
+            
+             const restaurantIdx  = state.restaurants.findIndex((restaurant)=> restaurant._id === shop)
+             const itemIdx =  state.restaurants[restaurantIdx].item.findIndex((getItem) => getItem._id === _id) 
+             state.restaurants[restaurantIdx].item[itemIdx] = action.payload
         }
     }   
 });
 
 
 
-export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant} = currentOwnerRestaurants.actions; 
+export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant, updateMenuItem} = currentOwnerRestaurants.actions; 
 export default currentOwnerRestaurants.reducer; 

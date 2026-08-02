@@ -13,7 +13,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { useParams } from "react-router";
 const URL = import.meta.env.VITE_BACKEND_ITEM_API_URL;
-import { addMenuItemToRestaurant, deleteMenuFromRestaurant } from "@/redux/features/currentOwnerRestaurants.slice";
+import { addMenuItemToRestaurant, deleteMenuFromRestaurant, updateMenuItem } from "@/redux/features/currentOwnerRestaurants.slice";
 import useGetFoodAndCategory from "@/hooks/useGetFoodAndCategory";
 import {
     AlertDialog,
@@ -40,9 +40,8 @@ const MenuItems = ({ restaurantData }) => {
     const { foodType, foodCategory } = useGetFoodAndCategory();
     const [loading, setLoading] = useState(false);
 
-
-
-
+    
+    
 
     const [menuData, setMenuData] = useState({
         name: "",
@@ -53,6 +52,18 @@ const MenuItems = ({ restaurantData }) => {
         image: null
     })
 
+    const editmenuBtnClicked = (itemID) => { 
+        
+        const getMenuItemData = restaurantData.item.filter(getItem => getItem._id === itemID)[0]; 
+        setMenuData({
+            name : getMenuItemData.name,
+            foodType : getMenuItemData.foodType,
+            category : getMenuItemData.category,
+            status : getMenuItemData.status, 
+            price: getMenuItemData.price, 
+            image : getMenuItemData.image
+        })
+    }
 
 
     const menuInputChangeHandler = (e) => {
@@ -102,7 +113,20 @@ const MenuItems = ({ restaurantData }) => {
         }))
     };
 
-    const submitHandler = (menuData) => {
+    // resetting the form when the sheet is closed or the user clicks on close button :
+    const resetMenuData = () => {
+        setMenuData({
+            name: "",
+            foodType: "",
+            category: "",
+            status: true,
+            price: "",
+            image: null
+        });
+    };
+
+    const submitHandler = async(menuData) => {
+
         if (!menuData.name || !menuData.foodType || !menuData.category || !menuData.image || !menuData.status || !menuData.price) {
             toast.error(`All fields are required!`);
             return false;
@@ -121,25 +145,31 @@ const MenuItems = ({ restaurantData }) => {
 
 
         // api call : 
-
-        (async function createMenuItem() {
             try {
                 setLoading(true);
                 const { data } = await axios.post(`${URL}/add-item/${id}`, formData, { withCredentials: true });
                 if (data.success) {
-                    setLoading(false);
                     toast.success(`A menu item has been created`);
                     dispatch(addMenuItemToRestaurant(data.data));
                 }
             } catch (error) {
-                setLoading(false);
                 toast.error(error?.response.data.messsage);
+            }finally { 
+                setLoading(false);
             }
-        })();
+
+            // clearing the form after performing api call : 
+            setMenuData({
+                name: "",
+                foodType: "",
+                category: "",
+                status: true,
+                price: "",
+                image: null
+            })
     }
 
     const deleteMenuItemHandler = async (itemID) => {
-        console.log("ITEM ID ++++++",itemID);
         
         try {
             setLoading(true); 
@@ -154,6 +184,32 @@ const MenuItems = ({ restaurantData }) => {
             setLoading(false);
         }
     }
+
+    const updateMenuItemHandler = async(menuData, itemID)=> { 
+        const {name ,foodType, foodCategory, status , price , image } = menuData;
+        
+        const formData = new FormData();
+
+        if(name) formData.append("name", name);
+        if(foodType) formData.append("foodType", foodType);
+        if(foodCategory) formData.append("category", foodCategory);
+        if(status) formData.append("status", status);
+        if(price) formData.append("price", price);
+        if(image) formData.append("image", image);
+        
+        try { 
+            setLoading(true);
+            const {data} = await axios.put(`${URL}/update-item/${id}/${itemID}`, formData, {withCredentials : true});
+            if(data.success) { 
+                toast.success(data.message);
+                dispatch(updateMenuItem(data.data));
+            }
+        }catch(error) { 
+            console.log(error);
+        }finally { 
+            setLoading(false);
+        }
+    } 
 
 
     return (
@@ -225,7 +281,7 @@ const MenuItems = ({ restaurantData }) => {
                                     <div className={`rounded relative flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
 
                                         <Utensils color="gray" className="absolute left-2 size-4" />
-                                        <Select onValueChange={foodTypeHandler}>
+                                        <Select value={menuData.foodType} onValueChange={foodTypeHandler}>
                                             <SelectTrigger className="w-full  border-none">
                                                 <SelectValue placeholder="Select Type" />
                                             </SelectTrigger>
@@ -259,7 +315,7 @@ const MenuItems = ({ restaurantData }) => {
                                     </Label>
                                     <div className={`rounded relative flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
                                         <Utensils color="gray" className="absolute left-2 size-4" />
-                                        <Select onValueChange={foodCategoryHandler}>
+                                        <Select value={menuData.category} onValueChange={foodCategoryHandler}>
                                             <SelectTrigger className="w-full  border-none">
                                                 <SelectValue placeholder="Select Category" />
                                             </SelectTrigger>
@@ -285,7 +341,7 @@ const MenuItems = ({ restaurantData }) => {
 
                                     <div className="relative flex items-center">
                                         <CiLocationOn color="gray" className="absolute ml-2" />
-                                        <Tabs defaultValue="active" onValueChange={statusTabChangeHandler} >
+                                        <Tabs value={menuData.status ? "active" : "inactive"} onValueChange={statusTabChangeHandler} >
                                             <TabsList className={`${theme === "dark" ? "bg-zinc-700" : "bg-zinc-200"}`}>
                                                 <TabsTrigger value="active">
                                                     <ShieldCheck />
@@ -336,7 +392,7 @@ const MenuItems = ({ restaurantData }) => {
                                 </div>
                             </div>
                             <SheetFooter className={`flex! lg:flex-row! lg:justify-end  justify-center flex-col-reverse`}>
-                                <SheetClose asChild>
+                                <SheetClose asChild >
                                     <Button ariant="outline" className={`rounded ${theme === "dark" && "bg-zinc-700 border-zinc-500"}`}>
                                         Close
                                     </Button>
@@ -416,41 +472,233 @@ const MenuItems = ({ restaurantData }) => {
                                     <TableCell className="">
                                         <div className="flex gap-1 justify-end">
 
-                                            <Button className={`cursor-pointer transition-all duration-100 hover:bg-mauve-500 rounded-full h-7 w-7 border! bg-customOrange`}>
-                                                <Pencil className="size-3 cursor-pointer hover:text-customOrange transition-all duration-200" />
-                                            </Button>
 
-                                            <AlertDialog>
-                                                <AlertDialogTrigger asChild>
-                                                        <Button className={`rounded-full h-7 cursor-pointer hover:bg-mauve-500 transition-all duration-100 w-7 border! bg-customOrange`}>
-                                                            <Trash className="size-3 cursor-pointer hover:text-customOrange transition-all duration-200" />
+                                        {/* Edit menu  :  */}
+                    
+                                        <Sheet onOpenChange={(open) => {
+                                            if (!open) resetMenuData();
+                                        }}>
+                                            <SheetTrigger asChild>
+                                                <Button 
+                                                onClick={()=>editmenuBtnClicked(data._id)}
+                                                className={`cursor-pointer transition-all duration-100 hover:bg-mauve-500 rounded-full h-7 w-7 border! bg-customOrange`}>
+                                                            <Pencil className="size-3 cursor-pointer hover:text-customOrange transition-all duration-200" />
+                                                </Button>
+                                            </SheetTrigger>
+                                            <SheetContent className={`max-w-md! overflow-y-scroll! ${theme === "light" ? "bg-gray-100" : "bg-zinc-800 border-zinc-800 text-gray-100"}`}>
+                                                <SheetHeader>
+                                                    <SheetTitle className={`${theme === "dark" && "text-zinc-300"}`}>Update menu item</SheetTitle>
+                                                    <SheetDescription className={`text-xs ${theme === "dark" && "text-zinc-500"}`}>Please update the required details and click on "update" when you&apos;re done.</SheetDescription>
+                                                </SheetHeader>
+                                                <div className="grid flex-1 auto-rows-min gap-4 px-4">
+
+
+                                                    {/* Menu name :  */}
+                                                    <div className="">
+
+                                                        <div className="flex flex-col items-center gap-1">
+
+                                                            <div className="flex  gap-1 items-center" >
+                                                                <Label className="font-medium text-xs">Restaurant : </Label>
+                                                                <h1 className="text-xs font-medium bg-customOrange rounded px-1 py-px text-orange-100">{restaurantname.toUpperCase()}</h1>
+                                                            </div>
+
+
+                                                            <span className="text-[10px] text-gray-400">The menu item will be updated in Restaurant mentioned above.</span>
+                                                        </div>
+
+
+
+                                                    </div>
+                                                    <div className="grid gap-1">
+                                                        <Label className={`text-xs`} htmlFor="sheet-demo-name">
+                                                            Menu Name *
+                                                        </Label>
+                                                        <div className="relative flex items-center">
+                                                            <SquareMenu color="gray" className="absolute ml-2 size-4" />
+                                                            <Input
+                                                                className={`rounded outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}
+                                                                placeholder="Enter your shop name"
+                                                                id="sheet-demo-name"
+                                                                name="name"
+                                                                value={menuData.name}
+                                                                onChange={menuInputChangeHandler}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Food Type :  */}
+                                                    <div className="grid gap-1">
+                                                        <Label className={`text-xs`} htmlFor="sheet-demo-name">
+                                                            Food Type *
+                                                        </Label>
+                                                        <div className={`rounded relative flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
+
+                                                            <Utensils color="gray" className="absolute left-2 size-4" />
+                                                            <Select value={menuData.foodType} onValueChange={foodTypeHandler}>
+                                                                <SelectTrigger className="w-full  border-none">
+                                                                    <SelectValue placeholder="Select Type" />
+                                                                </SelectTrigger>
+                                                                <SelectContent className={` ${theme === "dark" ? "bg-zinc-700 text-zinc-300" : "bg-zinc-100 text-zinc-700"}`}>
+                                                                    <SelectGroup>
+                                                                        <SelectLabel className={` ${theme === "dark" ? " text-zinc-100" : " text-zinc-800"}`}>Select Type</SelectLabel>
+                                                                        {
+                                                                            foodType && foodType.map((type, idx) => {
+                                                                                return (
+                                                                                    <SelectItem
+                                                                                        className={`transition-all duration-75 ${theme === "dark" ? "hover:bg-zinc-500!" : "hover:bg-zinc-200! "}`}
+                                                                                        key={idx}
+                                                                                        value={type}
+                                                                                    >
+                                                                                        {type}
+                                                                                    </SelectItem>
+                                                                                )
+
+                                                                            })
+                                                                        }
+                                                                    </SelectGroup>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Food category  :  */}
+                                                    <div className="grid gap-1">
+                                                        <Label className={`text-xs`} htmlFor="sheet-demo-name">
+                                                            Food Category *
+                                                        </Label>
+                                                        <div className={`rounded relative flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
+                                                            <Utensils color="gray" className="absolute left-2 size-4" />
+                                                            <Select value={menuData.category} onValueChange={foodCategoryHandler}>
+                                                                <SelectTrigger className="w-full  border-none">
+                                                                    <SelectValue placeholder="Select Category" />
+                                                                </SelectTrigger>
+                                                                <SelectContent className={` ${theme === "dark" ? "bg-zinc-700 text-zinc-300" : "bg-zinc-100 text-zinc-700"}`}>
+                                                                    <SelectGroup>
+                                                                        <SelectLabel className={` ${theme === "dark" ? " text-zinc-100" : " text-zinc-800"}`}>Select Type</SelectLabel>
+                                                                        {foodCategory && foodCategory.map((category, idx) => (
+                                                                            <SelectItem className={`transition-all duration-75 ${theme === "dark" ? "hover:bg-zinc-500!" : "hover:bg-zinc-200! "}`} key={idx} value={category}>
+                                                                                {category}
+                                                                            </SelectItem>
+                                                                        ))}
+                                                                    </SelectGroup>
+                                                                </SelectContent>
+                                                            </Select>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* menu status :  */}
+                                                    <div className="grid gap-1">
+                                                        <Label className={`text-xs`} htmlFor="sheet-demo-username">
+                                                            Status *
+                                                        </Label>
+
+                                                        <div className="relative flex items-center">
+                                                            <CiLocationOn color="gray" className="absolute ml-2" />
+                                                            <Tabs value={menuData.status ? "active" : "inactive"} onValueChange={statusTabChangeHandler} >
+                                                                <TabsList className={`${theme === "dark" ? "bg-zinc-700" : "bg-zinc-200"}`}>
+                                                                    <TabsTrigger value="active">
+                                                                        <ShieldCheck />
+                                                                        Active
+                                                                    </TabsTrigger>
+                                                                    <TabsTrigger value="inactive">
+                                                                        <ShieldX />
+                                                                        InActive
+                                                                    </TabsTrigger>
+                                                                </TabsList>
+                                                            </Tabs>
+                                                        </div>
+                                                    </div>
+
+                                                    {/* Price :  */}
+                                                    <div className="grid gap-1">
+                                                        <Label className={`text-xs`} htmlFor="sheet-demo-name">
+                                                            Price *
+                                                        </Label>
+                                                        <div className="relative flex items-center">
+                                                            <IndianRupee color="gray" className="absolute ml-2 size-4" />
+                                                            <Input
+                                                                type="text"
+                                                                inputMode="numeric"
+                                                                pattern="[0-9]*"
+                                                                className={`rounded outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}
+                                                                placeholder="Price"
+                                                                id="sheet-demo-name"
+                                                                name="price"
+                                                                value={menuData.price}
+                                                                onChange={menuInputChangeHandler}
+                                                            />
+                                                        </div>
+                                                    </div>
+
+                                                    {/* image :  */}
+                                                    <div className="grid gap-2">
+                                                        <Label className={`text-xs`} htmlFor="sheet-demo-username">
+                                                            Upload your Menu image *
+                                                        </Label>
+                                                        <Input
+                                                            type={`file`}
+                                                            className={`rounded outline-none ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}
+                                                            id="sheet-demo-username"
+                                                            name="image"
+                                                            onChange={fileChangeHandler}
+                                                        />
+                                                    </div>
+                                                </div>
+                                                <SheetFooter className={`flex! lg:flex-row! lg:justify-end  justify-center flex-col-reverse`}>
+                                                    <SheetClose asChild>
+                                                        <Button ariant="outline" className={`rounded ${theme === "dark" && "bg-zinc-700 border-zinc-500"}`}>
+                                                            Close
                                                         </Button>
-                                                    </AlertDialogTrigger>
-                                                <AlertDialogContent className={`${theme === "dark"
-                                                    ? "bg-zinc-800 text-zinc-300"
-                                                    : "bg-zinc-100 text-zinc-700/50"
-                                                    }`}>
-                                                    <AlertDialogHeader>
-                                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
-                                                        <AlertDialogDescription className={`${theme === "dark"
-                                                            ? "text-zinc-400/95 bg-zinc-800"
-                                                            : "text-zinc-700 bg-zinc-100"
-                                                            }`}>
-                                                            This action cannot be undone. This will permanently delete menu items from your restaurant.
+                                                    </SheetClose>
+                                                
 
-                                                        </AlertDialogDescription>
-                                                    </AlertDialogHeader>
-                                                    <AlertDialogFooter className={`${theme === "dark"
-                                                        ? "bg-zinc-800"
-                                                        : "bg-zinc-100"
+                                                    <Button disabled={loading} onClick={() => updateMenuItemHandler(menuData, data._id)} className={`bg-customOrange rounded transition-all duration-200 py-4`} type="submit">
+                                                        {loading ? (
+                                                            <div className="flex items-center gap-3">
+                                                                <Loader className="animate-spin" />
+                                                                <span className="text-xs">Please wait!</span>
+                                                            </div>
+                                                        ) : (
+                                                            "Update Menu"
+                                                        )}
+                                                    </Button>
+                                                </SheetFooter>
+                                            </SheetContent>
+                                        </Sheet>
+                                        
+                                        {/* Delete Menu Item :  */}
+                                        <AlertDialog>
+                                            <AlertDialogTrigger asChild>
+                                                    <Button className={`rounded-full h-7 cursor-pointer hover:bg-mauve-500 transition-all duration-100 w-7 border! bg-customOrange`}>
+                                                        <Trash className="size-3 cursor-pointer hover:text-customOrange transition-all duration-200" />
+                                                    </Button>
+                                                </AlertDialogTrigger>
+                                            <AlertDialogContent className={`${theme === "dark"
+                                                ? "bg-zinc-800 text-zinc-300"
+                                                : "bg-zinc-100 text-zinc-700/50"
+                                                }`}>
+                                                <AlertDialogHeader>
+                                                    <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                    <AlertDialogDescription className={`${theme === "dark"
+                                                        ? "text-zinc-400/95 bg-zinc-800"
+                                                        : "text-zinc-700 bg-zinc-100"
                                                         }`}>
-                                                        <AlertDialogCancel className={`rounded! ${theme === 'dark' ? 'bg-zinc-700 border-none text-white hover:text-customOrange! hover:bg-zinc-600' : ''}`}>Cancel</AlertDialogCancel>
-                                                        <AlertDialogAction
-                                                           onClick={()=>deleteMenuItemHandler(data._id)}
-                                                            className={`bg-customOrange! border-none hover:text-orange-200 rounded!`}>Continue</AlertDialogAction>
-                                                    </AlertDialogFooter>
-                                                </AlertDialogContent>
-                                            </AlertDialog>
+                                                        This action cannot be undone. This will permanently delete menu items from your restaurant.
+
+                                                    </AlertDialogDescription>
+                                                </AlertDialogHeader>
+                                                <AlertDialogFooter className={`${theme === "dark"
+                                                    ? "bg-zinc-800"
+                                                    : "bg-zinc-100"
+                                                    }`}>
+                                                    <AlertDialogCancel className={`rounded! ${theme === 'dark' ? 'bg-zinc-700 border-none text-white hover:text-customOrange! hover:bg-zinc-600' : ''}`}>Cancel</AlertDialogCancel>
+                                                    <AlertDialogAction
+                                                        onClick={()=>deleteMenuItemHandler(data._id)}
+                                                        className={`bg-customOrange! border-none hover:text-orange-200 rounded!`}>Continue</AlertDialogAction>
+                                                </AlertDialogFooter>
+                                            </AlertDialogContent>
+                                        </AlertDialog>
 
                                         </div>
                                     </TableCell>
