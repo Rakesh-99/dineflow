@@ -421,12 +421,11 @@ const MenuItems = ({ restaurantData }) => {
                                             </Button>
 
                                             <AlertDialog>
-                                                <AlertDialogTrigger>
-
-                                                    <Button className={`rounded-full h-7 cursor-pointer hover:bg-mauve-500 transition-all duration-100 w-7 border! bg-customOrange`}>
-                                                        <Trash className="size-3 cursor-pointer hover:text-customOrange transition-all duration-200" />
-                                                    </Button>
-                                                </AlertDialogTrigger>
+                                                <AlertDialogTrigger asChild>
+                                                        <Button className={`rounded-full h-7 cursor-pointer hover:bg-mauve-500 transition-all duration-100 w-7 border! bg-customOrange`}>
+                                                            <Trash className="size-3 cursor-pointer hover:text-customOrange transition-all duration-200" />
+                                                        </Button>
+                                                    </AlertDialogTrigger>
                                                 <AlertDialogContent className={`${theme === "dark"
                                                     ? "bg-zinc-800 text-zinc-300"
                                                     : "bg-zinc-100 text-zinc-700/50"
