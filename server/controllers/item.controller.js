@@ -104,7 +104,8 @@ export const updateItem = expressAsyncHandler(async(req, res, next)=> {
     const {name, price, category, foodType, status} = req.body; 
     const userId = req.userId; 
     const file = req.file ; 
-    const itemId = req.params.itemId; 
+    const {itemID} = req.params; 
+    const {restaurantID} = req.params;
 
     let cloudinaryImgUrl ; 
 
@@ -120,7 +121,7 @@ export const updateItem = expressAsyncHandler(async(req, res, next)=> {
         return next(new ErrorHandler(403, 'You are not authorized to update the Item!')); 
     }; 
 
-    const shop = await shopModel.findOne({owner : userId}); 
+    const shop = await shopModel.findOne({owner : userId, _id: restaurantID}); 
 
     if(!shop) { 
         return next(new ErrorHandler(404, 'Shop not found!')); 
@@ -138,7 +139,7 @@ export const updateItem = expressAsyncHandler(async(req, res, next)=> {
     
 
     const updateItem  = await itemModel.findOneAndUpdate(
-        {_id : itemId, shop : shop._id}, 
+        {_id : itemID, shop : restaurantID}, 
         {$set : updatedItemData},
         {new : true, runValidators : true}
     ); 
