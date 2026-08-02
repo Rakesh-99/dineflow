@@ -12,10 +12,20 @@ import { useState } from "react";
 import { toast } from "sonner";
 import axios from "axios";
 import { useParams } from "react-router";
-const URL = import.meta.env.VITE_BACKEND_ITEM_API_URL; 
-import { addMenuItemToRestaurant } from "@/redux/features/currentOwnerRestaurants.slice";
+const URL = import.meta.env.VITE_BACKEND_ITEM_API_URL;
+import { addMenuItemToRestaurant, deleteMenuFromRestaurant } from "@/redux/features/currentOwnerRestaurants.slice";
 import useGetFoodAndCategory from "@/hooks/useGetFoodAndCategory";
-
+import {
+    AlertDialog,
+    AlertDialogAction,
+    AlertDialogCancel,
+    AlertDialogContent,
+    AlertDialogDescription,
+    AlertDialogFooter,
+    AlertDialogHeader,
+    AlertDialogTitle,
+    AlertDialogTrigger,
+} from "@/components/ui/alert-dialog"
 
 
 
@@ -25,14 +35,14 @@ const MenuItems = ({ restaurantData }) => {
 
 
     const { theme } = useSelector((state) => state.themeSlice);
-    const {restaurantname, id} = useParams(); 
-    const dispatch = useDispatch(); 
-    const {foodType,foodCategory} = useGetFoodAndCategory(); 
-    const [loading, setLoading] = useState(false); 
-    
-    
+    const { restaurantname, id } = useParams();
+    const dispatch = useDispatch();
+    const { foodType, foodCategory } = useGetFoodAndCategory();
+    const [loading, setLoading] = useState(false);
 
-    
+
+
+
 
     const [menuData, setMenuData] = useState({
         name: "",
@@ -93,39 +103,56 @@ const MenuItems = ({ restaurantData }) => {
     };
 
     const submitHandler = (menuData) => {
-        if(!menuData.name || !menuData.foodType || !menuData.category || !menuData.image || !menuData.status || !menuData.price){
-            toast.error(`All fields are required!`); 
-            return false; 
-        }; 
+        if (!menuData.name || !menuData.foodType || !menuData.category || !menuData.image || !menuData.status || !menuData.price) {
+            toast.error(`All fields are required!`);
+            return false;
+        };
 
-        const {name, foodType, category, image, status, price} = menuData; 
+        const { name, foodType, category, image, status, price } = menuData;
 
         // preparing the form data : 
         let formData = new FormData();
-        formData.append("name", name); 
-        formData.append("foodType",foodType); 
-        formData.append("category",category); 
-        formData.append("image", image); 
+        formData.append("name", name);
+        formData.append("foodType", foodType);
+        formData.append("category", category);
+        formData.append("image", image);
         formData.append("price", price);
         formData.append("status", status);
 
 
         // api call : 
 
-       (async function createMenuItem () { 
-         try{ 
-            setLoading(true); 
-                const {data} = await axios.post(`${URL}/add-item/${id}`,formData,{withCredentials: true}); 
-                if(data.success){ 
-                    setLoading(false); 
-                    toast.success(`A menu item has been created`); 
+        (async function createMenuItem() {
+            try {
+                setLoading(true);
+                const { data } = await axios.post(`${URL}/add-item/${id}`, formData, { withCredentials: true });
+                if (data.success) {
+                    setLoading(false);
+                    toast.success(`A menu item has been created`);
                     dispatch(addMenuItemToRestaurant(data.data));
                 }
-            }catch(error){ 
-                setLoading(false); 
+            } catch (error) {
+                setLoading(false);
                 toast.error(error?.response.data.messsage);
             }
-       })();   
+        })();
+    }
+
+    const deleteMenuItemHandler = async (itemID) => {
+        console.log("ITEM ID ++++++",itemID);
+        
+        try {
+            setLoading(true); 
+            const {data} = await axios.delete(`${URL}/delete-item/${id}/${itemID}`, {withCredentials : true}); 
+            if(data.success) {        
+                toast.success(data?.message);
+                dispatch(deleteMenuFromRestaurant(data.item))
+            }
+        } catch (error) {
+            console.log(error);
+        }finally { 
+            setLoading(false);
+        }
     }
 
 
@@ -162,14 +189,14 @@ const MenuItems = ({ restaurantData }) => {
                                     <div className="flex flex-col items-center gap-1">
 
                                         <div className="flex  gap-1 items-center" >
-                                        <Label className="font-medium text-xs">Restaurant : </Label>
-                                        <h1 className="text-xs font-medium bg-customOrange rounded px-1 py-px text-orange-100">{restaurantname.toUpperCase()}</h1>
+                                            <Label className="font-medium text-xs">Restaurant : </Label>
+                                            <h1 className="text-xs font-medium bg-customOrange rounded px-1 py-px text-orange-100">{restaurantname.toUpperCase()}</h1>
                                         </div>
-                                       
+
 
                                         <span className="text-[10px] text-gray-400">The menu item will be added in Restaurant mentioned above.</span>
                                     </div>
-                          
+
 
 
                                 </div>
@@ -198,25 +225,25 @@ const MenuItems = ({ restaurantData }) => {
                                     <div className={`rounded relative flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
 
                                         <Utensils color="gray" className="absolute left-2 size-4" />
-                                        <Select  onValueChange={foodTypeHandler}>
+                                        <Select onValueChange={foodTypeHandler}>
                                             <SelectTrigger className="w-full  border-none">
-                                                <SelectValue placeholder="Select Type"/>
+                                                <SelectValue placeholder="Select Type" />
                                             </SelectTrigger>
                                             <SelectContent className={` ${theme === "dark" ? "bg-zinc-700 text-zinc-300" : "bg-zinc-100 text-zinc-700"}`}>
                                                 <SelectGroup>
                                                     <SelectLabel className={` ${theme === "dark" ? " text-zinc-100" : " text-zinc-800"}`}>Select Type</SelectLabel>
                                                     {
-                                                        foodType && foodType.map((type, idx)=> {
-                                                            return(
-                                                                <SelectItem 
-                                                                    className={`transition-all duration-75 ${theme === "dark" ? "hover:bg-zinc-500!" : "hover:bg-zinc-200! "}`} 
-                                                                        key={idx} 
-                                                                        value={type}
-                                                                    >
-                                                                        {type}
-                                                            </SelectItem>
+                                                        foodType && foodType.map((type, idx) => {
+                                                            return (
+                                                                <SelectItem
+                                                                    className={`transition-all duration-75 ${theme === "dark" ? "hover:bg-zinc-500!" : "hover:bg-zinc-200! "}`}
+                                                                    key={idx}
+                                                                    value={type}
+                                                                >
+                                                                    {type}
+                                                                </SelectItem>
                                                             )
-                                                          
+
                                                         })
                                                     }
                                                 </SelectGroup>
@@ -232,9 +259,9 @@ const MenuItems = ({ restaurantData }) => {
                                     </Label>
                                     <div className={`rounded relative flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
                                         <Utensils color="gray" className="absolute left-2 size-4" />
-                                        <Select  onValueChange={foodCategoryHandler}>
+                                        <Select onValueChange={foodCategoryHandler}>
                                             <SelectTrigger className="w-full  border-none">
-                                                <SelectValue  placeholder="Select Category"/>
+                                                <SelectValue placeholder="Select Category" />
                                             </SelectTrigger>
                                             <SelectContent className={` ${theme === "dark" ? "bg-zinc-700 text-zinc-300" : "bg-zinc-100 text-zinc-700"}`}>
                                                 <SelectGroup>
@@ -322,15 +349,15 @@ const MenuItems = ({ restaurantData }) => {
                                     Create Menu
                                 </Button> */}
 
-                                  <Button disabled={loading}     onClick={() => submitHandler(menuData)} className={`bg-customOrange rounded transition-all duration-200 py-4`} type="submit">
-                                        {loading ? (
+                                <Button disabled={loading} onClick={() => submitHandler(menuData)} className={`bg-customOrange rounded transition-all duration-200 py-4`} type="submit">
+                                    {loading ? (
                                         <div className="flex items-center gap-3">
                                             <Loader className="animate-spin" />
                                             <span className="text-xs">Please wait!</span>
                                         </div>
-                                        ) : (
+                                    ) : (
                                         "Create Menu"
-                                        )}
+                                    )}
                                 </Button>
                             </SheetFooter>
                         </SheetContent>
@@ -361,9 +388,10 @@ const MenuItems = ({ restaurantData }) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody className={`text-xs`}>
-                        {restaurantData && restaurantData?.item.map((data, idx) => {                            
+                        {restaurantData && restaurantData?.item.map((data) => {
+                         
                             return (
-                                <TableRow key={idx} className={` transition-all duration-200 ${theme === "dark" && "hover:bg-zinc-700 border-zinc-700 shadow"}`}>
+                                <TableRow  key={data._id} className={` transition-all duration-200 ${theme === "dark" && "hover:bg-zinc-700 border-zinc-700 shadow"}`}>
                                     <TableCell className={`flex items-center gap-2`}>
                                         <img src={data?.image?.url} className="w-14 rounded border-2" alt="" />
                                         <span>{data?.name}</span>
@@ -386,10 +414,46 @@ const MenuItems = ({ restaurantData }) => {
                                     </TableCell>
 
                                     <TableCell className="">
-                                        <span className="flex gap-5 justify-end">
-                                            <Pencil size={13} className="cursor-pointer hover:text-customOrange transition-all duration-200" />
-                                            <Trash size={13} className="cursor-pointer hover:text-customOrange transition-all duration-200" />
-                                        </span>
+                                        <div className="flex gap-1 justify-end">
+
+                                            <Button className={`cursor-pointer transition-all duration-100 hover:bg-mauve-500 rounded-full h-7 w-7 border! bg-customOrange`}>
+                                                <Pencil className="size-3 cursor-pointer hover:text-customOrange transition-all duration-200" />
+                                            </Button>
+
+                                            <AlertDialog>
+                                                <AlertDialogTrigger>
+
+                                                    <Button className={`rounded-full h-7 cursor-pointer hover:bg-mauve-500 transition-all duration-100 w-7 border! bg-customOrange`}>
+                                                        <Trash className="size-3 cursor-pointer hover:text-customOrange transition-all duration-200" />
+                                                    </Button>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent className={`${theme === "dark"
+                                                    ? "bg-zinc-800 text-zinc-300"
+                                                    : "bg-zinc-100 text-zinc-700/50"
+                                                    }`}>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Are you absolutely sure?</AlertDialogTitle>
+                                                        <AlertDialogDescription className={`${theme === "dark"
+                                                            ? "text-zinc-400/95 bg-zinc-800"
+                                                            : "text-zinc-700 bg-zinc-100"
+                                                            }`}>
+                                                            This action cannot be undone. This will permanently delete menu items from your restaurant.
+
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <AlertDialogFooter className={`${theme === "dark"
+                                                        ? "bg-zinc-800"
+                                                        : "bg-zinc-100"
+                                                        }`}>
+                                                        <AlertDialogCancel className={`rounded! ${theme === 'dark' ? 'bg-zinc-700 border-none text-white hover:text-customOrange! hover:bg-zinc-600' : ''}`}>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction
+                                                           onClick={()=>deleteMenuItemHandler(data._id)}
+                                                            className={`bg-customOrange! border-none hover:text-orange-200 rounded!`}>Continue</AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+
+                                        </div>
                                     </TableCell>
                                 </TableRow>
                             );

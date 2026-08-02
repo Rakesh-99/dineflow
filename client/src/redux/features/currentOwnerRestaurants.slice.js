@@ -34,11 +34,20 @@ const currentOwnerRestaurants = createSlice({
             if(restaurant){ 
                 restaurant.item.push(action.payload)
             }
+        }, 
+        deleteMenuFromRestaurant : (state, action) => { 
+            const {shop, _id} = action.payload
+            const restaurantIdx =  state.restaurants.findIndex(restaurant => restaurant._id === shop); 
+            
+            if(restaurantIdx !== -1 ){ 
+                state.restaurants[restaurantIdx].item = 
+                    state.restaurants[restaurantIdx].item.filter((getItem) => getItem._id !== _id);
+            }
         }
-    }
+    }   
 });
 
 
 
-export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant} = currentOwnerRestaurants.actions; 
+export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant} = currentOwnerRestaurants.actions; 
 export default currentOwnerRestaurants.reducer; 
