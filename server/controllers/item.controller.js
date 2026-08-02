@@ -167,14 +167,15 @@ export const deleteItemById = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(401, "Shop or menu Item IDs are invalid!"))
     }
 
-    const item = await itemModel.findOneAndDelete({shop : restaurantID, _id : itemID, owner : userId}); 
+    const item = await itemModel.findOneAndDelete({shop : restaurantID, _id : itemID, owner : userId}, {returnDocument: "after"}); 
     if(!item) { 
         return next(new ErrorHandler(404, "Item not found!")); 
     }; 
 
     return res.status(200).json({
         success : true, 
-        message : 'Item has been deleted'
+        message : 'Item has been deleted', 
+        item
     })
 })
 
