@@ -49,6 +49,8 @@ const NavBar = () => {
   const dispatch = useDispatch() ; 
   const {theme} = useSelector(state => state.themeSlice); 
   const {city, userData } = useSelector(state => state.currentuserSlice); 
+  console.log(userData);
+  
   
   
   
@@ -164,10 +166,13 @@ const NavBar = () => {
                   {/* Right Section :  (cart , my order and account ) */}
                   <div className="flex md:gap-10 gap-4 items-center">
                       {/* cart icon  :  */}
-                      <div className="w-10 h-10 flex items-center justify-center relative">
+                      {
+                        userData && userData.role === "user" && 
+                        <div className="w-10 h-10 flex items-center justify-center relative">
                         <ShoppingCart className='cursor-pointer' size={21}/>
                         <span className='border border-[#ff8802] absolute left-5 bottom-6 rounded-full bg-[#ff6900]  font-semibold w-1/3 p-2 h-1/3 text-white flex items-center justify-center text-[9px]'>2</span>
                       </div>
+                      }    
 
                       {/* User account button or account button depending upon the current user  :  */}
 
