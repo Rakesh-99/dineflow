@@ -23,8 +23,7 @@ const useGetCurrentLocation = () => {
                  const {data} = await axios.get(`https://api.geoapify.com/v1/geocode/reverse?lat=${latitude}&lon=${longitude}&format=json&apiKey=${location_api_key}`);
 
                  const response = data?.results[0]; 
-                 const { city} = response;                      
-                 dispatch(setCurrentUserCity(city));
+                 dispatch(setCurrentUserCity(response));
             } catch (error) {
                 console.log('Could not fetch current location ->', error);
             }
