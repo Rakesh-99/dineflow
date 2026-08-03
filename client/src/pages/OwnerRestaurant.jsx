@@ -15,7 +15,7 @@ import { toast } from "sonner";
 import axios from "axios";
 const URL = import.meta.env.VITE_BACKEND_SHOP_API_URL;
 import { addNewRestaurant } from "@/redux/features/currentOwnerRestaurants.slice";
-import { Loader, ShieldCheck, ShieldX } from "lucide-react";
+import { Loader, Plus, ShieldCheck, ShieldX } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -126,16 +126,16 @@ const OwnerRestaurant = () => {
           {/* search bar :  */}
           <div className="relative flex  items-center ">
             <BsSearch className="absolute left-3" size={15} color="gray" />
-            <Input className={`lg:w-80 w-60 rounded outline-none px-10 placeholder:text-xs placeholder:font-medium `} placeholder="Search Restaurants by name" />
+            <Input className={`lg:w-80 w-60 py-4 rounded outline-none px-10 placeholder:text-xs placeholder:font-medium ${theme === "dark" ? "border-zinc-600" : "border-zinc-100"}`} placeholder="Search Restaurants by name" />
           </div>
 
-          <div className={`text-customOrange rounded flex items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer w-fit`}>
-            <FaKitchenSet size={15} />
 
-            {/* button for adding new restaurant :   */}
             <Sheet>
               <SheetTrigger asChild>
-                <Button className={`text-customOrange rounded flex  items-center px-2 bg-orange-50 text-[10px] font-medium hover:text-orange-600 cursor-pointer`}>Add Restaurant</Button>
+                <Button className={`bg-customOrange text-white gap-1  rounded flex  items-center text-[10px] font-semibold  cursor-pointer`}>
+                  <Plus size={15} />
+                  <span>Add Restaurant</span>
+                </Button>
               </SheetTrigger>
               <SheetContent className={`max-w-xl! overflow-y-scroll! ${theme === "light" ? "bg-gray-100" : "bg-zinc-800 border-zinc-800 text-gray-100"}`}>
                 <SheetHeader>
@@ -242,7 +242,7 @@ const OwnerRestaurant = () => {
                 </SheetFooter>
               </SheetContent>
             </Sheet>
-          </div>
+
         </div>
 
         {/* main content :  */}
