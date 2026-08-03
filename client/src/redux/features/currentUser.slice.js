@@ -7,14 +7,20 @@ const currentuserSlice = createSlice({
     name : 'currentuserSlice',
     initialState: { 
         userData : null,
-        city : null
+        userAddress : null
     }, 
     reducers : { 
         setCurrentUser : (state, action ) => {
             state.userData = action.payload; 
         },
         setCurrentUserCity : (state, action) => { 
-            state.city = action.payload
+          const {state_district,address_line1,address_line2, city} = action.payload; 
+          state.userAddress = {
+            "state" : state_district, 
+            "address1" : address_line1, 
+            "address2" : address_line2, 
+            "city" : city
+          }
         }
     }
 }); 
