@@ -23,16 +23,20 @@ const OwnerRestaurant = () => {
   const { theme } = useSelector((state) => state.themeSlice);
   const dispatch = useDispatch();
   const [loading, setLoading] = useState(false);
+  const {userAddress} = useSelector((state) => state.currentuserSlice);
 
   const [restaurantData, setRestaurantData] = useState({
     shopName: "",
-    city: "",
-    state: "",
-    address: "",
+    city: userAddress?.city,
+    state: userAddress?.state,
+    address: userAddress?.address2,
     description: "",
     status: true,
     image: null,
   });
+
+  console.log("User => ", userAddress);
+  
 
   const inputChangeHandler = (e) => {
     const { name, value } = e.target;
