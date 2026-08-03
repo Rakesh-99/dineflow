@@ -36,8 +36,7 @@ import {
 } from "../components/ui/dropdown-menu"; 
 import { TiWeatherSunny } from "react-icons/ti";
 import { BsMoonStars } from "react-icons/bs";
-import { FiPlus } from "react-icons/fi";
-import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
+
 
 
  
@@ -48,8 +47,8 @@ const NavBar = () => {
 
   const dispatch = useDispatch() ; 
   const {theme} = useSelector(state => state.themeSlice); 
-  const {city, userData } = useSelector(state => state.currentuserSlice); 
-  console.log(userData);
+  const {userAddress, userData } = useSelector(state => state.currentuserSlice); 
+  console.log(userAddress);
   
   
   
@@ -128,26 +127,29 @@ const NavBar = () => {
                      userData?.role === 'user' &&
 
                      <>
-                      <div className="md:flex hidden  py-2 shadow-xs rounded-xs   items-center">
+                      <div className="md:flex hidden rounded-xs gap-5  items-center">
                           {/* City location :  */}
-                            <div className="relative flex items-center">
-                              <MapPin size={14} color='#F54927' className='absolute left-2 '/>
+                            <div className={`${theme === "dark" ? "border-zinc-700" : "border-zinc-100"} border rounded-md px-2 flex items-center`}>
+                              <MapPin color='#F54927' className='size-4'/>
                               <input 
                               type="text" 
-                              value={city}  
-                              className=' text-sm outline-none ml-4  px-4 border-r '
+                              disabled
+                              value={userAddress?.address2}  
+                              className=' text-[10px]  outline-none p-2 rounded-md min-w-60  '
                               />
                             </div>
 
                             {/* Search food and restaurants :  */}
-                            <div className="relative flex items-center">
-                              <Search size={13} color='gray'  className='absolute md:cursor-default cursor-pointer left-5' onClick={() => setIsShowSearchBar(!isShowSearchBar)}/>
+                            <div className={` border-b px-2 flex  items-center ${theme === "dark" ? "border-zinc-700" : "border-zinc-100"}`}>
+
+                              <Search color='gray'  className='size-4 absolute md:cursor-default cursor-pointer' onClick={() => setIsShowSearchBar(!isShowSearchBar)}/>
+
                               <input 
                               type="text" 
                               value={searchFoodData}
                               onChange={inputFoodDataHandler} 
                               placeholder='Search food, restaurants ..'  
-                              className='  text-sm placeholder:text-[10px] outline-none ml-10 px-4  w-32'/>
+                              className='  text-sm placeholder:text-sm outline-none ml-5 py-1 rounded-md  w-60'/>
                             </div>
                     </div>
 
@@ -227,39 +229,45 @@ const NavBar = () => {
                     {
                       isShowSearchBar && 
 
-                          <div className={`z-10 absolute border shadow duration-200 transition-all  p-4 rounded-sm md:hidden flex flex-col gap-5 top-30 ${theme === 'light' ? ' border-zinc-200 ' : '  border-zinc-600'} `}>
+                          <div className={`z-10 absolute border shadow duration-200 transition-all w-[90%] p-5  rounded-sm md:hidden flex flex-col gap-5 top-30 ${theme === 'light' ? ' border-zinc-200 ' : '  border-zinc-600'} `}>
 
                           {/* Cross icon to cancel :  */}
                           <div className="w-full">
-                          <RxCrossCircled size={20} className='cursor-pointer float-right active:scale-90 transition-all duration-300' onClick={()=> setIsShowSearchBar(false)}/>
+                          <RxCrossCircled size={20} className='cursor-pointer  float-right active:scale-90 transition-all duration-300' onClick={()=> setIsShowSearchBar(false)}/>
                           </div>
                           
                           <p className='text-xs'>Search food and restaurant nearby you</p>
                           <form action="" onSubmit={formSubmitHandler}>
 
-                        <div className="flex gap-2 shadow-xs rounded ">
+                        <div className="flex flex-col gap-5 shadow-xs rounded ">
 
-                          <div className="relative w-28 flex items-center border-r">
-                            <MapPin size={15} color='red' className='absolute left-2  '/>
+                        {/* section for showing current location :  */}
+                          <div className= {`flex px-2 items-center border rounded ${theme === "dark"? "border-zinc-700": "border-zinc-100" }`}>
+
+                          <MapPin color='red' className={`size-4`}/>
                           <Input 
                           type="text"
                           name = 'searchlocation'
-                          value = {city}
+                          value = {userAddress.address2}
                           placeholder='Enter your location'
-                          className={`ml-5 placeholder:text-sm text-xs border-none py-4 `}
+                          className={` placeholder:text-sm  border-none! text-xs  `}
                           />
                           </div>
                         
-                        <div className="flex relative  items-center">
-                          <Search size={15} color='gray' className='absolute left-2  '/>
+                        {/* section for searching restaurants :  */}
+                        <div className={`flex border-b items-center ${theme === "dark"? "border-zinc-700": "border-zinc-100" }`}>
+                          <Search color='gray' className='size-4  '/>
+
                           <Input 
                           name = 'searchfood'
                           value = {searchFoodData}
                           onChange = {inputFoodDataHandler}
                           placeholder='Search food..'
-                          className={`ml-5 placeholder:text-sm text-xs border-none py-4 `}
+                          className={` placeholder:text-sm border-none!  text-xs  `}
                           />
-                      </div>
+                        </div>
+
+
                         </div>
                        
 
