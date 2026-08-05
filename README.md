@@ -13,7 +13,50 @@ DineFlow is a comprehensive restaurant management and food delivery platform . I
 The platform supports multiple user roles( User, Delivery Agent, Restaurant Owner ), secure authentication, location based restaurant discovery, online payments, and live order status updates.
 
 ---
+# 📸 Application Screenshots
 
+
+## 🔐 Authentication
+
+| Sign Up | Login |
+|---------|-------|
+| ![Signup](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/signup.png) | ![Login](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/login.png) |
+
+
+---
+
+# 🏪 Restaurant Owner Dashboard
+
+
+## Restaurant Listing
+
+![Restaurant Listing](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurant_listing.png)
+
+
+---
+
+## Create / Update Restaurant
+
+![Create Restaurant](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/createOrEdit_restaurant.png)
+
+
+---
+
+## Restaurant Details
+
+| Dark Theme | Light Theme |
+|------------|-------------|
+| ![Restaurant Details](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurant_details.png) | ![Restaurant Details Light](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurantDetails_light.png) |
+
+
+---
+
+## Menu Management
+
+![Create Update Menu](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/createOrUpdateMneu.png)
+
+
+---
 ## Highlights
 
 * Multi-Role Authentication System
