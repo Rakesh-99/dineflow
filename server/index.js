@@ -11,7 +11,7 @@ import userRoutes from './routes/user/user.routes.js';
 import cookieParser from 'cookie-parser'; 
 import shopRoutes from './routes/restaurant/shop.routes.js';
 import itemRoutes from './routes/item/item.routes.js';
-
+import categoryRoutes from './routes/category/category.routes.js';
 
 
 
@@ -33,7 +33,8 @@ app.get('/api/v1', (req, res) => {
 app.use('/api/v1/auth', authRoutes);
 app.use('/api/v1/user', userRoutes); 
 app.use('/api/v1/shop', shopRoutes); 
-app.use('/api/v1/item', itemRoutes)
+app.use('/api/v1/item', itemRoutes); 
+app.use('/api/v1/category', categoryRoutes);
 app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
