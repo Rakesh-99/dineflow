@@ -7,12 +7,13 @@ import { SlCalender } from "react-icons/sl";
 import { useNavigate } from "react-router";
 import { MapPin, UserRound } from "lucide-react";
 import { Button } from "./ui/button";
-
+import useGetShopsOfCurrentOwner from "@/hooks/useGetShopsOfCurrentOwner";
 
 
 
 const RestaurantListings = () => {
 
+    useGetShopsOfCurrentOwner(); 
     const { restaurants } = useSelector(state => state.currentOwnerRestaurants);
     const { theme } = useSelector(state => state.themeSlice);
     const navigate = useNavigate();
