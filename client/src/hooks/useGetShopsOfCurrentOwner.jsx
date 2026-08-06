@@ -22,7 +22,7 @@ const useGetShopsOfCurrentOwner = () => {
         }
     }
     getCurrentOwnerShop();
-    },[]);
+    },[dispatch]);
 };
 
 
