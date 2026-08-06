@@ -4,9 +4,8 @@
   import useGetCurrentUser from "./hooks/useGetCurrentUser";
   import useGetCurrentLocation from "./hooks/useGetCurrentLocation";
   import ProtectedRoutes from "./routes/ProtectedRoutes";
-  import useGetShopsOfCurrentOwner from "./hooks/useGetShopsOfCurrentOwner";
   import RestaurantOwnerRoutes from "./routes/RestaurantOwnerRoutes";
-  // import { useSelector } from "react-redux";
+import useGetFoodCategory from "./hooks/useGetFoodAndCategory";
 
   // lazy loading and code splitting :
   const Account = lazy(() => import("./pages/auth/Account"));
@@ -24,16 +23,7 @@
   const OwnerRestaurantDetails = lazy(()=> import("@/pages/OwnerRestaurantDetails")); 
 
 
-  const App = () => {
-
-
-    // some custom hooks :
-    useGetCurrentUser();
-    useGetCurrentLocation();
-    useGetShopsOfCurrentOwner();
-
-    
-    const routers = createBrowserRouter([
+   const routers = createBrowserRouter([
       {
         path: "/",
         element: (
@@ -146,6 +136,12 @@
         ],
       },
     ]);
+
+  const App = () => {
+    // custom hooks :
+    useGetCurrentUser();
+    useGetCurrentLocation();
+    useGetFoodCategory(); 
 
     return (
       <>
