@@ -1,35 +1,26 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
-const URL = import.meta.env.VITE_BACKEND_ITEM_API_URL;
+import { useEffect } from "react";
+const URL = import.meta.env.VITE_BACKEND_CATEGORY_API_URL;
+import { setCategory } from "@/redux/features/categorySlice";
+import { useDispatch } from "react-redux";
 
-const useGetFoodAndCategory = () => {
+const useGetFoodCategory = () => {
 
-    const [foodCategory, setFoodCategory] = useState(null); 
-    const [foodType, setFoodType] = useState(null); 
+    const dispatch = useDispatch(); 
 
-    
     useEffect(() => {
-
-        const getFoodAndCategory = async () => {
+        const getCategory = async () => {
             try {
-                const { data } = await axios.get(`${URL}/category-and-types`, { withCredentials: true });
+                const { data } = await axios.get(`${URL}/get-category`, { withCredentials: true });
                 if (data.success) {
-                   setFoodCategory(data.getFoodCategories);
-                   setFoodType(data.getFoodTypes);
+                    dispatch(setCategory(data.data))
                 }
             } catch (error) {
                 console.log(error);
-                console.log(error.response.data.message);
             }
         }
-        getFoodAndCategory();
-    },[]);
-
-    return {
-        foodCategory,
-        foodType
-    }
+        getCategory();
+    }, [dispatch]);
 };
+export default useGetFoodCategory;
 
-
-export default useGetFoodAndCategory; 

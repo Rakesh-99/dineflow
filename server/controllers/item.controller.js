@@ -5,14 +5,13 @@ import {uploadOnCloudinary, deleteAssestFromCloudinary} from '../utils/cloudinar
 import shopModel from "../models/shop.model.js";
 import userModel from "../models/user.model.js";
 import mongoose from "mongoose";
-import { foodTypes, categories } from "../constants/menuItem.js";
 
 
 
 // Fetch all Item (for restaurant owner only): 
 export const getAllItems = expressAsyncHandler(async(req, res, next) => { 
     const user = req.userId; 
-    const items = await itemModel.find({owner: user}).populate("shop").populate("owner")
+    const items = await itemModel.find({owner: user}).populate("shop").populate("owner").populate("category");
 
     if(!items || items.length < 1){ 
         return next(new ErrorHandler(404, 'No items found!'))
@@ -32,7 +31,6 @@ export const getAllItems = expressAsyncHandler(async(req, res, next) => {
 export const createItem = expressAsyncHandler(async(req, res, next) => { 
 
     const {name, foodType, category, price, status} = req.body; 
-
     const {restaurantID} = req.params; 
 
     if(!mongoose.Types.ObjectId.isValid(restaurantID)){
@@ -180,31 +178,6 @@ export const deleteItemById = expressAsyncHandler(async(req, res, next) => {
     })
 })
 
-
-// get food category and types : 
-export const getFoodCategoriesAndTypes = (req, res, next) => { 
-
-    if( foodTypes.length < 1 ) { 
-        return next(new ErrorHandler(404, "No food types found!")); 
-    };
-
-    if( categories.length < 1) { 
-        return next(new ErrorHandler(404, 'No category found!'));
-    }; 
-
-    let getFoodTypes = [];  
-    let getFoodCategories = [];
-    
-    getFoodTypes.push(...foodTypes); 
-    getFoodCategories.push(...categories); 
-
-    return res.status(200).json({
-        success : true, 
-        message : 'menu optiions have been fetched',
-        getFoodTypes,
-        getFoodCategories
-    })
-}
 
 
 
