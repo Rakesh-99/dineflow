@@ -48,7 +48,7 @@ const NavBar = () => {
   const dispatch = useDispatch() ; 
   const {theme} = useSelector(state => state.themeSlice); 
   const {userAddress, userData } = useSelector(state => state.currentuserSlice); 
-  console.log(userAddress);
+
   
   
   

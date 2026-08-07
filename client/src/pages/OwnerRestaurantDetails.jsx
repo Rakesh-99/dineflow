@@ -49,7 +49,7 @@ import { Textarea } from "@/components/ui/textarea"
 import { GiModernCity } from "react-icons/gi"
 import { PiCityLight } from "react-icons/pi"
 import { BiBuildingHouse } from "react-icons/bi"
-import { useEffect, useState } from "react"
+import {  useState } from "react"
 
 
 
@@ -67,7 +67,7 @@ const OwnerRestaurantDetails = () => {
   const restaurantDetails = restaurants.filter(restaurant => restaurant._id === id);
   const restaurantData = restaurantDetails[0];
 
-  console.log("Is the state mutated => ", restaurants);
+
   
   const [loading , setLoading] = useState(false);
 
