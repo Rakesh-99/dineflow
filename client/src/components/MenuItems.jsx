@@ -14,7 +14,6 @@ import axios from "axios";
 import { useParams } from "react-router";
 const URL = import.meta.env.VITE_BACKEND_ITEM_API_URL;
 import { addMenuItemToRestaurant, deleteMenuFromRestaurant, updateMenuItem } from "@/redux/features/currentOwnerRestaurants.slice";
-import useGetFoodCategory from "@/hooks/useGetFoodAndCategory";
 import {
     AlertDialog,
     AlertDialogAction,
@@ -33,10 +32,9 @@ import {
 
 const MenuItems = ({ restaurantData }) => {
 
-    useGetFoodCategory();
     const { theme } = useSelector((state) => state.themeSlice);
     const { categories } = useSelector(state => state.categorySlice);
-   
+    
 
     const getCategoryName = (categoryId) => {
     const found = categories.find((cat) => cat._id === categoryId);
