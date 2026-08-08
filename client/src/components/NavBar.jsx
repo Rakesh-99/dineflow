@@ -36,6 +36,8 @@ import {
 } from "../components/ui/dropdown-menu"; 
 import { TiWeatherSunny } from "react-icons/ti";
 import { BsMoonStars } from "react-icons/bs";
+import { setCurrentRestaurantOwnerData } from '@/redux/features/currentOwnerRestaurants.slice';
+import { setCategory } from '@/redux/features/categorySlice';
 
 
 
@@ -81,6 +83,9 @@ const NavBar = () => {
             ); 
             if(data.success) { 
               dispatch(setCurrentUser(null));
+              dispatch(setCurrentRestaurantOwnerData(null))
+              dispatch(setCategory(null));
+              dispatch(switchTheme(null))
               toast.success(data.message);
               setIsLogoutBtnClick(false);
             }
