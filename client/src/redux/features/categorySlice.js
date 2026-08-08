@@ -15,9 +15,12 @@ const categorySlice = createSlice({
         createCategory : (state, action ) => { 
             const {data} = action.payload; 
             state.categories = state.categories.push(data);
+        }, 
+        clearCurrentCategory : (state)=> { 
+            state.categories = null
         }
     }
 }); 
 
-export const {setCategory, createCategory} = categorySlice.actions; 
+export const {setCategory, createCategory, clearCurrentCategory} = categorySlice.actions; 
 export default categorySlice.reducer; 

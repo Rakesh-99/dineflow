@@ -1,12 +1,14 @@
 import {useSelector, useDispatch} from 'react-redux';
 import { MapPin, Search, SearchIcon, ShoppingCart } from 'lucide-react';
-import { switchTheme } from '../redux/features/theme.slice';
+import { clearTheme, switchTheme } from '../redux/features/theme.slice';
 import {  useState } from 'react';
 import { Input } from './ui/input';
 import { RxCrossCircled } from "react-icons/rx";
 import { Button } from './ui/button';
 import axios from 'axios';
-import { setCurrentUser } from '../redux/features/currentUser.slice';
+import { clearCurrentUser } from '../redux/features/currentUser.slice';
+import { clearCurrentRestaurant } from '@/redux/features/currentOwnerRestaurants.slice';
+import { clearCurrentCategory } from '@/redux/features/categorySlice';
 const URL = import.meta.env.VITE_BACKEND_AUTH_API_URL;
 import {
   AlertDialog,
@@ -36,8 +38,7 @@ import {
 } from "../components/ui/dropdown-menu"; 
 import { TiWeatherSunny } from "react-icons/ti";
 import { BsMoonStars } from "react-icons/bs";
-import { setCurrentRestaurantOwnerData } from '@/redux/features/currentOwnerRestaurants.slice';
-import { setCategory } from '@/redux/features/categorySlice';
+
 
 
 
@@ -82,10 +83,10 @@ const NavBar = () => {
               }
             ); 
             if(data.success) { 
-              dispatch(setCurrentUser(null));
-              dispatch(setCurrentRestaurantOwnerData(null))
-              dispatch(setCategory(null));
-              dispatch(switchTheme('light'))
+              dispatch(clearCurrentUser());
+              dispatch(clearCurrentRestaurant())
+              dispatch(clearCurrentCategory());
+              dispatch(clearTheme())
               toast.success(data.message);
               setIsLogoutBtnClick(false);
             }

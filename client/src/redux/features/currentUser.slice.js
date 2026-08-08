@@ -21,10 +21,14 @@ const currentuserSlice = createSlice({
             "address2" : address_line2, 
             "city" : city
           }
+        }, 
+        clearCurrentUser : (state) => { 
+            state.userData  = null,
+            state.userAddress = null
         }
     }
 }); 
 
 
-export const { setCurrentUser, setCurrentUserCity} = currentuserSlice.actions; 
+export const { setCurrentUser, setCurrentUserCity, clearCurrentUser} = currentuserSlice.actions; 
 export default currentuserSlice.reducer; 

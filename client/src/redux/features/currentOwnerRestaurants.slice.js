@@ -26,6 +26,9 @@ const currentOwnerRestaurants = createSlice({
                 state.restaurants[restaurantIndex] = {...updatedRestaurantData} 
             }
         }, 
+        clearCurrentRestaurant : (state)=> { 
+            state.restaurants = null
+        },
         
         // menu Items : 
         addMenuItemToRestaurant : (state, action) => { 
@@ -56,5 +59,5 @@ const currentOwnerRestaurants = createSlice({
 
 
 
-export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant, updateMenuItem} = currentOwnerRestaurants.actions; 
+export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant, updateMenuItem, clearCurrentRestaurant} = currentOwnerRestaurants.actions; 
 export default currentOwnerRestaurants.reducer; 
