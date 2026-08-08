@@ -85,7 +85,7 @@ const NavBar = () => {
               dispatch(setCurrentUser(null));
               dispatch(setCurrentRestaurantOwnerData(null))
               dispatch(setCategory(null));
-              dispatch(switchTheme(null))
+              dispatch(switchTheme('light'))
               toast.success(data.message);
               setIsLogoutBtnClick(false);
             }
