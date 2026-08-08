@@ -8,17 +8,13 @@ const useGetFoodCategory = () => {
 
     const dispatch = useDispatch(); 
     const {userData} = useSelector((state)=> state.currentuserSlice); 
-    
-    
-
     useEffect(() => {
 
-        if(!userData?.user){
+        if(!userData?.role){
             return;
         }
 
         if(userData?.user === "user") {
-            
             const getCategoryForUser = async()=> { 
                 try {
                       const {data} = await axios.get(`${URL}/get-categories-user`, {withCredentials: true}); 
@@ -32,11 +28,12 @@ const useGetFoodCategory = () => {
             };
             getCategoryForUser();
             
-        }else if(userData?.user === "restaurantOwner"){
+        }else if(userData?.role === "restaurantOwner"){
             const getCategoryOfRestaurantOwner = async () => {
                 try {
                     const { data } = await axios.get(`${URL}/get-categories-owner`, { withCredentials: true });
                     if (data.success) {
+              
                         dispatch(setCategory(data.data))
                     }
                 } catch (error) {
