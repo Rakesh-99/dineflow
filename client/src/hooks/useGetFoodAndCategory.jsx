@@ -2,25 +2,53 @@ import axios from "axios";
 import { useEffect } from "react";
 const URL = import.meta.env.VITE_BACKEND_CATEGORY_API_URL;
 import { setCategory } from "@/redux/features/categorySlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const useGetFoodCategory = () => {
 
     const dispatch = useDispatch(); 
+    const {userData} = useSelector((state)=> state.currentuserSlice); 
+    
+    
 
     useEffect(() => {
-        const getCategory = async () => {
-            try {
-                const { data } = await axios.get(`${URL}/get-category`, { withCredentials: true });
-                if (data.success) {
+
+        if(!userData?.user){
+            return;
+        }
+
+        if(userData?.user === "user") {
+            
+            const getCategoryForUser = async()=> { 
+                try {
+                      const {data} = await axios.get(`${URL}/get-categories-user`, {withCredentials: true}); 
+                if(data.success){
                     dispatch(setCategory(data.data))
                 }
-            } catch (error) {
-                console.log(error);
+                } catch (error) {
+                    console.log(`An unexpected error occurred while fetching user categories =>${error}`);
+                }
+              
+            };
+            getCategoryForUser();
+            
+        }else if(userData?.user === "restaurantOwner"){
+            const getCategoryOfRestaurantOwner = async () => {
+                try {
+                    const { data } = await axios.get(`${URL}/get-categories-owner`, { withCredentials: true });
+                    if (data.success) {
+                        dispatch(setCategory(data.data))
+                    }
+                } catch (error) {
+                    console.log(`An unexpected error occurred while fetching restaurant owner categories =>${error}`);
+                }
             }
+            getCategoryOfRestaurantOwner();
+        }else {
+            return ;
         }
-        getCategory();
-    }, [dispatch]);
+       
+    }, [userData, dispatch]);
 };
 export default useGetFoodCategory;
 

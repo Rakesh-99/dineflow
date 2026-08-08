@@ -41,8 +41,8 @@ export const createCategory = expressAsyncHandler(async(req, res, next)=> {
     })
 }); 
 
-// get categories : 
-export const getCategory = expressAsyncHandler(async(req, res, next)=> {
+// get categories of a particular restaurant owner : 
+export const getCategoryForRestaurantOwner = expressAsyncHandler(async(req, res, next)=> {
     const user = req.userId; 
 
     const getAllCategory = await categoryModel.find({owner : user}).populate("owner"); 
@@ -55,6 +55,19 @@ export const getCategory = expressAsyncHandler(async(req, res, next)=> {
         success : true, 
         message : "Food category has been fetched",
         data : getAllCategory
+    })
+ }); 
+
+ // For USER -> get categories across all the restaurant owner : 
+ export const getCategoriesForUser = expressAsyncHandler(async(req, res, next)=> { 
+    const getCat = await categoryModel.find(); 
+    if(getCat.length < 1) { 
+        return next(new ErrorHandler(404, "No categories found!"))
+    }
+    return res.status(200).json({
+        success : true,
+        message : 'All categories have been fetched',
+        data : getCat
     })
  })
 
