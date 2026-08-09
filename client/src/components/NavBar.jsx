@@ -56,8 +56,7 @@ const NavBar = () => {
   
   
   
-  const [isShowSearchBar, setIsShowSearchBar] = useState(false); 
-  const [searchFoodData , setSearchFoodData] = useState('');
+
   const [isLogoutBtnClicked, setIsLogoutBtnClick] = useState(false);
   
   
@@ -66,14 +65,8 @@ const NavBar = () => {
           dispatch(switchTheme(themePreferences))
         }
 
-        const inputFoodDataHandler = (e) => { 
-          const { value} = e.target
-          setSearchFoodData(value)
-        }
+   
 
-        const  formSubmitHandler = (e) => {
-            e.preventDefault() ;
-        }
 
         const logoutHandler = async() => { 
           try {
@@ -127,48 +120,7 @@ const NavBar = () => {
                 </div>
               </div>
 
-                  {/* Middle Section 1 (city and search input ):  */}
-                  <div className="">
-                    {
-                     userData?.role === 'user' &&
-
-                     <>
-                      <div className="md:flex hidden rounded-xs gap-5  items-center">
-                          {/* City location :  */}
-                            <div className={`${theme === "dark" ? "border-zinc-700" : "border-zinc-100"} border rounded-md px-2 flex items-center`}>
-                              <MapPin color='#F54927' className='size-4'/>
-                              <input 
-                              type="text" 
-                              disabled
-                              value={userAddress?.address2}  
-                              className=' text-[10px]  outline-none p-2 rounded-md min-w-60  '
-                              />
-                            </div>
-
-                            {/* Search food and restaurants :  */}
-                            <div className={` border-b px-2 flex  items-center ${theme === "dark" ? "border-zinc-700" : "border-zinc-100"}`}>
-
-                              <Search color='gray'  className='size-4 absolute md:cursor-default cursor-pointer' onClick={() => setIsShowSearchBar(!isShowSearchBar)}/>
-
-                              <input 
-                              type="text" 
-                              value={searchFoodData}
-                              onChange={inputFoodDataHandler} 
-                              placeholder='Search food, restaurants ..'  
-                              className='  text-sm placeholder:text-sm outline-none ml-5 py-1 rounded-md  w-60'/>
-                            </div>
-                    </div>
-
-                    {/* only searchbar icon for mobile devices :  */}
-                    <div className="h-10 w-10 md:hidden  relative flex items-center justify-center">
-                        <Search size={20} color='gray' className='absolute  active:scale-95 duration-200 transition-all' onClick={()=> setIsShowSearchBar(!isShowSearchBar)}/>
-                    </div>
-                     </>
-                    }
-
-                   
-                  </div>
-
+              
                 
 
                   {/* Right Section :  (cart , my order and account ) */}
@@ -231,60 +183,7 @@ const NavBar = () => {
 
                   </div>
 
-                  {/* search bar toggle for mobile devices :  */}
-                    {
-                      isShowSearchBar && 
-
-                          <div className={`z-10 absolute border shadow duration-200 transition-all w-[90%] p-5  rounded-sm md:hidden flex flex-col gap-5 top-30 ${theme === 'light' ? ' border-zinc-200 ' : '  border-zinc-600'} `}>
-
-                          {/* Cross icon to cancel :  */}
-                          <div className="w-full">
-                          <RxCrossCircled size={20} className='cursor-pointer  float-right active:scale-90 transition-all duration-300' onClick={()=> setIsShowSearchBar(false)}/>
-                          </div>
-                          
-                          <p className='text-xs'>Search food and restaurant nearby you</p>
-                          <form action="" onSubmit={formSubmitHandler}>
-
-                        <div className="flex flex-col gap-5 shadow-xs rounded ">
-
-                        {/* section for showing current location :  */}
-                          <div className= {`flex px-2 items-center border rounded ${theme === "dark"? "border-zinc-700": "border-zinc-100" }`}>
-
-                          <MapPin color='red' className={`size-4`}/>
-                          <Input 
-                          type="text"
-                          name = 'searchlocation'
-                          value = {userAddress.address2}
-                          placeholder='Enter your location'
-                          className={` placeholder:text-sm  border-none! text-xs  `}
-                          />
-                          </div>
-                        
-                        {/* section for searching restaurants :  */}
-                        <div className={`flex border-b items-center ${theme === "dark"? "border-zinc-700": "border-zinc-100" }`}>
-                          <Search color='gray' className='size-4  '/>
-
-                          <Input 
-                          name = 'searchfood'
-                          value = {searchFoodData}
-                          onChange = {inputFoodDataHandler}
-                          placeholder='Search food..'
-                          className={` placeholder:text-sm border-none!  text-xs  `}
-                          />
-                        </div>
-
-
-                        </div>
-                       
-
-                          <Button type='submit' className='rounded py-2 mt-2 float-right text-xs bg-[#0071e3]'>
-                            <SearchIcon />
-                            <span className='text-[9px]'>Search</span>
-                          </Button>
-                          </form>
-                        
-                          </div>
-                    }
+              
 
                 </div>
                 : 
