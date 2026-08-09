@@ -22,7 +22,11 @@ The platform supports multiple user roles( User, Delivery Agent, Restaurant Owne
 |---------|-------|
 | ![Signup](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/signup.png) | ![Login](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/login.png) |
 
+---
+# Hero section (user) 
+![Home page](https://github.com/Rakesh-99/dineflow/blob/main/client/src/assets/user/user_home_page.png)
 
+---
 ---
 
 # 🏪 Restaurant Owner Dashboard
