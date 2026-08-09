@@ -12,6 +12,9 @@ const currentOwnerRestaurants = createSlice({
         setCurrentRestaurantOwnerData : (state, action) => { 
             state.restaurants = action.payload; 
         },
+        setCityBasedRestaurants : (state, action) => { 
+            state.restaurants = action.payload
+        },
         addNewRestaurant : (state, action) => { 
             state.restaurants.push(action.payload);
         }, 
@@ -59,5 +62,5 @@ const currentOwnerRestaurants = createSlice({
 
 
 
-export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant, updateMenuItem, clearCurrentRestaurant} = currentOwnerRestaurants.actions; 
+export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant, updateMenuItem, clearCurrentRestaurant, setCityBasedRestaurants} = currentOwnerRestaurants.actions; 
 export default currentOwnerRestaurants.reducer; 

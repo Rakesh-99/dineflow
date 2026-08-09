@@ -6,6 +6,7 @@
   import ProtectedRoutes from "./routes/ProtectedRoutes";
   import RestaurantOwnerRoutes from "./routes/RestaurantOwnerRoutes";
 import useGetFoodCategory from "./hooks/useGetFoodAndCategory";
+import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
 
   // lazy loading and code splitting :
   const Account = lazy(() => import("./pages/auth/Account"));
@@ -141,6 +142,7 @@ import useGetFoodCategory from "./hooks/useGetFoodAndCategory";
     // custom hooks :
     useGetCurrentUser();
     useGetCurrentLocation();
+    useGetCityBasedRestaurants()
     useGetFoodCategory(); 
 
     return (
