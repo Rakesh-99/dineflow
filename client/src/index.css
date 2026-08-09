@@ -7,6 +7,16 @@
 *{
   box-sizing: border-box;
 }
+
+/* Hide scrollbar but keep scrolling */
+.hide-scrollbar {
+  scrollbar-width: 1px; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none; /* Chrome/Safari */
+}
 @custom-variant dark (&:is(.dark *));
 
 :root {
