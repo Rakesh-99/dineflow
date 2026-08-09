@@ -14,7 +14,8 @@ const useGetFoodCategory = () => {
             return;
         }
 
-        if(userData?.user === "user") {
+        if(userData?.role === "user") {
+            
             const getCategoryForUser = async()=> { 
                 try {
                       const {data} = await axios.get(`${URL}/get-categories-user`, {withCredentials: true}); 
