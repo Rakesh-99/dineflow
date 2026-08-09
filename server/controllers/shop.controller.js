@@ -9,17 +9,20 @@ import itemModel from "../models/item.model.js";
 
 
 // Fetch shop from the user POV. Because user can see all the restaurants from all the restaurant owners : 
-export const fetchAllRestaurantsForUser = expressAsyncHandler(async(req, res, next) => { 
-
-    const getRestaurants = await shopModel.find().populate('owner');
+export const getRestaurantBasedOnLocation = expressAsyncHandler(async(req, res, next) => { 
+    const {city} = req.query; 
+   
+    const getRestaurants = await shopModel.find({
+        city : {$regex : `^${city}`, $options : "i" }
+    })
 
     if(getRestaurants.length < 1) { 
-        return next(new ErrorHandler(404, 'No restaurant found!')); 
+        return next(new ErrorHandler(404, "We'r not there yet!"));
     }
 
-    return res.status(200).json({ 
+    return res.status(200).json({
         success : true,
-        message : `All restaurants have been fetched`,
+        message : `Restaurants have been fetched`,
         data : getRestaurants
     })
 });
@@ -52,8 +55,7 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
 
     if(!shopName || !city || !state || !address || !image || !description || !status) {
         return next(new ErrorHandler(400, 'All fields are required!'));
-    }
-
+    }  
 
     const user = await userModel.findById({_id : userId}); 
 
