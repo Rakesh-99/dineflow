@@ -23,7 +23,7 @@ const currentuserSlice = createSlice({
           }
         }, 
         clearCurrentUser : (state) => { 
-            state.userData  = null,
+            state.userData  = null;
             state.userAddress = null
         }
     }
