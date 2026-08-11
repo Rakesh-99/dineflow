@@ -11,13 +11,16 @@ import {setCurrentUserCity} from '../redux/features/currentUser.slice';
 const useGetCurrentLocation = () => {
 
     const {userData} = useSelector((state)=> state.currentuserSlice);
-    console.log(userData);
+    
     
     const dispatch = useDispatch(); 
     useEffect(()=> { 
 
+        if(!userData) { 
+            return; 
+        }
+
         if(!navigator.geolocation) {
-            console.log("Geo location is not supporeted by this browser!");
             return;
         }
 
@@ -38,7 +41,7 @@ const useGetCurrentLocation = () => {
                 return; 
             }
         })
-    },[userData?._id, dispatch]); 
+    },[userData, dispatch]); 
 
 }
 
