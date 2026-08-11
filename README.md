@@ -13,19 +13,23 @@ DineFlow is a comprehensive restaurant management and food delivery platform . I
 The platform supports multiple user roles( User, Delivery Agent, Restaurant Owner ), secure authentication, location based restaurant discovery, online payments, and live order status updates.
 
 ---
-# 📸 Application Screenshots
+# Application Screenshots
 
 
-## 🔐 Authentication
+##  Signup/Login page
 
 | Sign Up | Login |
 |---------|-------|
 | ![Signup](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/signup.png) | ![Login](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/login.png) |
 
+---
+# Hero section (user) 
+![Home page](https://github.com/Rakesh-99/dineflow/blob/main/client/src/assets/user/user_home_page.png)
 
 ---
+---
 
-# 🏪 Restaurant Owner Dashboard
+#  Restaurant Owner Dashboard:
 
 
 ## Restaurant Listing
@@ -79,7 +83,7 @@ The platform supports multiple user roles( User, Delivery Agent, Restaurant Owne
 
 ## Features
 
-### 👤 Customer Features
+###  Customer Features
 
 * User Registration & Login
 * Email OTP Verification
@@ -98,7 +102,7 @@ The platform supports multiple user roles( User, Delivery Agent, Restaurant Owne
 
 ---
 
-### 🏪 Restaurant Owner Features
+###  Restaurant Owner Features
 
 * Dedicated Restaurant Dashboard
 * Restaurant Registration & Listing
@@ -131,7 +135,7 @@ Delivered
 
 ---
 
-### 🚴 Delivery Agent Features
+###  Delivery Agent Features
 
 * Dedicated Delivery Dashboard
 * Receive Delivery Requests
