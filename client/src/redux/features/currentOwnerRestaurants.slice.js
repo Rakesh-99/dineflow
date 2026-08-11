@@ -4,7 +4,8 @@ import {createSlice} from '@reduxjs/toolkit';
 const currentOwnerRestaurants = createSlice({
     name : 'currentOwnerRestaurants', 
     initialState : {
-        restaurants: null
+        restaurants: null, 
+        userCityBasedRestaurants : null
     }, 
     reducers : { 
 
@@ -12,8 +13,8 @@ const currentOwnerRestaurants = createSlice({
         setCurrentRestaurantOwnerData : (state, action) => { 
             state.restaurants = action.payload; 
         },
-        setCityBasedRestaurants : (state, action) => { 
-            state.restaurants = action.payload
+        setCityBasedRestaurants : (state, action) => {  
+            state.userCityBasedRestaurants = action.payload
         },
         addNewRestaurant : (state, action) => { 
             state.restaurants.push(action.payload);
@@ -29,8 +30,12 @@ const currentOwnerRestaurants = createSlice({
                 state.restaurants[restaurantIndex] = {...updatedRestaurantData} 
             }
         }, 
-        clearCurrentRestaurant : (state)=> { 
+        clearCurrentOwnerRestaurant : (state)=> { 
             state.restaurants = null
+        },
+
+        clearCityBasedUserRestaurants : (state) => { 
+            state.userCityBasedRestaurants = null; 
         },
         
         // menu Items : 
@@ -62,5 +67,5 @@ const currentOwnerRestaurants = createSlice({
 
 
 
-export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant, updateMenuItem, clearCurrentRestaurant, setCityBasedRestaurants} = currentOwnerRestaurants.actions; 
+export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant, updateMenuItem, clearCurrentOwnerRestaurant, setCityBasedRestaurants, clearCityBasedUserRestaurants} = currentOwnerRestaurants.actions; 
 export default currentOwnerRestaurants.reducer; 

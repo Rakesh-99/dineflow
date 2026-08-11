@@ -7,7 +7,7 @@ import { RxCrossCircled } from "react-icons/rx";
 import { Button } from './ui/button';
 import axios from 'axios';
 import { clearCurrentUser } from '../redux/features/currentUser.slice';
-import { clearCurrentRestaurant } from '@/redux/features/currentOwnerRestaurants.slice';
+import { clearCurrentOwnerRestaurant, clearCityBasedUserRestaurants } from '@/redux/features/currentOwnerRestaurants.slice';
 import { clearCurrentCategory } from '@/redux/features/categorySlice';
 const URL = import.meta.env.VITE_BACKEND_AUTH_API_URL;
 import {
@@ -77,7 +77,8 @@ const NavBar = () => {
             ); 
             if(data.success) { 
               dispatch(clearCurrentUser());
-              dispatch(clearCurrentRestaurant())
+              dispatch(clearCurrentOwnerRestaurant());
+              dispatch(clearCityBasedUserRestaurants());
               dispatch(clearCurrentCategory());
               dispatch(clearTheme())
               toast.success(data.message);
