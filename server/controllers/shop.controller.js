@@ -47,13 +47,13 @@ export const fetchOwnerRestaurants = expressAsyncHandler(async(req, res, next) =
 // Create Shop : 
 export const createShop = expressAsyncHandler(async(req, res, next)=> { 
 
-    const {shopName, city, state, address, description, status} = req.body; 
+    const {shopName, city, state, address, description, status, costForTwo, budgetFriendly} = req.body; 
     
     const userId = req.userId ; 
 
     const image = req.file ;
 
-    if(!shopName || !city || !state || !address || !image || !description || !status) {
+    if(!shopName || !city || !state || !address || !image || !description || !status || !costForTwo || !budgetFriendly) {
         return next(new ErrorHandler(400, 'All fields are required!'));
     }  
 
@@ -73,6 +73,8 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
         address, 
         description,
         status,
+        costForTwo,
+        budgetFriendly,
         image : {
             url : cloudinaryImgURL.url,
             public_id : cloudinaryImgURL.public_id,
@@ -93,7 +95,7 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
 // edit shop controller :  
 export const updateShop = expressAsyncHandler(async(req, res, next)=> { 
 
-    const { shopName , address, city, state, description, status} = req.body ; 
+    const { shopName , address, city, state, description, status, costForTwo, budgetFriendly} = req.body ; 
 
     const userId = req.userId; 
     const {shopId} = req.params; 
@@ -119,6 +121,8 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
     if(description) updatedData.description = description;
     if(city) updatedData.city = city; 
     if(state) updatedData.state = state; 
+    if(costForTwo) updatedData.costForTwo = costForTwo;
+    if(budgetFriendly) updatedData.budgetFriendly = budgetFriendly;
     if(file) updatedData.image = {
         "url" : cloudinaryImgURL.url,
         "resource_type" : cloudinaryImgURL.resource_type,

@@ -1,4 +1,4 @@
-import mongoose, { Mongoose, Schema } from "mongoose";
+import mongoose, { Mongoose, Schema, Types } from "mongoose";
 
 
 
@@ -38,6 +38,18 @@ const shopSchema = new mongoose.Schema({
         type : String, 
         required : [true, 'City is required']
     }, 
+    costForTwo: { 
+        type : Number, 
+        required : true
+    }, 
+    budgetFriendly : { 
+        type : Boolean,
+        default : true, 
+    },
+    rating : { 
+       ref: 'Rating', 
+       type : Schema.Types.ObjectId
+    },
     address : { 
         type  : String, 
         required: [true, 'Address is required!']
