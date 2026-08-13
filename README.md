@@ -16,15 +16,19 @@ The platform supports multiple user roles( User, Delivery Agent, Restaurant Owne
 # Application Screenshots
 
 
-##  Signup/Login page
+###  Signup/Login page
 
 | Sign Up | Login |
 |---------|-------|
 | ![Signup](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/signup.png) | ![Login](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/login.png) |
 
 ---
-# Hero section (user) 
-![Home page](https://github.com/Rakesh-99/dineflow/blob/main/client/src/assets/user/user_home_page.png)
+### Hero section ( if restaurant found in city )  
+![Home page](https://github.com/Rakesh-99/dineflow/blob/main/client/src/assets/user/cityBasedRestaurant.png)
+
+
+### Hero section ( if restaurant not found in city )  
+![Home Page](https://github.com/Rakesh-99/dineflow/blob/main/client/src/assets/user/restaurantNotFound.png)
 
 ---
 ---
@@ -32,21 +36,21 @@ The platform supports multiple user roles( User, Delivery Agent, Restaurant Owne
 #  Restaurant Owner Dashboard:
 
 
-## Restaurant Listing
+### Restaurant Listing
 
 ![Restaurant Listing](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurant_listing.png)
 
 
 ---
 
-## Create / Update Restaurant
+### Create / Update/ and manage Restaurant
 
 ![Create Restaurant](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/createOrEdit_restaurant.png)
 
 
 ---
 
-## Restaurant Details
+### Restaurant Details
 
 | Dark Theme | Light Theme |
 |------------|-------------|
@@ -55,13 +59,13 @@ The platform supports multiple user roles( User, Delivery Agent, Restaurant Owne
 
 ---
 
-## Menu Management
+### Menu Management
 
 ![Create Update Menu](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/createOrUpdateMneu.png)
 
 
 ---
-## Highlights
+### Highlights
 
 * Multi-Role Authentication System
 * Restaurant Owner Dashboard
@@ -81,7 +85,7 @@ The platform supports multiple user roles( User, Delivery Agent, Restaurant Owne
 
 ---
 
-## Features
+### Features
 
 ###  Customer Features
 
@@ -163,7 +167,7 @@ Delivered
 
 ---
 
-## Performance Optimizations
+### Performance Optimizations
 
 * React Lazy Loading
 * Code Splitting
@@ -173,7 +177,7 @@ Delivered
 
 ---
 
-## Technology Stack
+### Technology Stack
 
 ### Frontend
 
@@ -213,7 +217,7 @@ Delivered
 
 ---
 
-## Application Roles
+### Application Roles
 
 ### Customer
 
@@ -246,7 +250,7 @@ Delivery agents can:
 
 ---
 
-## Project Architecture
+### Project Architecture
 
 The application follows a scalable and modular architecture based on industry best practices.
 
