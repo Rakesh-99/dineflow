@@ -185,7 +185,7 @@ const RestaurantListings = () => {
 
                                         </div>
 
-                                        {/* footer : created/updated + view btn, replaces old float-right button */}
+                                        {/* footer : created/updated + view btn */}
                                         <div className={`mt-3 pt-3 flex items-center justify-between border-t ${theme === 'light' ? 'border-gray-100' : 'border-zinc-800'}`}>
                                             <div className="flex flex-col gap-0.5 text-[10px] text-gray-400">
                                                 <span className="flex items-center gap-1">
@@ -196,7 +196,7 @@ const RestaurantListings = () => {
 
                                             <Button
                                                 className="rounded-full bg-customOrange h-7 px-3 gap-1"
-                                                onClick={() => navigate(`/restaurantinfo/${getRestaurantName(restaurant.shopName)}/${restaurant._id}`)}
+                                                onClick={() => navigate(`/user-restaurant-details/${getRestaurantName(restaurant.shopName)}/${restaurant._id}`)}
                                             >
                                                 <span className="text-xs font-semibold">View</span>
                                                 <IoIosArrowDropright className="size-4 transition-transform group-hover:translate-x-0.5" />

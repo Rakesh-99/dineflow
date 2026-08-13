@@ -12,6 +12,7 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
   const Account = lazy(() => import("./pages/auth/Account"));
   const GuestRoutes = lazy(() => import("./routes/GuestRoutes"));
   const Home = lazy (()=> import("@/pages/Home")); 
+  const UserRestaurantDetails = lazy(()=> import("@/pages/UserRestaurantDetails")); 
 
   // Restaurant owner routes : 
   const RestaurantMenu = lazy(()=> import("@/pages/RestaurantMenu"));
@@ -39,6 +40,16 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
               <Suspense fallback={<>Loading ..</>}>
                 <ProtectedRoutes>
                   <Home/>
+                </ProtectedRoutes>
+              </Suspense>
+            )
+          },
+          {
+            path : "user-restaurant-details/:restaurantName/:restaurantId",
+            element : (
+              <Suspense fallback={<>Loading ..</> }>
+                <ProtectedRoutes>
+                  <UserRestaurantDetails/>
                 </ProtectedRoutes>
               </Suspense>
             )
