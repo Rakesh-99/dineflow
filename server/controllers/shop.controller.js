@@ -47,7 +47,7 @@ export const fetchOwnerRestaurants = expressAsyncHandler(async(req, res, next) =
 // Create Shop : 
 export const createShop = expressAsyncHandler(async(req, res, next)=> { 
 
-    const {shopName, city, state, address, description, status, costForTwo, budgetFriendly} = req.body; 
+    const {shopName, city, state, address, description, status, costForTwo, budgetFriendly, isVegRestaurant} = req.body; 
     
     const userId = req.userId ; 
 
@@ -74,6 +74,7 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
         description,
         status,
         costForTwo,
+        isVegRestaurant,
         budgetFriendly,
         image : {
             url : cloudinaryImgURL.url,

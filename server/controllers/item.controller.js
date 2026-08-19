@@ -56,9 +56,6 @@ export const createItem = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(404, 'User not found!'));
     }
 
-    if(user.role !== 'restaurantOwner'){ 
-        return next(new ErrorHandler(403, 'You are not authorized to create an Item!')); 
-    }
 
     const restaurant = await shopModel.findOne({owner : userId, _id : restaurantID});
 
@@ -66,6 +63,9 @@ export const createItem = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(404, 'Restaurant not found!'))
     }
 
+    if(restaurant.isVegRestaurant && foodType === "non-veg"){
+        return next(new ErrorHandler(400, "You can not add non-veg item in a veg restaurant!"))
+    }
 
     const item = new itemModel({
         name, 
