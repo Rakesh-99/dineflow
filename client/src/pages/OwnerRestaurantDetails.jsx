@@ -217,7 +217,8 @@ const OwnerRestaurantDetails = () => {
                 }
                 <BreadcrumbItem>
                   <BreadcrumbPage className={`${theme === 'dark' ? 'text-white' : 'text-zinc-700'}`}>
-                    {location.pathname.split("/")[1]}
+                    {/* {location.pathname.split("/")[1]} */}
+                    {restaurantData?.shopName}
                   </BreadcrumbPage>
                 </BreadcrumbItem>
               </BreadcrumbList>
