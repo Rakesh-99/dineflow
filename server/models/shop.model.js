@@ -46,6 +46,10 @@ const shopSchema = new mongoose.Schema({
         type : Boolean,
         default : true, 
     },
+    isVegRestaurant : { 
+        type : Boolean,
+        default : false
+    },
     rating : { 
        ref: 'Rating', 
        type : Schema.Types.ObjectId
