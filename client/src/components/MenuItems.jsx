@@ -34,16 +34,16 @@ const MenuItems = ({ restaurantData }) => {
 
     const { theme } = useSelector((state) => state.themeSlice);
     const { categories } = useSelector(state => state.categorySlice);
-    
+
 
     const getCategoryName = (categoryId) => {
-    const found = categories.find((cat) => cat._id === categoryId);
-    return found ? found.categoryName : "Uncategorized";
-};
-    
+        const found = categories.find((cat) => cat._id === categoryId);
+        return found ? found.categoryName : "Uncategorized";
+    };
 
-    
-   
+
+
+
 
     const { restaurantname, id } = useParams();
     const dispatch = useDispatch();
@@ -144,8 +144,8 @@ const MenuItems = ({ restaurantData }) => {
 
         const { name, foodType, category, image, status, price } = menuData;
 
- 
-        
+
+
 
         // // preparing the form data : 
         let formData = new FormData();
@@ -157,7 +157,7 @@ const MenuItems = ({ restaurantData }) => {
         formData.append("status", status);
 
         console.log(formData);
-        
+
 
         // // api call : 
         try {
@@ -334,26 +334,37 @@ const MenuItems = ({ restaurantData }) => {
                                             <SelectTrigger className="w-full  border-none">
                                                 <SelectValue placeholder="Select Category" />
                                             </SelectTrigger>
-                                            <SelectContent className={` ${theme === "dark" ? "bg-zinc-700 text-zinc-300" : "bg-zinc-100 text-zinc-700"}`}>
-                                                <SelectGroup>
-                                                    <SelectLabel className={` ${theme === "dark" ? " text-zinc-100" : " text-zinc-800"}`}>Select Type</SelectLabel>
-                                                   {categories.length > 0 &&
-                                                        categories.map((category) => (
+                                            {categories?.length > 0 ?
+                                                <SelectContent className={` ${theme === "dark" ? "bg-zinc-700 text-zinc-300" : "bg-zinc-100 text-zinc-700"}`}>
+                                                    <SelectGroup>
+                                                        <SelectLabel className={` ${theme === "dark" ? " text-zinc-100" : " text-zinc-800"}`}>Select Type</SelectLabel>
+
+                                                        {categories.map((category) => (
                                                             <SelectItem
                                                                 key={category._id}
                                                                 value={category._id}
-                                                                className={`transition-all duration-75 ${
-                                                                    theme === "dark"
-                                                                        ? "hover:bg-zinc-500!"
-                                                                        : "hover:bg-zinc-200!"
-                                                                }`}
+                                                                className={`transition-all duration-75 ${theme === "dark"
+                                                                    ? "hover:bg-zinc-500!"
+                                                                    : "hover:bg-zinc-200!"
+                                                                    }`}
                                                             >
                                                                 {category.categoryName}
                                                             </SelectItem>
-                                                        ))
-                                                    }
-                                                </SelectGroup>
-                                            </SelectContent>
+                                                        ))}
+
+
+                                                    </SelectGroup>
+
+                                                </SelectContent>
+                                                :
+                                                <div className="relative group inline-flex">
+                                                    <CirclePlus className="size-5 cursor-pointer hover:text-customOrange" />
+
+                                                    <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 whitespace-nowrap rounded-md  px-2 py-1 text-xs  opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
+                                                        Create a category
+                                                    </span>
+                                                </div>
+                                            }
                                         </Select>
                                     </div>
                                 </div>
@@ -470,8 +481,8 @@ const MenuItems = ({ restaurantData }) => {
                     </TableHeader>
                     <TableBody className={`text-xs`}>
                         {restaurantData && restaurantData?.item.map((data) => {
-                          
-                            
+
+
                             return (
                                 <TableRow key={data._id} className={` transition-all duration-200 ${theme === "dark" && "hover:bg-zinc-700 border-zinc-700 shadow"}`}>
                                     <TableCell className={`flex items-center gap-2`}>
@@ -601,13 +612,13 @@ const MenuItems = ({ restaurantData }) => {
                                                                     </SelectTrigger>
                                                                     <SelectContent className={` ${theme === "dark" ? "bg-zinc-700 text-zinc-300" : "bg-zinc-100 text-zinc-700"}`}>
                                                                         <SelectGroup>
-                                                                        <SelectLabel className={` ${theme === "dark" ? " text-zinc-100" : " text-zinc-800"}`}>Select Type</SelectLabel>
-                                                                        {categories.length > 0 && categories.map((category) => (
-                                                                            <SelectItem className={`transition-all duration-75 ${theme === "dark" ? "hover:bg-zinc-500!" : "hover:bg-zinc-200! "}`} key={category?._id} value={category._id}>
-                                                                                {category.categoryName}
-                                                                            </SelectItem>
-                                                                        ))}
-                                                                    </SelectGroup>
+                                                                            <SelectLabel className={` ${theme === "dark" ? " text-zinc-100" : " text-zinc-800"}`}>Select Type</SelectLabel>
+                                                                            {categories.length > 0 && categories.map((category) => (
+                                                                                <SelectItem className={`transition-all duration-75 ${theme === "dark" ? "hover:bg-zinc-500!" : "hover:bg-zinc-200! "}`} key={category?._id} value={category._id}>
+                                                                                    {category.categoryName}
+                                                                                </SelectItem>
+                                                                            ))}
+                                                                        </SelectGroup>
                                                                     </SelectContent>
                                                                 </Select>
                                                             </div>
