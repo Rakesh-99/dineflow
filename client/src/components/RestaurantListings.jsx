@@ -8,6 +8,7 @@ import { useNavigate } from "react-router";
 import { MapPin, UserRound } from "lucide-react";
 import { Button } from "./ui/button";
 import useGetShopsOfCurrentOwner from "@/hooks/useGetShopsOfCurrentOwner";
+import NoRestaurantFound from "./NoRestaurantFound";
 
 
 
@@ -30,7 +31,7 @@ const RestaurantListings = () => {
     if (userData.role === "restaurantOwner") {
         if (!restaurants || restaurants?.length < 1) {
             return (
-                <h1>No restaurant found!</h1>
+                <NoRestaurantFound/>
             )
         }
     }
