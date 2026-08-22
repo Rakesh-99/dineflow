@@ -53,7 +53,7 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
 
     const image = req.file ;
 
-    if(!shopName || !city || !state || !address || !image || !description || !status || !costForTwo || !budgetFriendly) {
+    if(!shopName  || !state || !address || !image || !description || !status || !costForTwo || !budgetFriendly) {
         return next(new ErrorHandler(400, 'All fields are required!'));
     }  
 
@@ -68,7 +68,6 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
     // now create a shop : 
     const shop = new shopModel({
         shopName,
-        city,
         state, 
         address, 
         description,

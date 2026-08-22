@@ -34,10 +34,10 @@ const shopSchema = new mongoose.Schema({
         type : String, 
         required : [true, 'State is required!']
     },  
-    city : {
-        type : String, 
-        required : [true, 'City is required']
-    }, 
+    // city : {
+    //     type : String, 
+    //     required : [true, 'City is required']
+    // }, 
     costForTwo: { 
         type : Number, 
         required : true
