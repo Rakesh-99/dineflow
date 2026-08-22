@@ -170,12 +170,13 @@ const MenuItems = ({ restaurantData }) => {
                 dispatch(addMenuItemToRestaurant(data.data));
             }
         } catch (error) {
-            toast.error(error?.response.data.messsage);
+            toast.error(error?.response?.data?.message || "Could not create the menu item!");
+            console.log(error);
         } finally {
             setLoading(false);
         }
 
-        // clearing the form after performing api call : 
+        // clearing the form after performing api call :
         setMenuData({
             name: "",
             foodType: "",
@@ -196,6 +197,7 @@ const MenuItems = ({ restaurantData }) => {
                 dispatch(deleteMenuFromRestaurant(data.item))
             }
         } catch (error) {
+            toast.error(error?.response?.data?.message || "Could not delete the menu item!");
             console.log(error);
         } finally {
             setLoading(false);
@@ -222,6 +224,7 @@ const MenuItems = ({ restaurantData }) => {
                 dispatch(updateMenuItem(data.data));
             }
         } catch (error) {
+            toast.error(error?.response?.data?.message || "Could not update the menu item!");
             console.log(error);
         } finally {
             setLoading(false);

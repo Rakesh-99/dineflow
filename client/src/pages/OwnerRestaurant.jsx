@@ -85,12 +85,12 @@ const budgetTabHandler = (e) => {
  if (e === "yes") {
       setRestaurantData((prev) => ({
         ...prev,
-        status: true
+        budgetFriendly: true
       }))
     } else {
       setRestaurantData((prev) => ({
         ...prev,
-        status: false
+        budgetFriendly: false
       }))
     }
 };
