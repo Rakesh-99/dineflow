@@ -31,7 +31,7 @@ export const getRestaurantBasedOnLocation = expressAsyncHandler(async(req, res, 
 export const fetchOwnerRestaurants = expressAsyncHandler(async(req, res, next) => { 
     const userId = req.userId ; 
 
-    const getRestaurants = await shopModel.find({owner : userId}).sort({createdAt: -1}).populate("owner").populate("item");
+    const getRestaurants = await shopModel.find({owner : userId}).sort({createdAt: -1}).populate({path:"owner", select:"-password -otp -otpExpiration"}).populate("item");
 
     if(getRestaurants.length < 0 ) { 
         return next(new ErrorHandler(404, 'No restaurant found, Please create one!')); 
@@ -98,7 +98,7 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
 // edit shop controller :  
 export const updateShop = expressAsyncHandler(async(req, res, next)=> { 
 
-    const { shopName , address, city, state, description, status, costForTwo, budgetFriendly} = req.body ; 
+    const { shopName , address1, address2, street, city, state, description, status, costForTwo, budgetFriendly} = req.body ; 
 
     const userId = req.userId; 
     const {shopId} = req.params; 
@@ -120,12 +120,14 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
 
     const updatedData = {} ; 
     if(shopName) updatedData.shopName = shopName;
-    if(address) updatedData.address = address; 
+    if(address1) updatedData.address1 = address1;
+    if(address2 !== undefined) updatedData.address2 = address2; 
+    if(street !== undefined) updatedData.street = street;
     if(description) updatedData.description = description;
     if(city) updatedData.city = city; 
     if(state) updatedData.state = state; 
     if(costForTwo) updatedData.costForTwo = costForTwo;
-    if(budgetFriendly) updatedData.budgetFriendly = budgetFriendly;
+    if(budgetFriendly !== undefined) updatedData.budgetFriendly = budgetFriendly;
     if(file) updatedData.image = {
         "url" : cloudinaryImgURL.url,
         "resource_type" : cloudinaryImgURL.resource_type,
@@ -138,7 +140,7 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
         {_id: shopId, owner : user._id},
         {$set : updatedData},
         {returnDocument: 'after'}
-    ).populate('owner')
+    ).populate({path:"owner", select:"-password -otp -otpExpiration"})
     
     if(!shop) { 
         return next(new ErrorHandler(401, `Either the requested shop does't exist or you are unauthorized`))
@@ -160,7 +162,7 @@ export const getOwnerRestaurantByID = expressAsyncHandler(async(req, res, next) 
     }; 
     const userId = req.userId; 
 
-    const shop = await shopModel.findOne({owner : userId, _id : shopId}).populate({path:"owner", select : "-otpExpiration"}).populate("item");
+    const shop = await shopModel.findOne({owner : userId, _id : shopId}).populate({path:"owner", select:"-password -otp -otpExpiration"}).populate("item");
     
     if(!shop) { 
         return next(new ErrorHandler(404, 'Shop not found!'))

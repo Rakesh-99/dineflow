@@ -83,9 +83,9 @@ export const createItem = expressAsyncHandler(async(req, res, next) => {
     })
     await item.save(); 
 
-   restaurant.item.push(item._id);
-   await restaurant.save(); 
-    
+    // atomic push avoids full-document validation failures on schema drift :
+    await shopModel.updateOne({_id : restaurant._id}, {$push : {item : item._id}});
+
 
 
     return res.status(201).json({
@@ -170,6 +170,12 @@ export const deleteItemById = expressAsyncHandler(async(req, res, next) => {
     if(!item) { 
         return next(new ErrorHandler(404, "Item not found!")); 
     }; 
+
+    // remove the item reference from the shop and clean up its image asset : 
+    await shopModel.updateOne({_id : restaurantID}, {$pull : {item : item._id}});
+    if(item.image?.public_id){ 
+        await deleteAssestFromCloudinary([item.image.public_id]);
+    }
 
     return res.status(200).json({
         success : true, 
