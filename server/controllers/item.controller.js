@@ -27,7 +27,30 @@ export const getAllItems = expressAsyncHandler(async(req, res, next) => {
 
 
 
-// create Item : 
+// customer view : active items of one restaurant (for the menu page) :
+export const getShopItemsForCustomer = expressAsyncHandler(async(req, res, next) => {
+
+    const {shopId} = req.params;
+
+    if(!mongoose.Types.ObjectId.isValid(shopId)){
+        return next(new ErrorHandler(400, 'Invalid restaurant id!'));
+    }
+
+    const items = await itemModel.find({shop : shopId, status : true}).populate('category', 'categoryName');
+
+    if(items.length < 1){
+        return next(new ErrorHandler(404, 'No items found in this restaurant!'));
+    }
+
+    return res.status(200).json({
+        success : true,
+        message : 'Restaurant menu has been fetched',
+        data : items
+    });
+});
+
+
+// create Item :
 export const createItem = expressAsyncHandler(async(req, res, next) => { 
 
     const {name, foodType, category, price, status} = req.body; 

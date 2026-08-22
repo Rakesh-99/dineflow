@@ -1,16 +1,17 @@
-import express from 'express'; 
-import {  createItem, deleteItemById, getAllItems, updateItem  } from '../../controllers/item.controller.js';
+import express from 'express';
+import {  createItem, deleteItemById, getAllItems, updateItem, getShopItemsForCustomer  } from '../../controllers/item.controller.js';
 import isUserAuthenticated from '../../middlewares/auth.middleware.js';
 import multerFileUpload from '../../middlewares/multerFileupload.middleware.js';
 import isRestaurantOwner from '../../middlewares/isRestaurantOwner.js';
-const itemRoutes = express.Router() ; 
+const itemRoutes = express.Router() ;
 
 
 
 itemRoutes.post('/add-item/:restaurantID', isUserAuthenticated, isRestaurantOwner, multerFileUpload.single('image'), createItem)
           .put('/update-item/:restaurantID/:itemID', isUserAuthenticated, isRestaurantOwner, multerFileUpload.single('image'), updateItem)
           .get('/all-items', isUserAuthenticated, isRestaurantOwner, getAllItems)
+          .get('/shop-items/:shopId', isUserAuthenticated, getShopItemsForCustomer)
           .delete('/delete-item/:restaurantID/:itemID', isUserAuthenticated, isRestaurantOwner, deleteItemById)
-          
+
 
 export default itemRoutes; 

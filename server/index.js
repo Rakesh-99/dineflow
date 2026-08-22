@@ -12,10 +12,15 @@ import cookieParser from 'cookie-parser';
 import shopRoutes from './routes/restaurant/shop.routes.js';
 import itemRoutes from './routes/item/item.routes.js';
 import categoryRoutes from './routes/category/category.routes.js';
+import orderRoutes from './routes/order/order.routes.js';
 
 
 
-// global middlewares : 
+// global middlewares :
+app.use((req, res, next) => {
+    res.on('finish', () => console.log(`[REQ] ${req.method} ${req.originalUrl} -> ${res.statusCode}`));
+    next();
+});
 app.use(cookieParser());
 app.use(cors({
     origin : ['http://localhost:5173'],
@@ -35,6 +40,7 @@ app.use('/api/v1/user', userRoutes);
 app.use('/api/v1/shop', shopRoutes); 
 app.use('/api/v1/item', itemRoutes); 
 app.use('/api/v1/category', categoryRoutes);
+app.use('/api/v1/order', orderRoutes);
 app.use(globalErrorHandler);
 
 app.listen(PORT, () => {
