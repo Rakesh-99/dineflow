@@ -13,6 +13,7 @@ import { toast } from "sonner";
 import axios from "axios";
 import { useParams } from "react-router";
 const URL = import.meta.env.VITE_BACKEND_ITEM_API_URL;
+const CATURL = import.meta.env.VITE_BACKEND_CATEGORY_API_URL;
 import { addMenuItemToRestaurant, deleteMenuFromRestaurant, updateMenuItem } from "@/redux/features/currentOwnerRestaurants.slice";
 import {
     AlertDialog,
@@ -25,6 +26,7 @@ import {
     AlertDialogTitle,
     AlertDialogTrigger,
 } from "@/components/ui/alert-dialog"
+import { createCategory } from "@/redux/features/categorySlice";
 
 
 
@@ -33,7 +35,11 @@ import {
 const MenuItems = ({ restaurantData }) => {
 
     const { theme } = useSelector((state) => state.themeSlice);
+    const isDark = theme === "dark"; 
     const { categories } = useSelector(state => state.categorySlice);
+
+
+    // console.log(categories.image.url);
 
 
     const getCategoryName = (categoryId) => {
@@ -41,18 +47,14 @@ const MenuItems = ({ restaurantData }) => {
         return found ? found.categoryName : "Uncategorized";
     };
 
-
-
-
-
     const { restaurantname, id } = useParams();
     const dispatch = useDispatch();
 
     const [loading, setLoading] = useState(false);
-
-
-
-
+    const [categoryInfo, setCategoryInfo] = useState({
+        categoryName: "",
+        image: ""
+    })
     const [menuData, setMenuData] = useState({
         name: "",
         foodType: "",
@@ -226,6 +228,51 @@ const MenuItems = ({ restaurantData }) => {
         }
     }
 
+    // for category  : 
+
+    const categoryInputHandler = (e) => {
+        const { value, name } = e.target;
+        setCategoryInfo((prev) => ({
+            ...prev,
+            [name]: value
+        }))
+    }
+    const categoryImgHandler = (e) => {
+        const img = e.target.files[0];
+        setCategoryInfo((prev) => ({
+            ...prev,
+            image: img
+        }))
+    }
+
+
+
+    const createCat = async (categoryInfo) => {
+
+        const { categoryName, image } = categoryInfo;
+
+        if (!categoryName || !image) {
+            return;
+        }
+
+        // preparing a form Data from cat : 
+        const formData = new FormData();
+        formData.append("categoryName", categoryName);
+        formData.append("image", image)
+
+        try {
+            const { response } = await axios.post(`${CATURL}/create-category`, formData, { withCredentials: true });
+            if (response) {
+                toast.success("A new category has been added");
+                dispatch(createCategory(response.data));
+                console.log(response);
+            }
+        } catch (error) {
+            toast.error("Could not create a category!");
+            console.log(`Could not create a category ${error}`);
+        }
+    }
+
 
     return (
         <>
@@ -324,11 +371,11 @@ const MenuItems = ({ restaurantData }) => {
                                 </div>
 
                                 {/* Food category  :  */}
-                                <div className="grid gap-1">
+                                <div className="grid gap-2 ">
                                     <Label className={`text-xs`} htmlFor="sheet-demo-name">
                                         Food Category *
                                     </Label>
-                                    <div className={`rounded relative flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
+                                    <div className={`rounded relative py-1 flex items-center gap-1 border outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}>
                                         <Utensils color="gray" className="absolute left-2 size-4" />
                                         <Select value={menuData.category} onValueChange={foodCategoryHandler}>
                                             <SelectTrigger className="w-full  border-none">
@@ -348,7 +395,13 @@ const MenuItems = ({ restaurantData }) => {
                                                                     : "hover:bg-zinc-200!"
                                                                     }`}
                                                             >
-                                                                {category.categoryName}
+
+                                                                <div className="flex items-center gap-2 py-px">
+                                                                    <img className="w-10 rounded object-cover" src={category.image.url} alt="category_image" />
+                                                                    <p>{category.categoryName}</p>
+
+                                                                </div>
+
                                                             </SelectItem>
                                                         ))}
 
@@ -356,16 +409,63 @@ const MenuItems = ({ restaurantData }) => {
                                                     </SelectGroup>
 
                                                 </SelectContent>
-                                                :
-                                                <div className="relative group inline-flex">
-                                                    <CirclePlus className="size-5 cursor-pointer hover:text-customOrange" />
 
-                                                    <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 whitespace-nowrap rounded-md  px-2 py-1 text-xs  opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
-                                                        Create a category
-                                                    </span>
-                                                </div>
+                                                :
+                                                "No Cat found!"
                                             }
                                         </Select>
+
+                                    </div>
+                                    <div className="flex items-center gap-3">
+                                        <span className="text-xs">Could not find a desired category ? </span>
+                                        <div className="relative group inline-flex">
+                                            {/* only show when create category icon is clicked   */}
+                                            <AlertDialog >
+                                                <AlertDialogTrigger>
+                                                    <Label className={`text-xs text-orange-400 hover:text-orange-600 hover:underline cursor-pointer `}>Create One</Label>
+                                                </AlertDialogTrigger>
+                                                <AlertDialogContent className={`${isDark ? "bg-zinc-800 text-zinc-300" : "bg-zinc-50 text-zinc-600"}`}>
+                                                    <AlertDialogHeader>
+                                                        <AlertDialogTitle>Create a category </AlertDialogTitle>
+                                                        <AlertDialogDescription className={`text-xs ${isDark && "text-zinc-400"}`}>
+                                                            Add a category name and a file, click on sumbit when you are done.
+                                                        </AlertDialogDescription>
+                                                    </AlertDialogHeader>
+                                                    <div className="space-y-2">
+                                                        <div className="flex flex-col gap-1">
+                                                            <Label className={`text-xs font-medium`}> Category Name</Label>
+                                                            <Input
+                                                            className={`rounded ${isDark && "border-zinc-500"}`}
+                                                                type="text"
+                                                                value={categoryInfo.categoryName}
+                                                                name="categoryName"
+                                                                onChange={categoryInputHandler}
+                                                                placeholder="Enter category name"
+                                                            />
+                                                        </div>
+
+                                                        <div className="flex flex-col gap-1">
+                                                            <Label className={`text-xs font-medium`}>Category Image</Label>
+                                                            <Input
+                                                            className={`rounded ${isDark && "border-zinc-500"}`}
+                                                                onChange={categoryImgHandler}
+                                                                name="image"
+                                                                // value={categoryInfo.image}
+                                                                type="file"
+                                                                accept="image/*"
+                                                            />
+                                                        </div>
+                                                    </div>
+                                                    <AlertDialogFooter className={`${isDark && "bg-zinc-800"}`}>
+                                                        <AlertDialogCancel className={`rounded! ${isDark && "text-zinc-600" }`}>Cancel</AlertDialogCancel>
+                                                        <AlertDialogAction onClick={() => createCat(categoryInfo)} className={`bg-customOrange! rounded!`}>Continue</AlertDialogAction>
+                                                    </AlertDialogFooter>
+                                                </AlertDialogContent>
+                                            </AlertDialog>
+                                            <span className="absolute left-1/2 -translate-x-1/2 bottom-full mb-2 whitespace-nowrap rounded-md  px-2 py-1 text-xs  opacity-0 group-hover:opacity-100 transition-opacity duration-150 pointer-events-none">
+                                                Create a category
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
 
