@@ -247,11 +247,12 @@ const MenuItems = ({ restaurantData }) => {
 
 
 
-    const createCat = async (categoryInfo) => {
+    const createCat = async () => {
 
         const { categoryName, image } = categoryInfo;
 
         if (!categoryName || !image) {
+            toast.error("Category name and image are required!");
             return;
         }
 
@@ -261,15 +262,18 @@ const MenuItems = ({ restaurantData }) => {
         formData.append("image", image)
 
         try {
-            const { response } = await axios.post(`${CATURL}/create-category`, formData, { withCredentials: true });
-            if (response) {
-                toast.success("A new category has been added");
-                dispatch(createCategory(response.data));
-                console.log(response);
+            setLoading(true);
+            const { data } = await axios.post(`${CATURL}/create-category`, formData, { withCredentials: true });
+            if (data.success) {
+                toast.success(data.message || "A new category has been added");
+                dispatch(createCategory(data.data));
+                setCategoryInfo({ categoryName: "", image: "" });
             }
         } catch (error) {
-            toast.error("Could not create a category!");
+            toast.error(error?.response?.data?.message || "Could not create a category!");
             console.log(`Could not create a category ${error}`);
+        } finally {
+            setLoading(false);
         }
     }
 

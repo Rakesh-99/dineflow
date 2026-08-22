@@ -13,8 +13,8 @@ const categorySlice = createSlice({
             state.categories = action.payload
         }, 
         createCategory : (state, action ) => { 
-            const {data} = action.payload; 
-            state.categories = state.categories.push(data);
+            if (!state.categories) state.categories = [];
+            state.categories.push(action.payload);
         }, 
         clearCurrentCategory : (state)=> { 
             state.categories = null
