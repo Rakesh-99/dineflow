@@ -6,16 +6,7 @@ import itemModel from "../models/item.model.js";
 import mongoose from "mongoose";
 
 
-const VALID_STATUS = ['placed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled'];
-
-// allowed lifecycle transitions (agreed design) :
-const VALID_TRANSITIONS = {
-    placed : ['preparing', 'cancelled'],
-    preparing : ['out_for_delivery', 'cancelled'],
-    out_for_delivery : ['delivered'],
-    delivered : [],
-    cancelled : []
-};
+// status vocabulary lives on the Order schema as statics (single source of truth) :
 
 
 // place order (customer) : prices are always re-read from DB, client totals are never trusted :
@@ -139,7 +130,7 @@ export const updateOrderStatus = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(400, 'Invalid order id!'));
     }
 
-    if(!VALID_STATUS.includes(status)){
+    if(!orderModel.STATUSES.includes(status)){
         return next(new ErrorHandler(400, 'Invalid status!'));
     }
 
@@ -152,7 +143,7 @@ export const updateOrderStatus = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(403, 'You are not authorized to update this order!'));
     }
 
-    if(!VALID_TRANSITIONS[order.status].includes(status)){
+    if(!orderModel.canTransition(order.status, status)){
         return next(new ErrorHandler(400, `Cannot change status from ${order.status} to ${status}!`));
     }
 

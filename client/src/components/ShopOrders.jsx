@@ -4,17 +4,9 @@ import axios from "axios";
 import { toast } from "sonner";
 import { IndianRupee } from "lucide-react";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { STATUS_LABELS, legalNext } from "@/constants/orderStatus";
 
 const ORDER_URL = import.meta.env.VITE_BACKEND_ORDER_API_URL;
-const STATUSES = ["placed", "preparing", "out_for_delivery", "delivered", "cancelled"];
-
-const STATUS_LABELS = {
-    placed: "Placed",
-    preparing: "Preparing",
-    out_for_delivery: "Out for delivery",
-    delivered: "Delivered",
-    cancelled: "Cancelled"
-};
 
 const ShopOrders = () => {
     const { theme } = useSelector((state) => state.themeSlice);
@@ -78,7 +70,7 @@ const ShopOrders = () => {
                                     <SelectContent className={isDark ? "bg-zinc-800 text-zinc-200" : ""}>
                                         <SelectGroup>
                                             <SelectLabel className="text-xs">Update status</SelectLabel>
-                                            {STATUSES.map((s) => (
+                                            {legalNext(order.status).map((s) => (
                                                 <SelectItem key={s} value={s}>{STATUS_LABELS[s]}</SelectItem>
                                             ))}
                                         </SelectGroup>

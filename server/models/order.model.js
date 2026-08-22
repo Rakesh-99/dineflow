@@ -52,5 +52,18 @@ const orderSchema = new mongoose.Schema({
 orderSchema.index({customer : 1, createdAt : -1});
 orderSchema.index({shop : 1, createdAt : -1});
 
+// single source of truth for the status lifecycle :
+orderSchema.statics.STATUSES = ['placed', 'preparing', 'out_for_delivery', 'delivered', 'cancelled'];
+orderSchema.statics.TRANSITIONS = {
+    placed : ['preparing', 'cancelled'],
+    preparing : ['out_for_delivery', 'cancelled'],
+    out_for_delivery : ['delivered'],
+    delivered : [],
+    cancelled : []
+};
+orderSchema.statics.canTransition = function(from, to) {
+    return (this.TRANSITIONS[from] || []).includes(to);
+};
+
 const orderModel = mongoose.model('Order', orderSchema);
 export default orderModel;

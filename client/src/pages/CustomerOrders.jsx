@@ -3,24 +3,9 @@ import { useSelector } from "react-redux";
 import axios from "axios";
 import { IndianRupee, PackageOpen } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { STATUS_LABELS, STATUS_STYLES } from "@/constants/orderStatus";
 
 const ORDER_URL = import.meta.env.VITE_BACKEND_ORDER_API_URL;
-
-const STATUS_STYLES = {
-    placed: "bg-blue-100 text-blue-800",
-    preparing: "bg-amber-100 text-amber-800",
-    out_for_delivery: "bg-purple-100 text-purple-800",
-    delivered: "bg-green-100 text-green-800",
-    cancelled: "bg-red-100 text-red-800"
-};
-
-const STATUS_LABELS = {
-    placed: "Placed",
-    preparing: "Preparing",
-    out_for_delivery: "Out for delivery",
-    delivered: "Delivered",
-    cancelled: "Cancelled"
-};
 
 const CustomerOrders = () => {
     const { theme } = useSelector((state) => state.themeSlice);
