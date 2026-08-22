@@ -34,10 +34,10 @@ const shopSchema = new mongoose.Schema({
         type : String, 
         required : [true, 'State is required!']
     },  
-    // city : {
-    //     type : String, 
-    //     required : [true, 'City is required']
-    // }, 
+    city : {
+        type : String, 
+        required : [true, 'City is required']
+    }, 
     costForTwo: { 
         type : Number, 
         required : true
@@ -54,9 +54,15 @@ const shopSchema = new mongoose.Schema({
        ref: 'Rating', 
        type : Schema.Types.ObjectId
     },
-    address : { 
+    address1 : { 
         type  : String, 
         required: [true, 'Address is required!']
+    },
+     address2 : { 
+        type  : String, 
+    },
+    street: {
+        type : String,
     }
 
 }, {timestamps : true}); 

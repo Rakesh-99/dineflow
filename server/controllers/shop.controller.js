@@ -47,13 +47,13 @@ export const fetchOwnerRestaurants = expressAsyncHandler(async(req, res, next) =
 // Create Shop : 
 export const createShop = expressAsyncHandler(async(req, res, next)=> { 
 
-    const {shopName, city, state, address, description, status, costForTwo, budgetFriendly, isVegRestaurant} = req.body; 
+    const {shopName, city, state, address1,address2,street, description, status, costForTwo, budgetFriendly, isVegRestaurant} = req.body; 
     
     const userId = req.userId ; 
 
     const image = req.file ;
 
-    if(!shopName  || !state || !address || !image || !description || !status || !costForTwo || !budgetFriendly) {
+    if(!shopName || !city || !state || !address1 || !image || !description || !status || !costForTwo || !budgetFriendly) {
         return next(new ErrorHandler(400, 'All fields are required!'));
     }  
 
@@ -68,8 +68,11 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
     // now create a shop : 
     const shop = new shopModel({
         shopName,
+        city,
         state, 
-        address, 
+        address1, 
+        address2: address2 ? address2 : "",
+        street: street ? street : "", 
         description,
         status,
         costForTwo,

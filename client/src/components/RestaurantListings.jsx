@@ -77,7 +77,7 @@ const RestaurantListings = () => {
 
                                             <div className='flex items-center gap-1'>
                                                 <UserRound className="size-4" />
-                                                <span className=''>Owner : {restaurant.owner.fullname}</span>
+                                                <span className=''>Owner : {restaurant?.owner.fullname}</span>
                                             </div>
 
                                             <div className='flex items-center gap-1 '>
@@ -88,7 +88,12 @@ const RestaurantListings = () => {
 
                                             <div className='flex items-center gap-1  '>
                                                 <MapPin className="size-4" />
-                                                <span >Address : {restaurant?.address}</span>
+                                                <span >Address1 : {restaurant?.address1}</span>
+                                            </div>
+
+                                            <div className='flex items-center gap-1  '>
+                                                <MapPin className="size-4" />
+                                                <span >Address2 : {restaurant?.address2}</span>
                                             </div>
 
                                             <div className='flex items-center gap-1 '>
@@ -98,12 +103,12 @@ const RestaurantListings = () => {
 
                                             <div className='flex items-center gap-1  '>
                                                 <SlCalender className="size-3.5" />
-                                                <span>Created : {new Date(restaurant.createdAt).toLocaleDateString()}</span>
+                                                <span>Created : {new Date(restaurant?.createdAt).toLocaleDateString()}</span>
                                             </div>
 
                                             <div className='flex items-center gap-1 '>
                                                 <SlCalender className="size-3.5" />
-                                                <span>Updated : {new Date(restaurant.updatedAt).toLocaleDateString()}</span>
+                                                <span>Updated : {new Date(restaurant?.updatedAt).toLocaleDateString()}</span>
                                             </div>
                                         </div>
                                     </div>
