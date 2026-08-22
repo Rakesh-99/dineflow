@@ -156,12 +156,20 @@ export const updateOrderStatus = expressAsyncHandler(async(req, res, next) => {
         return next(new ErrorHandler(400, `Cannot change status from ${order.status} to ${status}!`));
     }
 
-    order.status = status;
-    await order.save();
+    // guarded update : fails when another request changed the status after our read (race-safe)
+    const updatedOrder = await orderModel.findOneAndUpdate(
+        {_id : orderId, status : order.status},
+        {$set : {status}},
+        {new : true}
+    );
+
+    if(!updatedOrder){
+        return next(new ErrorHandler(409, 'Order status was just changed by someone else, please refresh!'));
+    }
 
     return res.status(200).json({
         success : true,
         message : `Order status updated to ${status}`,
-        data : order
+        data : updatedOrder
     });
 });
