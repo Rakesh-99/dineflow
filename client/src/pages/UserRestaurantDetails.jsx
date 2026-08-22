@@ -1,9 +1,16 @@
 import { Label } from "@/components/ui/label";
-import { BadgeCheck, BadgeIndianRupee, ClockFading, LeafyGreen, MapPinned, Phone } from "lucide-react";
-import { useSelector } from "react-redux";
+import { BadgeCheck, BadgeIndianRupee, ClockFading, IndianRupee, LeafyGreen, Loader, MapPinned, Phone, Plus } from "lucide-react";
+import { useSelector, useDispatch } from "react-redux";
 import { Link, useParams } from "react-router"
 import { Badge } from "@/components/ui/badge"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Button } from "@/components/ui/button";
+import axios from "axios";
+import { useEffect, useState } from "react";
+import { toast } from "sonner";
+import { addToCart } from "@/redux/features/cart.slice";
+
+const ITEM_URL = import.meta.env.VITE_BACKEND_ITEM_API_URL;
 
 
 const UserRestaurantDetails = () => {
@@ -12,7 +19,42 @@ const UserRestaurantDetails = () => {
     const getUserRestaurantDetails = userCityBasedRestaurants.filter(restaurant => restaurant._id === restaurantId)[0];
     const { theme } = useSelector(state => state.themeSlice);
     const isDark = theme === "dark";
-    console.log(getUserRestaurantDetails);
+    const dispatch = useDispatch();
+    const cart = useSelector(state => state.cartSlice);
+
+    const [menuItems, setMenuItems] = useState(null);
+
+    useEffect(() => {
+        if (!restaurantId) return;
+        (async function fetchMenu() {
+            try {
+                const { data } = await axios.get(`${ITEM_URL}/shop-items/${restaurantId}`, { withCredentials: true });
+                if (data.success) setMenuItems(data.data);
+            } catch (error) {
+                setMenuItems([]);
+                console.log(`Could not load the menu ${error}`);
+            }
+        })();
+    }, [restaurantId]);
+
+    // single-restaurant cart rule : warn when replacing another shop's items
+    const handleAddToCart = (item) => {
+        if (!getUserRestaurantDetails) return;
+        if (cart.shopId && cart.shopId !== restaurantId) {
+            toast.info(`Cart updated : previous items from ${cart.shopName} were removed`);
+        }
+        dispatch(addToCart({
+            shopId: restaurantId,
+            shopName: getUserRestaurantDetails?.shopName,
+            item: {
+                itemId: item._id,
+                name: item.name,
+                price: item.price,
+                image: item.image?.url
+            }
+        }));
+        toast.success(`${item.name} added to cart`);
+    };
 
     // breadcrumbs : 
     const data = [
@@ -100,9 +142,37 @@ const UserRestaurantDetails = () => {
 
 
                     {/* menu items :  */}
-
-                    <div className="">
-
+                    <div className="mt-8">
+                        <h3 className="text-lg font-medium mb-3">Menu</h3>
+                        {menuItems === null ? (
+                            <div className={`flex items-center gap-2 text-xs ${isDark ? "text-zinc-400" : "text-zinc-500"}`}>
+                                <Loader className="size-4 animate-spin" /> Loading menu...
+                            </div>
+                        ) : menuItems.length === 0 ? (
+                            <p className={`text-xs ${isDark ? "text-zinc-400" : "text-zinc-500"}`}>No items on the menu yet.</p>
+                        ) : (
+                            <div className="flex flex-col gap-3">
+                                {menuItems.map((item) => (
+                                    <div key={item._id}
+                                        className={`flex items-center justify-between gap-3 border rounded-lg p-3 ${isDark ? "border-zinc-700" : "border-zinc-100"}`}>
+                                        <div className="flex items-center gap-3 min-w-0">
+                                            <img src={item.image?.url} alt={item.name} className="w-14 h-14 rounded object-cover shrink-0" />
+                                            <div className="min-w-0">
+                                                <p className="text-sm font-medium truncate">{item.name}</p>
+                                                <p className={`text-xs flex items-center ${isDark ? "text-zinc-400" : "text-zinc-500"}`}>
+                                                    <IndianRupee className="size-3" /> {item.price}
+                                                    {item.category?.categoryName && <span className="ml-2">• {item.category.categoryName}</span>}
+                                                </p>
+                                            </div>
+                                        </div>
+                                        <Button onClick={() => handleAddToCart(item)}
+                                            className={`bg-customOrange rounded shrink-0 gap-1 text-xs`}>
+                                            <Plus className="size-3.5" /> Add
+                                        </Button>
+                                    </div>
+                                ))}
+                            </div>
+                        )}
                     </div>
 
 

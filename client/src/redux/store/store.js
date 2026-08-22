@@ -5,11 +5,12 @@ import storage from 'redux-persist/lib/storage';
 import persistReducer from 'redux-persist/es/persistReducer';
 import persistStore from 'redux-persist/es/persistStore';
 const realStorage = storage?.default || storage;
-import currentOwnerRestaurants from '@/redux/features/currentOwnerRestaurants.slice'; 
-import categorySlice from '@/redux/features/categorySlice'; 
+import currentOwnerRestaurants from '@/redux/features/currentOwnerRestaurants.slice';
+import categorySlice from '@/redux/features/categorySlice';
+import cartSlice from '../features/cart.slice';
 
 
-const persistConfig = { 
+const persistConfig = {
   key : 'root',
   version : 1,
   storage:  realStorage
@@ -17,9 +18,10 @@ const persistConfig = {
 
 const rootReducer = combineReducers ({
   currentuserSlice: currentuserSlice,
-  themeSlice : themeSlice, 
+  themeSlice : themeSlice,
   currentOwnerRestaurants : currentOwnerRestaurants,
-  categorySlice : categorySlice
+  categorySlice : categorySlice,
+  cartSlice : cartSlice
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer); 

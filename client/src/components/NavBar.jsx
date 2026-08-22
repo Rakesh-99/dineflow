@@ -1,6 +1,7 @@
 import {useSelector, useDispatch} from 'react-redux';
 import { MapPin, Search, SearchIcon, ShoppingCart } from 'lucide-react';
 import { clearTheme, switchTheme } from '../redux/features/theme.slice';
+import { clearCart } from '../redux/features/cart.slice';
 import {  useState } from 'react';
 import { Input } from './ui/input';
 import { RxCrossCircled } from "react-icons/rx";
@@ -22,7 +23,7 @@ import {
   AlertDialogTrigger,
 } from '../components/ui/alert-dialog'; 
 import { toast } from 'sonner';
-import { Link } from 'react-router';
+import { Link, useNavigate } from 'react-router';
 import { RiLogoutCircleRLine } from "react-icons/ri";
 import {
  DropdownMenu,
@@ -47,10 +48,13 @@ import { BsMoonStars } from "react-icons/bs";
 
 
 const NavBar = () => {
+  const navigate = useNavigate();
 
-  const dispatch = useDispatch() ; 
-  const {theme} = useSelector(state => state.themeSlice); 
-  const {userAddress, userData } = useSelector(state => state.currentuserSlice); 
+  const dispatch = useDispatch() ;
+  const {theme} = useSelector(state => state.themeSlice);
+  const {userAddress, userData } = useSelector(state => state.currentuserSlice);
+  const cartItems = useSelector(state => state.cartSlice.items);
+  const cartCount = cartItems.reduce((sum, i) => sum + i.quantity, 0);
 
   
   
@@ -75,11 +79,12 @@ const NavBar = () => {
                 withCredentials : true
               }
             ); 
-            if(data.success) { 
+            if(data.success) {
               dispatch(clearCurrentUser());
               dispatch(clearCurrentOwnerRestaurant());
               dispatch(clearCityBasedUserRestaurants());
               dispatch(clearCurrentCategory());
+              dispatch(clearCart());
               dispatch(clearTheme())
               toast.success(data.message);
               setIsLogoutBtnClick(false);
@@ -128,12 +133,12 @@ const NavBar = () => {
                   <div className="flex md:gap-10 gap-4 items-center">
                       {/* cart icon  :  */}
                       {
-                        userData && userData.role === "user" && 
-                        <div className="w-10 h-10 flex items-center justify-center relative">
+                        userData && userData.role === "user" &&
+                        <div className="w-10 h-10 flex items-center justify-center relative cursor-pointer" onClick={() => navigate('/cart')}>
                         <ShoppingCart className='cursor-pointer' size={21}/>
-                        <span className='border border-[#ff8802] absolute left-5 bottom-6 rounded-full bg-[#ff6900]  font-semibold w-1/3 p-2 h-1/3 text-white flex items-center justify-center text-[9px]'>2</span>
+                        {cartCount > 0 && <span className='border border-[#ff8802] absolute left-5 bottom-6 rounded-full bg-[#ff6900]  font-semibold w-1/3 p-2 h-1/3 text-white flex items-center justify-center text-[9px]'>{cartCount}</span>}
                       </div>
-                      }    
+                      }
 
                       {/* User account button or account button depending upon the current user  :  */}
 
@@ -150,7 +155,7 @@ const NavBar = () => {
                             <DropdownMenuGroup>
                               <DropdownMenuLabel>My Account</DropdownMenuLabel>
                               <DropdownMenuItem className={`cursor-pointer`}>Profile</DropdownMenuItem>
-                              <DropdownMenuItem className={`cursor-pointer`}>Orders</DropdownMenuItem>
+                              <DropdownMenuItem className={`cursor-pointer`} onClick={() => navigate('/customer-orders')}>Orders</DropdownMenuItem>
                             </DropdownMenuGroup>
 
                             <DropdownMenuSeparator />

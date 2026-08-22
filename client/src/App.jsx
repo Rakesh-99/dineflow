@@ -11,8 +11,9 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
   // lazy loading and code splitting :
   const Account = lazy(() => import("./pages/auth/Account"));
   const GuestRoutes = lazy(() => import("./routes/GuestRoutes"));
-  const Home = lazy (()=> import("@/pages/Home")); 
-  const UserRestaurantDetails = lazy(()=> import("@/pages/UserRestaurantDetails")); 
+  const Home = lazy (()=> import("@/pages/Home"));
+  const UserRestaurantDetails = lazy(()=> import("@/pages/UserRestaurantDetails"));
+  const Cart = lazy(()=> import("@/pages/Cart"));
 
   // Restaurant owner routes : 
   const RestaurantMenu = lazy(()=> import("@/pages/RestaurantMenu"));
@@ -53,7 +54,17 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
                 </ProtectedRoutes>
               </Suspense>
             )
-          }, 
+          },
+          {
+            path : "cart",
+            element : (
+              <Suspense fallback={<>Loading ..</> }>
+                <ProtectedRoutes>
+                  <Cart/>
+                </ProtectedRoutes>
+              </Suspense>
+            )
+          },
           {
             path : "dashboard", 
             element : (
@@ -106,15 +117,15 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
             )
           }, 
           {
-            path : "customer-orders", 
+            path : "customer-orders",
             element : (
               <Suspense fallback={<>Loading ..</>}>
-              <RestaurantOwnerRoutes>
+              <ProtectedRoutes>
                 <CustomerOrders/>
-              </RestaurantOwnerRoutes>
+              </ProtectedRoutes>
               </Suspense>
             )
-          }, 
+          },
           {
               path : "customers",
               element : (
