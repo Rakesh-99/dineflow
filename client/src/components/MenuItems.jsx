@@ -411,13 +411,15 @@ const MenuItems = ({ restaurantData }) => {
                                                 </SelectContent>
 
                                                 :
-                                                "No Cat found!"
+                                                <div className="">
+                                                    <span className="text-[10px]">No Category found!</span>
+                                                </div>
                                             }
                                         </Select>
 
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <span className="text-xs">Could not find a desired category ? </span>
+                                        <span className="text-xs">Could not find a category or want to create a new one ? </span>
                                         <div className="relative group inline-flex">
                                             {/* only show when create category icon is clicked   */}
                                             <AlertDialog >
