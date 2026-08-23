@@ -17,6 +17,25 @@
 .hide-scrollbar::-webkit-scrollbar {
   display: none; /* Chrome/Safari */
 }
+
+
+/* style for scrollbar :  */
+::-webkit-scrollbar {
+  width: 7px;              
+  height: 3px;              
+}
+::-webkit-scrollbar-track {  
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb {
+  background: #ff964b;          
+  border-radius: 5px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #ff6900;         
+}
+
+
 @custom-variant dark (&:is(.dark *));
 
 :root {
