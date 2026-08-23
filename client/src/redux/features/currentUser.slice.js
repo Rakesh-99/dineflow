@@ -16,13 +16,14 @@ const currentuserSlice = createSlice({
         setCurrentUserCity : (state, action) => { 
             console.log("Payload", action.payload);
             
-          const {street, state : addState ,address_line1,address_line2, city} = action.payload; 
+          const {street, state : addState ,address_line1,address_line2, city, country} = action.payload; 
           state.userAddress = {
             "state" : addState, 
             "address1" : address_line1, 
             "address2" : address_line2, 
             "city" : city,
-            "street" : street
+            "street" : street,
+            "country": country
           }
         }, 
         clearCurrentUser : (state) => { 
