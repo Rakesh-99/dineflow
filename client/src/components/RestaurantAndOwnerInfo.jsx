@@ -8,12 +8,13 @@ const RestaurantAndOwnerInfo = ({restaurantData}) => {
   const {theme} = useSelector(state => state.themeSlice)
   
   
+  
 
   return (
     <>
     <div className=" text-zinc-400 mt-10 flex md:gap-5 gap-10 md:flex-row flex-col justify-between">
       {/* Restaurant Information  */}
-        <div className={`md:w-lg md:mx-0 mx-4 border flex flex-col gap-4  p-5 rounded-xl ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-200 '}`}>
+        <div className={`md:w-lg md:mx-0 mx-4 border flex flex-col gap-4  p-5 rounded-xl ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100 '}`}>
           <h1 className={`text-lg font-medium`}>Restaurant Information</h1>
 
           <div className="flex flex-col gap-1">
@@ -21,7 +22,10 @@ const RestaurantAndOwnerInfo = ({restaurantData}) => {
               <MapPin className={`size-8 rounded text-customOrange  p-1 border   ${theme === 'dark' ? ' bg-gray-800 border-orange-800' : 'border-zinc-200  bg-orange-50'}`}/>
             <div className="">
               <h2 className={`text-xs font-medium`}>Address</h2>
-              <span className={`text-[10px]`}>{restaurantData?.address}</span>
+              <div className="flex gap-1 items-center">
+              <span className={`text-[10px]`}>{restaurantData?.street},</span>
+              <span className={`text-[10px]`}>{restaurantData?.address2}</span>
+              </div>
             </div>
           </div>
           <Separator className={`${theme === 'dark' ? 'bg-zinc-700' : 'bg-zinc-100'}`}/>
@@ -31,6 +35,7 @@ const RestaurantAndOwnerInfo = ({restaurantData}) => {
             <div className="">
               <h2 className={`text-xs font-medium`}>City</h2>
               <span className={`text-[10px]`}>{restaurantData?.city}</span>
+              <span className={`text-[10px]`}>{restaurantData?.country}</span>
             </div>
           </div>
           <Separator className={`${theme === 'dark' ? 'bg-zinc-700' : 'bg-zinc-100'}`}/>

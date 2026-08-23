@@ -12,20 +12,20 @@ const RestaurantOwnerBriefInfo = ({briefData}) => {
 
   return (
     <>
-    <div className={`mt-5 md:mx-2 mx-4 rounded-xl flex items-center justify-center shadow-xs border  h-fit p-5 ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-200'}`}>
+    <div className={`mt-5 md:mx-2 mx-4 rounded-lg flex items-center justify-center shadow-xs border  h-fit p-5 ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'}`}>
  
         {briefData.map((data, idx) => (
 
        <div className="flex flex-col px-4 text-gray-400 gap-2" key={idx}>
              <div className="flex gap-1 text-xs  items-center">
                 <Blocks size={15} className="text-customBlueViolet"/>
-                <Label className={`text-xs`}>Restaurant ID : </Label>
-                <span>{data.restaurantID }</span>
+                <Label className={`text-[10px]`}>Restaurant ID: </Label>
+                <span className="">{data.restaurantID }</span>
             </div>
             <Separator className={`${theme === 'dark' ? 'bg-zinc-700' : 'bg-zinc-200'}`}/>
-            <div className="flex gap-1 text-xs items-center">
+            <div className="flex gap-1 text-[10px] items-center">
                 <Clock size={15} className="text-customBlueViolet"/>
-                <Label className={`text-xs`}>Created At : </Label>
+                <Label className={`text-[10px]`}>Created At : </Label>
                 <span>{new Date(data.createdAt).toLocaleString() }</span>
             </div>
             <Separator className={`${theme === 'dark' ? 'bg-zinc-700' : 'bg-zinc-200'}`}/>
@@ -33,7 +33,7 @@ const RestaurantOwnerBriefInfo = ({briefData}) => {
 
             <div className="flex gap-1 text-xs items-center">
                 <Clock size={15} className="text-customBlueViolet"/>
-                <Label className={`text-xs`}>Updated At : </Label>
+                <Label className={`text-[10px]`}>Updated At : </Label>
                 <span>{new Date(data.updatedAt).toLocaleString() }</span>
             </div>
             <Separator className={`${theme === 'dark' ? 'bg-zinc-700' : 'bg-zinc-200'}`}/>
@@ -41,9 +41,9 @@ const RestaurantOwnerBriefInfo = ({briefData}) => {
 
              <div className="flex gap-1 text-xs items-center">
                 <Blocks size={15} className="text-customBlueViolet"/>
-                <Label className={`text-xs`}>Status : </Label>
+                <Label className={`text-[10px]`}>Status : </Label>
                 {data.status === true ? 
-                    <span className={`text-xs text-green-500 border flex gap-1 py-1 items-center rounded-xl px-3  font-semibold  border-green-500 ${theme === 'dark' ? 'bg-green-950' : 'bg-green-50'}`}>
+                    <span className={`text-xs text-green-500 border flex gap-1 py-px items-center rounded-xl px-2  font-semibold  border-green-500 ${theme === 'dark' ? 'bg-green-950' : 'bg-green-50'}`}>
                         <ShieldCheck size={12}/>
                         <span className="text-[8px]">Active</span>
                     </span>

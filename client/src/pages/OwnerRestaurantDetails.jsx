@@ -66,9 +66,6 @@ const OwnerRestaurantDetails = () => {
   const { restaurants } = useSelector(state => state.currentOwnerRestaurants);
   const restaurantDetails = restaurants.filter(restaurant => restaurant._id === id);
   const restaurantData = restaurantDetails[0];
-
-
-  
   const [loading , setLoading] = useState(false);
 
   const [shopData, setShopData] = useState({
@@ -193,7 +190,7 @@ const OwnerRestaurantDetails = () => {
 
   return (
     <>
-      <div className="max-w-7xl m-auto ">
+      <div className="max-w-5xl m-auto ">
 
         <div className="flex lg:flex-row flex-col items-center justify-around">
           {/* breadcrumbs  */}
