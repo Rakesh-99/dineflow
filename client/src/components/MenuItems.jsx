@@ -35,7 +35,7 @@ import { createCategory } from "@/redux/features/categorySlice";
 const MenuItems = ({ restaurantData }) => {
 
     const { theme } = useSelector((state) => state.themeSlice);
-    const isDark = theme === "dark"; 
+    const isDark = theme === "dark";
     const { categories } = useSelector(state => state.categorySlice);
 
 
@@ -404,7 +404,7 @@ const MenuItems = ({ restaurantData }) => {
                                                             >
 
                                                                 <div className="flex items-center gap-2 py-px">
-                                                                    <img className="w-10 rounded object-cover" src={category.image.url} alt="category_image" />
+                                                                    <img className="w-9 rounded-full h-9 object-cover" src={category.image.url} alt="category_image" />
                                                                     <p>{category.categoryName}</p>
 
                                                                 </div>
@@ -444,7 +444,7 @@ const MenuItems = ({ restaurantData }) => {
                                                         <div className="flex flex-col gap-1">
                                                             <Label className={`text-xs font-medium`}> Category Name</Label>
                                                             <Input
-                                                            className={`rounded ${isDark && "border-zinc-500"}`}
+                                                                className={`rounded ${isDark && "border-zinc-500"}`}
                                                                 type="text"
                                                                 value={categoryInfo.categoryName}
                                                                 name="categoryName"
@@ -456,7 +456,7 @@ const MenuItems = ({ restaurantData }) => {
                                                         <div className="flex flex-col gap-1">
                                                             <Label className={`text-xs font-medium`}>Category Image</Label>
                                                             <Input
-                                                            className={`rounded ${isDark && "border-zinc-500"}`}
+                                                                className={`rounded ${isDark && "border-zinc-500"}`}
                                                                 onChange={categoryImgHandler}
                                                                 name="image"
                                                                 // value={categoryInfo.image}
@@ -466,7 +466,7 @@ const MenuItems = ({ restaurantData }) => {
                                                         </div>
                                                     </div>
                                                     <AlertDialogFooter className={`${isDark && "bg-zinc-800"}`}>
-                                                        <AlertDialogCancel className={`rounded! ${isDark && "text-zinc-600" }`}>Cancel</AlertDialogCancel>
+                                                        <AlertDialogCancel className={`rounded! ${isDark && "text-zinc-600"}`}>Cancel</AlertDialogCancel>
                                                         <AlertDialogAction onClick={() => createCat(categoryInfo)} className={`bg-customOrange! rounded!`}>Continue</AlertDialogAction>
                                                     </AlertDialogFooter>
                                                 </AlertDialogContent>
@@ -591,26 +591,50 @@ const MenuItems = ({ restaurantData }) => {
                     <TableBody className={`text-xs`}>
                         {restaurantData && restaurantData?.item.map((data) => {
 
+                            console.log(data?.image?.url);
 
                             return (
                                 <TableRow key={data._id} className={` transition-all duration-200 ${theme === "dark" && "hover:bg-zinc-700 border-zinc-700 shadow"}`}>
-                                    <TableCell className={`flex items-center gap-2`}>
-                                        <img src={data?.image?.url} className="w-14 rounded border-2" alt="" />
-                                        <span>{data?.name}</span>
+                                    <TableCell>
+                                        <div className="flex items-center gap-3 py-1">
+                                            <div className="w-10 h-10 shrink-0 overflow-hidden rounded-full border border-gray-200 bg-gray-100">
+                                                <img
+                                                    src={data?.image?.url}
+                                                    alt={data?.name || "Restaurant"}
+                                                    className="w-full h-full object-cover"
+                                                />
+                                            </div>
+
+                                            <div className="min-w-0">
+                                                <p className="truncate text-sm font-semibold">
+                                                    {data?.name}
+                                                </p>
+                                            </div>
+                                        </div>
                                     </TableCell>
                                     <TableCell className={`text-right`}>{getCategoryName(data?.category)}</TableCell>
                                     <TableCell className={`text-right`}>{data?.foodType}</TableCell>
                                     <TableCell className="text-right">{data?.price}</TableCell>
-                                    <TableCell className=" float-end">
+                                    <TableCell className="text-right">
                                         {data.status === true ? (
-                                            <div className={`flex px-1  py-px rounded-full  items-center justify-center gap-1 ${theme === "dark" ? "bg-green-950 text-green-300 border-green-300" : "text-green-800 bg-green-100"}`}>
-                                                <ShieldCheck className={`size-3`} />
+                                            <div
+                                                className={`ml-auto flex w-fit items-center justify-center gap-1 rounded-full px-2 py-1 ${theme === "dark"
+                                                        ? "border border-green-800 bg-green-950 text-green-300"
+                                                        : "border border-green-200 bg-green-50 text-green-700"
+                                                    }`}
+                                            >
+                                                <ShieldCheck className="size-3" />
                                                 <span className="text-[11px]">Active</span>
                                             </div>
                                         ) : (
-                                            <div className={`flex px-1 rounded-full  py-px   items-center justify-center gap-1 ${theme === "dark" ? "bg-red-950 text-red-300 border-red-300" : "text-red-800 bg-red-100"}`}>
-                                                <ShieldCheck className={`size-3`} />
-                                                <span className="text-[11px]">Active</span>
+                                            <div
+                                                className={`ml-auto flex w-fit items-center justify-center gap-1 rounded-full px-2 py-1 ${theme === "dark"
+                                                        ? "border border-red-800 bg-red-950 text-red-300"
+                                                        : "border border-red-200 bg-red-50 text-red-700"
+                                                    }`}
+                                            >
+                                                <ShieldX className="size-3" />
+                                                <span className="text-[11px]">Inactive</span>
                                             </div>
                                         )}
                                     </TableCell>
