@@ -1,23 +1,35 @@
-name : CI Pipeline
-on : 
-  push : 
-    branches : [main]
+name: CI Pipeline
 
-jobs : 
-  build : 
-    runs on : ubuntu-latest
-    steps :
-      - name : Checkout code
-        uses : actions/checkout@v5
+on:
+  push:
+    branches: [main]
 
-      - name : Set up Node.js
-        uses : actions/setup-node@v3
-        with :
-          node-version : 18
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name : Install dependencies 
-        run : npm install
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: npm
 
-      - name : Run tests
-        run : npm test
+      - name: Install client dependencies
+        working-directory: ./client
+        run: npm install
+
+      - name: Install server dependencies
+        working-directory: ./server
+        run: npm install
+
+      - name: Build client
+        working-directory: ./client
+        run: npm run build
+
+      - name: Check server
+        working-directory: ./server
+        run: node --check index.js
