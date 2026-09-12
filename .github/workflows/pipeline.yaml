@@ -10,21 +10,29 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+      - name: Set up Node.js for client
+        uses: actions/setup-node@v5
         with:
-          node-version: 18
+          node-version: 22
           cache: npm
+          cache-dependency-path: client/package-lock.json
 
       - name: Install client dependencies
         working-directory: ./client
-        run: npm install
+        run: npm ci
+
+      - name: Set up Node.js for server
+        uses: actions/setup-node@v5
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: server/package-lock.json
 
       - name: Install server dependencies
         working-directory: ./server
-        run: npm install
+        run: npm ci
 
       - name: Build client
         working-directory: ./client
