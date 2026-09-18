@@ -14,7 +14,7 @@ export const getRestaurantBasedOnLocation = expressAsyncHandler(async(req, res, 
    
     const getRestaurants = await shopModel.find({
         city : {$regex : `^${city}`, $options : "i" }
-    })
+    }).populate("owner")
 
     if(getRestaurants.length < 1) { 
         return next(new ErrorHandler(404, "We'r not there yet!"));
