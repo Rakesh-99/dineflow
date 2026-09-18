@@ -156,7 +156,7 @@ const RestaurantListings = () => {
                                         />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-black/0 to-black/0" />
 
-                                        <span className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full bg-white/90 backdrop-blur px-2.5 py-1 text-[11px] font-medium text-gray-700">
+                                        <span className="absolute top-3 left-3 inline-flex items-center gap-1 rounded-full  backdrop-blur-3xl px-2.5 py-1 text-[11px] font-medium text-orange-500">
                                             <PiBuildingApartment className="size-3.5" />
                                             {restaurant?.city}
                                         </span>
@@ -176,7 +176,7 @@ const RestaurantListings = () => {
 
                                             <div className='flex items-center gap-2'>
                                                 <UserRound className="size-3.5 shrink-0" />
-                                                <span className="truncate">Owner : {restaurant.owner.fullname}</span>
+                                                <span className="truncate">Owner : {restaurant?.owner?.fullname}</span>
                                             </div>
 
                                             <div className='flex items-center gap-2'>
@@ -186,7 +186,7 @@ const RestaurantListings = () => {
 
                                             <div className='flex items-center gap-2'>
                                                 <MdOutlinePhoneInTalk className="size-3.5 shrink-0" />
-                                                <span className="truncate">Contact : {restaurant?.owner.contact}</span>
+                                                <span className="truncate">Contact : {restaurant?.owner?.contact}</span>
                                             </div>
 
                                         </div>
@@ -196,13 +196,13 @@ const RestaurantListings = () => {
                                             <div className="flex flex-col gap-0.5 text-[10px] text-gray-400">
                                                 <span className="flex items-center gap-1">
                                                     <SlCalender className="size-3" />
-                                                    Updated {new Date(restaurant.updatedAt).toLocaleDateString()}
+                                                    Updated {new Date(restaurant?.updatedAt).toLocaleDateString()}
                                                 </span>
                                             </div>
 
                                             <Button
                                                 className="rounded-full bg-customOrange h-7 px-3 gap-1"
-                                                onClick={() => navigate(`/user-restaurant-details/${getRestaurantName(restaurant.shopName)}/${restaurant._id}`)}
+                                                onClick={() => navigate(`/user-restaurant-details/${getRestaurantName(restaurant?.shopName)}/${restaurant?._id}`)}
                                             >
                                                 <span className="text-xs font-semibold">View</span>
                                                 <IoIosArrowDropright className="size-4 transition-transform group-hover:translate-x-0.5" />
