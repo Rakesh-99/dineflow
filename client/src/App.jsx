@@ -13,7 +13,7 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
   const GuestRoutes = lazy(() => import("./routes/GuestRoutes"));
   const Home = lazy (()=> import("@/pages/Home")); 
   const UserRestaurantDetails = lazy(()=> import("@/pages/UserRestaurantDetails")); 
-
+  const Profile = lazy(()=> import("@/pages/Profile"));
   // Restaurant owner routes : 
   const RestaurantMenu = lazy(()=> import("@/pages/RestaurantMenu"));
   const Settings = lazy(()=> import("@/pages/Settings")); 
@@ -55,7 +55,33 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
             )
           }, 
           {
-            path : "dashboard", 
+            path : "about-profile",
+            element : ( 
+              <>
+              <Suspense fallback={<>Loading..</>}>
+                <RestaurantOwnerRoutes>
+                  <Profile/>
+                </RestaurantOwnerRoutes>
+              </Suspense>
+              
+              </>
+            )
+          },
+          {
+            path : "about-profile-info",
+            element : ( 
+              <>
+              <Suspense fallback={<>Loading..</>}>
+                <ProtectedRoutes>
+                  <Profile/>
+                </ProtectedRoutes>
+              </Suspense>
+              
+              </>
+            )
+          },
+          {
+            path : "overview", 
             element : (
               <Suspense fallback={<>Loading ..</>}>
               <RestaurantOwnerRoutes>

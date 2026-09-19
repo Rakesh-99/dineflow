@@ -149,7 +149,13 @@ const NavBar = () => {
                           <DropdownMenuContent className={`${theme === 'light' ? 'bg-white text-zinc-800' : 'bg-zinc-700 text-zinc-100'}`}>
                             <DropdownMenuGroup>
                               <DropdownMenuLabel>My Account</DropdownMenuLabel>
-                              <DropdownMenuItem className={`cursor-pointer`}>Profile</DropdownMenuItem>
+                              <DropdownMenuItem asChild>
+                                {userData.role === "restaurantOwner" ? 
+                                <Link to="/about-profile">Profile</Link>
+                                : 
+                                <Link to="/about-profile-info">Profile</Link>
+                              }
+                              </DropdownMenuItem>
                               <DropdownMenuItem className={`cursor-pointer`}>Orders</DropdownMenuItem>
                             </DropdownMenuGroup>
 
