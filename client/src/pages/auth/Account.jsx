@@ -4,13 +4,17 @@ import { useState } from "react"
 import {Card,CardContent,CardDescription,CardHeader,CardTitle} from "../../components/ui/card"
 import {Tabs,TabsContent,TabsList,TabsTrigger} from "../../components/ui/tabs"
 import VerifyEmail from "./VerifyEmail"
+import { useSelector } from "react-redux"
 
 
 const Account = () => {
 
     const [showEmailVerifyComp, setShowEmailVerifyComp] = useState(false) ; 
     const [userSignupEmail , setUserSignupEmail] = useState(''); 
-
+    const {theme} = useSelector((state)=> state.themeSlice); 
+    const isDark = theme === 'dark'; 
+    
+    
 
   return (
     <>
@@ -37,13 +41,13 @@ const Account = () => {
                 {/* account switch tab :  */}
 
             <div className="">
-                <Tabs defaultValue="login" className="md:w-125 w-96">
-                <TabsList className='mb-2'>
-                    <TabsTrigger className='px-10 rounded' value="login">Login</TabsTrigger>
-                    <TabsTrigger className='px-10 rounded ' value="signup">Signup</TabsTrigger>
+                <Tabs  defaultValue="login" className="md:w-125 w-96" >
+                <TabsList className={`${isDark ? 'bg-zinc-800 border border-zinc-700 shadow-md' : ''}`}>
+                    <TabsTrigger className={`px-10 rounded hover:text-orange-500  ${isDark ? "text-gray-100" : "text-gray-700"}`} value="login">Login</TabsTrigger>
+                    <TabsTrigger className={`px-10 rounded hover:text-orange-500  ${isDark ? "text-gray-100" : "text-gray-700"}`} value="signup">Signup</TabsTrigger>
                 </TabsList>
                 <TabsContent value="login">
-                    <Card>
+                    <Card className={`${isDark ? 'bg-zinc-800 border border-zinc-700 shadow-md text-gray-200' : ''}`}>
                     <CardHeader>
                         <CardTitle>Login to your account</CardTitle>
                         <CardDescription>
@@ -56,7 +60,7 @@ const Account = () => {
                     </Card>
                 </TabsContent>
                 <TabsContent value="signup">
-                    <Card>
+                    <Card className={`${isDark ? 'bg-zinc-800 border border-zinc-700 shadow-md text-gray-200' : ''}`}>
                     <CardHeader>
                         <CardTitle>Register your account</CardTitle>
                         <CardDescription>

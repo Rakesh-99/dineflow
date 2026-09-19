@@ -12,7 +12,7 @@ import {FaGithub} from 'react-icons/fa';
 import { GithubAuthProvider, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { auth } from "../../firebase/firebase.config";
 import {Eye} from 'lucide-react'
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setCurrentUser } from "../../redux/features/currentUser.slice";
 
 
@@ -28,7 +28,8 @@ const Signup = ({setShowEmailVerifyComp, setUserSignupEmail }) => {
     password : '',
     role : ''
   }); 
-
+  const {theme} = useSelector((state)=> state.themeSlice); 
+  const isDark = theme === 'dark'; 
   const [passwordVisibility, setPasswordVisibility] = useState(false);
   const dispatch = useDispatch() ; 
 
@@ -202,17 +203,17 @@ const Signup = ({setShowEmailVerifyComp, setUserSignupEmail }) => {
               {/* user role  */}
               <div className="my-4 w-full">
                   <Tabs defaultValue="user" onValueChange={onTabChange}>
-                    <TabsList className='w-full py-5 rounded'>
-                      <TabsTrigger className='py-4 rounded' name='user'  value="user">
+                    <TabsList className={`w-full rounded ${isDark ? "bg-zinc-700 " : "bg-white text-zinc-800"} `}>
+                      <TabsTrigger className={`text-xs rounded hover:text-orange-500 ${isDark ? 'text-zinc-300': 'text-zinc-500'}`} name='user'  value="user">
                         <User2 />
-                        <span className="text-xs">User</span>
+                        <span >User</span>
                       </TabsTrigger>
-                      <TabsTrigger className='py-4 rounded' name='restaurantOwner'  value="restaurantOwner">
+                      <TabsTrigger className={`text-xs rounded hover:text-orange-500 ${isDark ? 'text-zinc-300 ': 'text-zinc-500'}`} name='restaurantOwner'  value="restaurantOwner">
                         <HousePlugIcon />
-                        <span className="text-xs">Restauranr Owner</span>
+                        <span >Restauranr Owner</span>
                       </TabsTrigger>
 
-                      <TabsTrigger className='py-4 rounded' name='delivery_agent' value="delivery_agent">
+                      <TabsTrigger className={`text-xs rounded hover:text-orange-500 ${isDark ? 'text-zinc-300': 'text-zinc-500'}`} name='delivery_agent' value="delivery_agent">
                         <Bike />
                       <span className="text-xs">Delivery Agent</span>  
                       </TabsTrigger>
