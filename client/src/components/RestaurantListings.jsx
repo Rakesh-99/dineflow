@@ -19,6 +19,7 @@ const RestaurantListings = () => {
     const { restaurants, userCityBasedRestaurants } = useSelector(state => state.currentOwnerRestaurants);
     const { userData } = useSelector(state => state.currentuserSlice);
     const { theme } = useSelector(state => state.themeSlice);
+    const isDark = theme === "dark"; 
     const navigate = useNavigate();
 
 
@@ -60,20 +61,23 @@ const RestaurantListings = () => {
                                     </div>
 
                                     {/* restaurant glance data :  */}
-                                    <div className={` mx-2  rounded-md  py-4 ${theme === 'dark' && 'bg-zinc-800'}`}>
+                                    <div className={`  flex flex-col justify-center items-center  rounded-md py-2 ${theme === 'dark' && 'bg-zinc-800'}`}>
 
-                                        {/* restaurant icon and title :  */}
-                                        <div className={`flex items-center gap-1`}>
-                                            <div className={`border rounded-full py-px px-px ${theme === 'light' ? 'bg-orange-50 border-orange-100' : 'bg-customOrange border-orange-700'}`}>
-                                                <GrRestaurant className={`${theme === 'light' ? 'text-customOrange' : 'text-orange-200'}`} />
+                                       
+
+
+
+                                <div className="grid grid-cols-1 gap-2 text-[10px] md:text-xs  text-gray-400">
+
+                                  
+                                            {/* restaurant icon and title :  */}
+                                            <div className={`flex items-center gap-1`}>
+                                                <div className={`border rounded-full py-px px-px ${theme === 'light' ? 'bg-orange-50 border-orange-100' : 'bg-customOrange border-orange-700'}`}>
+                                                    <GrRestaurant className={`${theme === 'light' ? 'text-customOrange' : 'text-orange-200'}`} />
+                                                </div>
+                                                <h2 className={`md:text-lg text-sm  font-semibold ${isDark ? "text-white" : "text-zinc-700"}`}>{restaurant?.shopName}</h2>
                                             </div>
-                                            <h2 className='md:text-lg text-sm  font-semibold'>{restaurant?.shopName}</h2>
-                                        </div>
 
-
-
-
-                                        <div className="grid grid-cols-1 gap-2 text-[10px] md:text-xs mt-2 text-gray-400">
 
                                             <div className='flex items-center gap-1'>
                                                 <UserRound className="size-4" />
