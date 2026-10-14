@@ -8,40 +8,40 @@ import { FaShop } from "react-icons/fa6";
 const sidebarItems = [
     {
         name : '',
-        label : 'Dashboard', 
-        path: '/', 
+        label : 'OverView',
+        path: '/overview',
         icon : MdDashboard,
     },
     {
         name : '',
-        label : 'Restaurants', 
+        label : 'Restaurants',
         path : '/restaurants',
         icon :FaShop,
     },
     {
         name : '',
-        label : 'Menu', 
-        path : '/restaurant-menu', 
+        label : 'Menu',
+        path : '/restaurant-menu',
         icon :MdOutlineRestaurantMenu,
     },
     {
         name : '',
-        label : 'Orders', 
-        path : '/customer-orders', 
+        label : 'Orders',
+        path : '/customer-orders',
         icon :TiShoppingCart,
-    }, 
+    },
     {
         name : '',
-        label : 'Customers', 
+        label : 'Customers',
         path :'/customers' ,
         icon :FaUsers,
     },
     {
         name : '',
-        label : 'Settings', 
+        label : 'Settings',
         path : '/settings',
         icon :MdOutlineSettings,
     }
-]; 
+];
 
 export default sidebarItems;

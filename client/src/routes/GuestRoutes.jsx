@@ -8,7 +8,7 @@ const GuestRoutes = ({ children }) => {
     return children;
   }
 
-  return <Navigate to={`/`} replace />;
+  return <Navigate to={`/overview`} replace />;
 };
 
 export default GuestRoutes;

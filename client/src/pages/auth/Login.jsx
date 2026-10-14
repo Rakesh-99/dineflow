@@ -46,7 +46,7 @@ const Login = () => {
       try {
         setLoading(true); 
         const response = await axios.post(`${URL}/login-user`, userData, {
-          withCredentials : true   // here i am including it otherwise i will not get thje cookie 
+          withCredentials : true    
         }); 
         const apiResponse  = await response.data; 
         
