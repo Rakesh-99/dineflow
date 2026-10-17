@@ -8,6 +8,7 @@ import {
   Camera,
   Check,
   CircleAlert,
+  Loader2,
   Lock,
   Mail,
   Shield,
@@ -19,20 +20,19 @@ import {
 import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
-const URL = import.meta.env.VITE_BACKEND_USER_API_URL; 
+const URL = import.meta.env.VITE_BACKEND_USER_API_URL;
 
 const Profile = () => {
   const { userData } = useSelector((state) => state.currentuserSlice);
 
   console.log();
-  
 
   const [personalDetails, setPersonalDetails] = useState({
     fullname: userData?.fullname,
     contact: userData?.contact,
   });
-  const [loading, setLoading] = useState(false); 
-  const dispatch = useDispatch(); 
+  const [loading, setLoading] = useState(false);
+  const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.themeSlice);
   const isDark = theme === "dark";
   const fileRef = useRef(null);
@@ -78,28 +78,30 @@ const Profile = () => {
     if (validateForm(personalDetails)) {
       // api call :
 
-      personalDetailApi(); 
+      personalDetailApi();
     }
   };
 
-
-  const personalDetailApi = async() => { 
-    
-    const {contact, fullname} = personalDetails; 
-        setLoading(true); 
-        try {
-          const {data} = await axios.put(`${URL}/update-user/${userData?._id}`,{contact, fullname}, {withCredentials : true});
-          if(data.success){
-            toast.success(data.message || "User has been updated"); 
-            console.log("The data => ", data);
-            dispatch(setCurrentUser(data.data)); 
-          }
-          setLoading(false); 
-        } catch (error) {
-          setLoading(false); 
-          console.log(error);
-        }
-  }
+  const personalDetailApi = async () => {
+    const { contact, fullname } = personalDetails;
+    setLoading(true);
+    try {
+      const { data } = await axios.put(
+        `${URL}/update-user/${userData?._id}`,
+        { contact, fullname },
+        { withCredentials: true },
+      );
+      if (data.success) {
+        toast.success(data.message || "User has been updated");
+        console.log("The data => ", data);
+        dispatch(setCurrentUser(data.data));
+      }
+      setLoading(false);
+    } catch (error) {
+      setLoading(false);
+      console.log(error);
+    }
+  };
 
   return (
     <>
@@ -312,11 +314,20 @@ const Profile = () => {
 
             {/* buttons : */}
             <div className="float-right flex mt-2 gap-2">
-              <Button
+              <Button disabled={loading}
                 className={`rounded-sm text-xs h-9 bg-customOrange hover:cursor-pointer hover:bg-orange-700 flex item-center gap-1`}
               >
-                <Check />
-                <span>Save changes</span>
+                {loading ? (
+                  <div className="flex items-center gap-1 cursor-not-allowed ">
+                    <Loader2 className="animate-spin"/>
+                    <span>Please wait ..</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1">
+                    <Check />
+                    <span>Save changes</span>
+                  </div>
+                )}
               </Button>
             </div>
           </form>
