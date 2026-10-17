@@ -1,321 +1,257 @@
-# DineFlow 🍽️
+<div align="center">
 
-A full-stack restaurant management and food delivery platform built using the MERN stack. "DineFlow",the name of the app🫣️, it connects customers, restaurant owners, and delivery agents through a seamless food ordering and delivery experience.
+# 🍽️ DineFlow
 
-> 🚧 **Project Status:** Under Active Development
+**A full-stack restaurant management and food delivery platform built with the MERN stack.**
 
----
+Connecting customers, restaurant owners, and delivery agents through one seamless ordering and delivery experience.
 
-## Overview
+![Status](https://img.shields.io/badge/status-under%20active%20development-orange)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![React](https://img.shields.io/badge/React-20232A?logo=react&logoColor=61DAFB)
+![Node.js](https://img.shields.io/badge/Node.js-339933?logo=nodedotjs&logoColor=white)
+![Express](https://img.shields.io/badge/Express-000000?logo=express&logoColor=white)
+![MongoDB](https://img.shields.io/badge/MongoDB-47A248?logo=mongodb&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-06B6D4?logo=tailwindcss&logoColor=white)
 
-DineFlow is a comprehensive restaurant management and food delivery platform . It manages From restaurant onboarding and menu management to order fulfillment and delivery tracking.
-
-The platform supports multiple user roles( User, Delivery Agent, Restaurant Owner ), secure authentication, location based restaurant discovery, online payments, and live order status updates.
-
----
-# Application Screenshots
-
-
-###  Signup/Login page
-
-| Sign Up | Login |
-|---------|-------|
-| ![Signup](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/signup.png) | ![Login](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/login.png) |
-
----
-### Hero section ( if restaurant found in city )  
-![Home page](https://github.com/Rakesh-99/dineflow/blob/main/client/src/assets/user/cityBasedRestaurant.png)
-
-
-### Hero section ( if restaurant not found in city )  
-![Home Page](https://github.com/Rakesh-99/dineflow/blob/main/client/src/assets/user/restaurantNotFound.png)
-
----
----
-
-#  Restaurant Owner Dashboard:
-
-
-### Restaurant Listing
-
-![Restaurant Listing](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurant_listing.png)
-
+</div>
 
 ---
 
-### Create / Update/ and manage Restaurant
+## 📑 Table of Contents
 
-![Create Restaurant](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/createOrEdit_restaurant.png)
-
-
----
-
-### Restaurant Details
-
-| Dark Theme | Light Theme |
-|------------|-------------|
-| ![Restaurant Details](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurant_details.png) | ![Restaurant Details Light](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurantDetails_light.png) |
-
-
----
-
-### Menu Management
-
-![Create Update Menu](https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/createOrUpdateMneu.png)
-
-
----
-### Highlights
-
-* Multi-Role Authentication System
-* Restaurant Owner Dashboard
-* Delivery Agent Dashboard
-* Location-Based Restaurant Discovery
-* Real-Time Order Tracking
-* Live Delivery Tracking on Maps
-* Razorpay Payment Integration
-* JWT Authentication & Authorization
-* Google, GitHub , traditional email and password signup/login 
-* Cloudinary is being used for storing files
-* Lazy Loading & Code Splitting for routes
-* Redux Toolkit for State Management
-* OTP Verification for signup and forget password
-* Role-Based Access Control (RBAC)
-* Custom Error Handling 
+- [Overview](#-overview)
+- [Highlights](#-highlights)
+- [Screenshots](#-screenshots)
+- [Features by Role](#-features-by-role)
+- [Tech Stack](#-tech-stack)
+- [Architecture](#-architecture)
+- [Security](#-security)
+- [Getting Started](#-getting-started)
+- [Environment Variables](#-environment-variables)
+- [Contributing](#-contributing)
+- [License](#-license)
+- [Author](#-author)
 
 ---
 
-### Features
+## 📖 Overview
 
-###  Customer Features
+DineFlow covers the full lifecycle of a food order, from restaurant onboarding and menu management to order fulfillment and live delivery tracking.
 
-* User Registration & Login
-* Email OTP Verification
-* Secure JWT Authentication
-* Google & GitHub Authentication
-* Browse Nearby Restaurants Based on Current Location
-* Explore Restaurant Menus & Dishes
-* Add Items to Cart
-* Place Food Orders
-* Razorpay Payment Integration
-* Order Status Updates
-* Live Delivery Tracking
-* View Order History
-* Manage User Profile
-* Responsive User Experience
+The platform supports three user roles: **Customer**, **Restaurant Owner**, and **Delivery Agent**. It offers secure authentication, location-based restaurant discovery, online payments, and real-time order status updates.
+
+> 🚧 **Project status:** under active development. More screenshots and demo videos will be added soon.
 
 ---
 
-###  Restaurant Owner Features
+## ✨ Highlights
 
-* Dedicated Restaurant Dashboard
-* Restaurant Registration & Listing
-* Manage Restaurant Information
-* Upload Restaurant Images
-* Create, Update & Delete Dishes
-* Manage Menu Items
-* Receive New Order Notifications
-* Accept or Reject Orders
-* Update Order Status
-
-Order workflow:
-
-```text
-Order Received
-      ↓
-Order Accepted
-      ↓
-Preparing Food
-      ↓
-Ready For Pickup
-      ↓
-Out For Delivery
-      ↓
-Delivered
-```
-
-* View Restaurant Orders
-* Monitor Restaurant Activity
+- 👥 Multi-role authentication with Role-Based Access Control (RBAC)
+- 🏪 Dedicated dashboards for restaurant owners and delivery agents
+- 📍 Location-based restaurant discovery
+- 🛵 Real-time order tracking and live delivery tracking on maps
+- 💳 Razorpay payment integration
+- 🔐 JWT authentication with Google, GitHub, and email/password login
+- ✉️ OTP verification for signup and password reset
+- ☁️ Cloudinary for media storage
+- ⚡ Route-level lazy loading and code splitting
+- 🧰 Redux Toolkit for state management and centralized custom error handling
 
 ---
 
-###  Delivery Agent Features
-
-* Dedicated Delivery Dashboard
-* Receive Delivery Requests
-* Accept or Reject Deliveries
-* View Assigned Deliveries
-* Delivery Tracking
-* Update Delivery Status
-* Manage Active Deliveries
-* Track Delivery Locations
-
----
-
-## Authentication & Security
-
-* JWT Authentication
-* Role-Based Access Control (RBAC)
-* Protected Routes
-* Secure Cookie-Based Authentication
-* Password Hashing with bcrypt
-* OTP Hashing & Verification
-* Authentication Middleware
-* Authorization Middleware
-* Secure Session Management
-* Custom Error Handling System
-
----
-
-### Performance Optimizations
-
-* React Lazy Loading
-* Code Splitting
-* Optimized API Calls
-* Efficient Redux Toolkit State Management
-* Reusable Components
-
----
-
-### Technology Stack
-
-### Frontend
-
-* React.js
-* Redux Toolkit
-* React Router
-* Tailwind CSS
-* Shadcn UI
-
-### Backend
-
-* Node.js
-* Express.js
-* MongoDB
-
+## 📸 Screenshots
 
 ### Authentication
 
-* JWT
-* bcrypt
-* Firebase Authentication
-* Google OAuth
-* GitHub OAuth
-
-### Payments
-
-* Razorpay
-
-### Media Storage
-
-* Cloudinary
-
-### Maps & Location Services
-
-* Geolocation API
-
-
----
-
-### Application Roles
+<table>
+  <tr>
+    <td align="center"><b>Sign Up</b></td>
+    <td align="center"><b>Login</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/signup.png" alt="Signup" /></td>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/auth/login.png" alt="Login" /></td>
+  </tr>
+</table>
 
 ### Customer
 
-Customers can:
+<table>
+  <tr>
+    <td align="center"><b>Home: restaurants found in city</b></td>
+    <td align="center"><b>Home: no restaurants in city</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/user/cityBasedRestaurant.png" alt="Home page with nearby restaurants" /></td>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/user/restaurantNotFound.png" alt="Home page when no restaurant is found" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Profile (Light)</b></td>
+    <td align="center"><b>Profile Details (Light)</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/user/profile/profile1_light.png" alt="User profile, light theme" /></td>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/user/profile/profile2_light.png" alt="User profile details, light theme" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Profile (Dark)</b></td>
+    <td align="center"><b>Profile Details (Dark)</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/user/profile/profile1_dark.png" alt="User profile, dark theme" /></td>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/user/profile/profile2_dark.png" alt="User profile details, dark theme" /></td>
+  </tr>
+</table>
 
-* Browse restaurants
-* Explore dishes
-* Place orders
-* Track deliveries
-* Manage profiles
-* View order history
+### Restaurant Owner Dashboard
 
-### Restaurant Owner
-
-Restaurant owners can:
-
-* Manage restaurants
-* Manage menus
-* Manage dishes
-* Receive customer orders
-* Update order statuses
-
-### Delivery Agent
-
-Delivery agents can:
-
-* Receive delivery requests
-* Accept or reject deliveries
-* Update delivery statuses
+<table>
+  <tr>
+    <td align="center"><b>Restaurant Listing</b></td>
+    <td align="center"><b>Create / Update Restaurant</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurant_listing.png" alt="Restaurant listing" /></td>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/createOrEdit_restaurant.png" alt="Create or edit restaurant" /></td>
+  </tr>
+  <tr>
+    <td align="center"><b>Restaurant Details (Dark)</b></td>
+    <td align="center"><b>Restaurant Details (Light)</b></td>
+  </tr>
+  <tr>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurant_details.png" alt="Restaurant details, dark theme" /></td>
+    <td><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/restaurantDetails_light.png" alt="Restaurant details, light theme" /></td>
+  </tr>
+  <tr>
+    <td align="center" colspan="2"><b>Menu Management</b></td>
+  </tr>
+  <tr>
+    <td colspan="2"><img src="https://raw.githubusercontent.com/Rakesh-99/dineflow/main/client/src/assets/restaurntOwner/createOrUpdateMneu.png" alt="Create or update menu" /></td>
+  </tr>
+</table>
 
 ---
 
-### Project Architecture
+## 🧑‍🤝‍🧑 Features by Role
 
-The application follows a scalable and modular architecture based on industry best practices.
+### 🙋 Customer
 
-### Backend Architecture
+- Register and log in (email/password, Google, GitHub) with email OTP verification
+- Browse nearby restaurants based on current location
+- Explore restaurant menus and dishes
+- Add items to cart and place orders
+- Pay online with Razorpay
+- Receive order status updates and track delivery live
+- View order history and manage profile
+- Responsive experience across devices
 
-* RESTful API Design
-* MVC Architecture
-* Centralized Error Handling
-* Authentication Middleware
-* Authorization Middleware
-* Role-Based Access Control
-* Secure Data Validation
+### 🏪 Restaurant Owner
 
-### Frontend Architecture
+- Dedicated restaurant dashboard
+- Register and list restaurants, manage details, upload images
+- Create, update, and delete dishes and menu items
+- Receive new order notifications, then accept or reject orders
+- Update order status and monitor restaurant activity
 
-* Component-Based Design
-* Redux Toolkit Global State Management
-* Route Protection
-* Lazy Loading
-* Reusable UI Components
-* Feature-Based Folder Structure
+**Order workflow**
 
----
-
-## Installation
-
-### Clone Repository
-
-```bash
-git clone https://github.com/your-username/dineflow.git
+```text
+Order Received → Order Accepted → Preparing Food → Ready For Pickup → Out For Delivery → Delivered
 ```
 
+### 🛵 Delivery Agent
+
+- Dedicated delivery dashboard
+- Receive delivery requests, then accept or reject them
+- View assigned deliveries and manage active ones
+- Update delivery status and track delivery locations
+
+---
+
+## 🛠️ Tech Stack
+
+| Layer | Technologies |
+|-------|--------------|
+| **Frontend** | React.js, Redux Toolkit, React Router, Tailwind CSS, Shadcn UI |
+| **Backend** | Node.js, Express.js, MongoDB |
+| **Authentication** | JWT, bcrypt, Firebase Authentication, Google OAuth, GitHub OAuth |
+| **Payments** | Razorpay |
+| **Media Storage** | Cloudinary |
+| **Maps & Location** | Geolocation API |
+
+---
+
+## 🏗️ Architecture
+
+**Backend**
+
+- RESTful API design with MVC architecture
+- Centralized error handling
+- Authentication and authorization middleware
+- Role-Based Access Control
+- Secure data validation
+
+**Frontend**
+
+- Component-based design with reusable UI components
+- Feature-based folder structure
+- Redux Toolkit for global state
+- Protected routes
+- Lazy loading and code splitting
+
+---
+
+## 🔐 Security
+
+- JWT authentication with secure, cookie-based sessions
+- Role-Based Access Control and protected routes
+- Authentication and authorization middleware
+- Password hashing with bcrypt
+- OTP hashing and verification
+- Custom error handling system
+
+---
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- [Node.js](https://nodejs.org/) and npm
+- A MongoDB database (local or Atlas)
+- Accounts and keys for Cloudinary, Razorpay, and Firebase
+
+### 1. Clone the repository
+
 ```bash
+git clone https://github.com/Rakesh-99/dineflow.git
 cd dineflow
 ```
 
----
-
-## Backend Setup
+### 2. Set up the backend
 
 ```bash
 cd server
-
 npm install
-
 npm run dev
 ```
 
----
-
-## Frontend Setup
+### 3. Set up the frontend
 
 ```bash
 cd client
-
 npm install
-
 npm run dev
 ```
 
+> Create the `.env` files described below before starting each app.
+
 ---
 
-## Environment Variables
+## 🔑 Environment Variables
 
-### Backend (.env)
+<details>
+<summary><b>Backend</b> — <code>server/.env</code></summary>
 
 ```env
 PORT=
@@ -337,7 +273,10 @@ RAZORPAY_KEY_ID=
 RAZORPAY_SECRET=
 ```
 
-### Frontend (.env)
+</details>
+
+<details>
+<summary><b>Frontend</b> — <code>client/.env</code></summary>
 
 ```env
 VITE_BACKEND_AUTH_API_URL=
@@ -346,38 +285,37 @@ VITE_FIREBASE_API_KEY=
 VITE_LOCATION_API_KEY=
 ```
 
----
-
-## Screenshots
-
-Project screenshots and demo videos will be added soon.
+</details>
 
 ---
 
----
-
-## Contributing
+## 🤝 Contributing
 
 Contributions, suggestions, and feedback are welcome.
 
 1. Fork the repository
-2. Create a feature branch
+2. Create a feature branch (`git checkout -b feature/your-feature`)
 3. Commit your changes
 4. Push to your branch
 5. Open a Pull Request
 
 ---
 
-## License
+## 📄 License
 
-This project is licensed under the MIT License.
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## 👤 Author
+
+**Rakesh Kumar Parida**
+[GitHub](https://github.com/Rakesh-99)
 
 ---
 
-## Author
-
-### Rakesh Kumar Parida
-
----
+<div align="center">
 
 ⭐ If you found this project useful, consider giving it a star on GitHub.
+
+</div>
