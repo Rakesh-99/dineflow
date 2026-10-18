@@ -2,7 +2,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Separator } from "@/components/ui/separator";
-import { setCurrentUser } from "@/redux/features/currentUser.slice";
+import {
+  clearCurrentUser,
+  setCurrentUser,
+} from "@/redux/features/currentUser.slice";
 import axios from "axios";
 import {
   Camera,
@@ -14,6 +17,7 @@ import {
   Mail,
   Shield,
   Trash,
+  Trash2,
   TriangleAlert,
   Upload,
   User,
@@ -22,11 +26,26 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 const URL = import.meta.env.VITE_BACKEND_USER_API_URL;
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
+import { Field, FieldGroup } from "@/components/ui/field";
+import {
+  clearCityBasedUserRestaurants,
+  clearCurrentOwnerRestaurant,
+} from "@/redux/features/currentOwnerRestaurants.slice";
+import { clearCurrentCategory } from "@/redux/features/categorySlice";
+import { clearTheme } from "@/redux/features/theme.slice";
 
 const Profile = () => {
   const { userData } = useSelector((state) => state.currentuserSlice);
-
-  console.log();
 
   const [personalDetails, setPersonalDetails] = useState({
     fullname: userData?.fullname,
@@ -49,6 +68,8 @@ const Profile = () => {
   const isDark = theme === "dark";
   const fileRef = useRef(null);
   const [isPasswordLoading, setIsPasswordLoading] = useState(false);
+  const [accountDeletionPassword, setAccountDeletionPassword] = useState("");
+
   const handleFile = (e) => {
     const file = e.target.files[0];
 
@@ -101,7 +122,6 @@ const Profile = () => {
           );
           if (data.success) {
             toast.success(data.message || "User has been updated");
-            console.log("The data => ", data);
             dispatch(setCurrentUser(data.data));
           }
           setLoading(false);
@@ -163,7 +183,6 @@ const Profile = () => {
           );
           if (data.success) {
             setLoading(false);
-            console.log("Password resp => ", data.data);
           }
         } catch (error) {
           setLoading(false);
@@ -175,6 +194,44 @@ const Profile = () => {
       };
       updateUserPassword();
     }
+  };
+
+  const validateAccountPasswordHandler = (password) => {
+    if (!password) {
+      toast.error("Password is required!");
+      return false;
+    }
+    return true;
+  };
+  const deleteAccountHandler = async () => {
+
+    if (validateAccountPasswordHandler(accountDeletionPassword)) {
+      try {
+        const { data } = await axios.delete(
+          `${URL}/delete-account/${userData?._id}`,
+          {
+            data: { currentPassword: accountDeletionPassword },
+            withCredentials: true,
+          },
+        );
+        if (data.success) {
+          toast.success("Account has been deleted");
+          dispatch(clearCurrentUser());
+          dispatch(clearCurrentOwnerRestaurant());
+          dispatch(clearCityBasedUserRestaurants());
+          dispatch(clearCurrentCategory());
+          dispatch(clearTheme());
+        }
+      } catch (error) {
+        toast.error(error.response.data.message || "Could not delete account!");
+        console.log("Could not delete account!");
+      }
+    }
+  };
+
+  const accountPasswordInputChangeHandler = (e) => {
+    const { value } = e.target;
+    setAccountDeletionPassword(...accountDeletionPassword, value);
   };
 
   return (
@@ -586,10 +643,61 @@ const Profile = () => {
                   undone.
                 </p>
 
-                <Button className="flex mt-5  items-center gap-2  float-right py-5 bg-red-500">
-                  <Trash size={12} />
-                  <span className="text-xs">Delete Account</span>
-                </Button>
+                <Dialog>
+                  <DialogTrigger className="relative w-full">
+                    <div
+                      className={
+                        "absolute cursor-pointer hover:bg-orange-600 active:bg-orange-700 top-0 flex items-center gap-1 bg-customOrange rounded-sm p-2 right-0"
+                      }
+                    >
+                      <Trash2 className="size-4" />
+                      <span className="text-xs">Delete Account</span>
+                    </div>
+                  </DialogTrigger>
+
+                  <DialogContent
+                    className={`sm:max-w-sm ${isDark ? "bg-zinc-800 text-zinc-200" : "bg-zinc-200 text-zinc-700"}`}
+                  >
+                    <DialogHeader>
+                      <DialogTitle>Delete Account!</DialogTitle>
+                      <DialogDescription>
+                        Are you sure you want to delete your account ? This is
+                        Unreversible operation and you will permanently loose
+                        your all data associated with this account
+                      </DialogDescription>
+                    </DialogHeader>
+
+                    <FieldGroup>
+                      <Field>
+                        <Label htmlFor="username-1">Enter your password</Label>
+                        <Input
+                          name="accountDeletionPassword"
+                          type={"password"}
+                          placeholder="Enter password to delete your account "
+                          className={"rounded text-customOrange text-sm"}
+                          onChange={accountPasswordInputChangeHandler}
+                        />
+                      </Field>
+                    </FieldGroup>
+
+                    <DialogFooter
+                      className={`${isDark ? "bg-zinc-700 text-zinc-200" : "bg-zinc-100 text-zinc-700"}`}
+                    >
+                      <div className="flex items-center gap-3">
+                        <DialogClose className="cursor-pointer hover:text-green-600 transition-all duration-200">
+                          Cancel
+                        </DialogClose>
+                        <Button
+                          className="flex cursor-pointer  hover:bg-red-600 active:bg-red-700 items-center gap-1 rounded-md  float-right py-4 bg-red-500"
+                          onClick={deleteAccountHandler}
+                        >
+                          <Trash size={12} />
+                          <span className="text-xs">Delete Account</span>
+                        </Button>
+                      </div>
+                    </DialogFooter>
+                  </DialogContent>
+                </Dialog>
               </div>
             </div>
           </div>

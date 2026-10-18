@@ -31,7 +31,7 @@ export const getCurrentUser = asyncErrorHandler(async (req, res, next) => {
 // update user :
 export const updateUser = expressAsyncHandler(async (req, res, next) => {
   const { contact, fullname } = req.body;
-console.log(req.body);
+  console.log(req.body);
 
   const userId = req.userId;
   const paramsId = req.params.id;
@@ -46,9 +46,10 @@ console.log(req.body);
       {
         fullname: fullname && fullname,
         contact: contact && contact,
-      },{returnDocument : "after", runValidators : true}
+      },
+      { returnDocument: "after", runValidators: true },
     )
-    .select({password : 0, otpExpiration : 0});
+    .select({ password: 0, otpExpiration: 0 });
   if (!user) {
     return next(new ErrorHandler(401, "User not found!"));
   }
@@ -62,37 +63,73 @@ console.log(req.body);
   });
 });
 
+// Update user password :
+export const updateUserPassword = expressAsyncHandler(
+  async (req, res, next) => {
+    const { currentPassword, newPassword } = req.body;
+    console.log(req.body);
 
-// Update user password : 
-export const updateUserPassword = expressAsyncHandler(async(req, res, next)=> { 
-  const {currentPassword, newPassword} = req.body; 
-  console.log(req.body);
-  
-  const userId = req.userId; 
-  const paramsId = req.params.id; 
+    const userId = req.userId;
+    const paramsId = req.params.id;
 
-  if(userId !== paramsId) { 
-    return next(new ErrorHandler(401, "Unauthorized Access!")); 
-  };
-  const user = await userModel.findOne({_id : paramsId}); 
-  if(!user) { 
-    return next(new ErrorHandler(401, "User not found!")); 
+    if (userId !== paramsId) {
+      return next(new ErrorHandler(401, "Unauthorized Access!"));
+    }
+    const user = await userModel.findOne({ _id: paramsId });
+    if (!user) {
+      return next(new ErrorHandler(401, "User not found!"));
+    }
+
+    const isExistingPasswordMatch = await bcrypt.compare(
+      currentPassword,
+      user.password,
+    );
+
+    if (!isExistingPasswordMatch) {
+      return next(new ErrorHandler(401, "Current password is incorrect!"));
+    }
+
+    const genSalt = await bcrypt.genSalt(10);
+    const hashNewPass = await bcrypt.hash(newPassword);
+
+    await userModel.findOneAndUpdate(
+      { _id: paramsId },
+      { password: hashNewPass },
+    );
+
+    return res.status(201).json({
+      success: true,
+      message: "Password has been updated",
+    });
+  },
+);
+
+// Delete account :
+export const deleteAccount = expressAsyncHandler(async (req, res, next) => {
+  const userId = req.userId;
+  const paramsId = req.params.id;
+  const { currentPassword } = req.body;
+
+  if (userId !== paramsId) {
+    return next(new ErrorHandler(401, "Unauthorzed access!"));
   }
 
-  const isExistingPasswordMatch = await bcrypt.compare(currentPassword, user.password); 
+  const user = await userModel.findOne({ _id: paramsId });
 
-  if(!isExistingPasswordMatch){
-    return next(new ErrorHandler(401, "Current password is incorrect!")); 
-  };
+  if (!user) {
+    return next(new ErrorHandler(404, "User not found!"));
+  }
 
-  const genSalt = await bcrypt.genSalt(10); 
-  const hashNewPass = await bcrypt.hash(newPassword); 
+  const isPasswordMatch = await bcrypt.compare(currentPassword, user.password);
 
-  await userModel.findOneAndUpdate({_id : paramsId}, {password : hashNewPass});
+  if (!isPasswordMatch) {
+    return next(new ErrorHandler(401, "Password does not match !"));
+  }
+
+  await userModel.findOneAndDelete({ _id: paramsId });
 
   return res.status(201).json({
-    success : true, 
-    message : "Password has been updated" 
-  })
-
-})
+    success: true,
+    message: "Your account has been deleted",
+  });
+});
