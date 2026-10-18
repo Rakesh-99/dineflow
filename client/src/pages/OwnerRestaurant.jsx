@@ -25,7 +25,6 @@ const OwnerRestaurant = () => {
   const [loading, setLoading] = useState(false);
   const { userAddress } = useSelector((state) => state.currentuserSlice);
 
-  console.log(userAddress);
   
   const [restaurantData, setRestaurantData] = useState({
     shopName: "",

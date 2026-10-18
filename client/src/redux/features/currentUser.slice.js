@@ -14,8 +14,6 @@ const currentuserSlice = createSlice({
             state.userData = action.payload; 
         },
         setCurrentUserCity : (state, action) => { 
-            console.log("Payload", action.payload);
-            
           const {street, state : addState ,address_line1,address_line2, city, country} = action.payload; 
           state.userAddress = {
             "state" : addState, 
