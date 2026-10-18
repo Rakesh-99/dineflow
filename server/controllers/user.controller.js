@@ -66,6 +66,8 @@ console.log(req.body);
 // Update user password : 
 export const updateUserPassword = expressAsyncHandler(async(req, res, next)=> { 
   const {currentPassword, newPassword} = req.body; 
+  console.log(req.body);
+  
   const userId = req.userId; 
   const paramsId = req.params.id; 
 

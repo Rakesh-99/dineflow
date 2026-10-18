@@ -8,6 +8,7 @@ import {
   Camera,
   Check,
   CircleAlert,
+  Eye,
   Loader2,
   Lock,
   Mail,
@@ -31,12 +32,23 @@ const Profile = () => {
     fullname: userData?.fullname,
     contact: userData?.contact,
   });
+  const [passwordManager, setPasswordManager] = useState({
+    currentPassword: "",
+    newPassword: "",
+    confirmPassowrd: "",
+  });
+  const [isPasswordVisible, setIsPasswordVisible] = useState({
+    currentPassword: false,
+    newPassword: false,
+    confirmPassowrd: false,
+  });
+
   const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const { theme } = useSelector((state) => state.themeSlice);
   const isDark = theme === "dark";
   const fileRef = useRef(null);
-
+  const [isPasswordLoading, setIsPasswordLoading] = useState(false);
   const handleFile = (e) => {
     const file = e.target.files[0];
 
@@ -48,7 +60,7 @@ const Profile = () => {
   const personalDetailsChangeHandler = (e) => {
     const { name, value } = e.target;
 
-    setPersonalDetails({ ...personalDetails, [name]: value });
+    setPersonalDetails((prev) => ({ ...prev, [name]: value }));
   };
 
   const validateForm = (data) => {
@@ -78,28 +90,90 @@ const Profile = () => {
     if (validateForm(personalDetails)) {
       // api call :
 
+      const personalDetailApi = async () => {
+        const { contact, fullname } = personalDetails;
+        setLoading(true);
+        try {
+          const { data } = await axios.put(
+            `${URL}/update-user/${userData?._id}`,
+            { contact, fullname },
+            { withCredentials: true },
+          );
+          if (data.success) {
+            toast.success(data.message || "User has been updated");
+            console.log("The data => ", data);
+            dispatch(setCurrentUser(data.data));
+          }
+          setLoading(false);
+        } catch (error) {
+          setLoading(false);
+          console.log(error);
+        }
+      };
       personalDetailApi();
     }
   };
 
-  const personalDetailApi = async () => {
-    const { contact, fullname } = personalDetails;
-    setLoading(true);
-    try {
-      const { data } = await axios.put(
-        `${URL}/update-user/${userData?._id}`,
-        { contact, fullname },
-        { withCredentials: true },
-      );
-      if (data.success) {
-        toast.success(data.message || "User has been updated");
-        console.log("The data => ", data);
-        dispatch(setCurrentUser(data.data));
+  const validatePassword = (passwordData) => {
+    const { currentPassword, newPassword, confirmPassowrd } = passwordData;
+
+    if (currentPassword) {
+      if (!newPassword) {
+        toast.error("New Paswword is required!");
+        return false;
+      } else if (!confirmPassowrd) {
+        toast.error("Confirm password is required!");
+        return false;
       }
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-      console.log(error);
+    }
+
+    if (
+      currentPassword.length < 6 ||
+      newPassword.length < 6 ||
+      confirmPassowrd.length < 6
+    ) {
+      toast.error("Password length should be minimum 6 char!");
+      return false;
+    } else if (newPassword !== confirmPassowrd) {
+      toast.error("Confirm password does not match !");
+      return false;
+    }
+
+    return true;
+  };
+
+  const passwordInputChangeHandler = (e) => {
+    const { name, value } = e.target;
+    setPasswordManager((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const passwordSubmitHandler = (e) => {
+    e.preventDefault();
+
+    // api call :
+    if (validatePassword(passwordManager)) {
+      const updateUserPassword = async () => {
+        const { currentPassword, newPassword } = passwordManager;
+        setLoading(true);
+        try {
+          const { data } = await axios.put(
+            `${URL}/update-password/${userData?._id}`,
+            { currentPassword: currentPassword, newPassword: newPassword },
+            { withCredentials: true },
+          );
+          if (data.success) {
+            setLoading(false);
+            console.log("Password resp => ", data.data);
+          }
+        } catch (error) {
+          setLoading(false);
+          toast.error(
+            error.response.data.message || "Could not update Password!",
+          );
+          console.log("Could not update Password!");
+        }
+      };
+      updateUserPassword();
     }
   };
 
@@ -314,12 +388,13 @@ const Profile = () => {
 
             {/* buttons : */}
             <div className="float-right flex mt-2 gap-2">
-              <Button disabled={loading}
+              <Button
+                disabled={loading}
                 className={`rounded-sm text-xs h-9 bg-customOrange hover:cursor-pointer hover:bg-orange-700 flex item-center gap-1`}
               >
                 {loading ? (
                   <div className="flex items-center gap-1 cursor-not-allowed ">
-                    <Loader2 className="animate-spin"/>
+                    <Loader2 className="animate-spin" />
                     <span>Please wait ..</span>
                   </div>
                 ) : (
@@ -334,6 +409,7 @@ const Profile = () => {
 
           {/* Password details :-------------------------------------------------------------- */}
           <form
+            onSubmit={passwordSubmitHandler}
             className={`border pb-16 rounded-xl px-5 mt-7 ${isDark ? "border-zinc-700" : "border-zinc-100"} `}
           >
             <div className="flex mt-5 items-center">
@@ -359,11 +435,25 @@ const Profile = () => {
               <div className="flex flex-col gap-3">
                 <Label>Current Password</Label>
 
-                <div className="flex border border-muted-foreground rounded-md px-2 py-1 items-center ">
+                <div className="flex relative border border-muted-foreground rounded-md px-2 py-1 items-center ">
                   <User size={18} className="text-muted-foreground" />
                   <Input
+                    type={`${isPasswordVisible.currentPassword ? "text" : "password"}`}
                     placeholder="Current Password"
                     className={`border-none`}
+                    value={passwordManager.currentPassword}
+                    name="currentPassword"
+                    onChange={passwordInputChangeHandler}
+                  />
+                  <Eye
+                    size={15}
+                    className="cursor-pointer "
+                    onClick={() =>
+                      setIsPasswordVisible((prev) => ({
+                        ...prev,
+                        currentPassword: !prev.currentPassword,
+                      }))
+                    }
                   />
                 </div>
               </div>
@@ -376,9 +466,22 @@ const Profile = () => {
                   <div className="flex border border-muted-foreground rounded-md px-2 py-1 items-center ">
                     <Lock size={15} className="text-muted-foreground" />
                     <Input
-                      type={`password`}
+                      type={`${isPasswordVisible.newPassword ? "text" : "password"}`}
                       placeholder="At least 8 characters"
                       className={`border-none`}
+                      value={passwordManager.newPassword}
+                      name="newPassword"
+                      onChange={passwordInputChangeHandler}
+                    />
+                    <Eye
+                      size={15}
+                      className="cursor-pointer"
+                      onClick={() =>
+                        setIsPasswordVisible((prev) => ({
+                          ...prev,
+                          newPassword: !prev.newPassword,
+                        }))
+                      }
                     />
                   </div>
                 </div>
@@ -394,8 +497,22 @@ const Profile = () => {
                   <div className="flex border gap-1 border-muted-foreground rounded-md px-2 py-1 items-center ">
                     <Lock size={15} className="text-muted-foreground" />
                     <Input
-                      className="border-none cursor-not-allowed"
+                      type={`${isPasswordVisible.confirmPassowrd ? "text" : "password"}`}
+                      className="border-none "
                       placeholder="Re-enter new password"
+                      name="confirmPassowrd"
+                      value={passwordManager.confirmPassowrd}
+                      onChange={passwordInputChangeHandler}
+                    />
+                    <Eye
+                      size={15}
+                      className="cursor-pointer"
+                      onClick={() =>
+                        setIsPasswordVisible((prev) => ({
+                          ...prev,
+                          confirmPassowrd: !prev.confirmPassowrd,
+                        }))
+                      }
                     />
                   </div>
 
@@ -411,15 +528,22 @@ const Profile = () => {
             />
 
             {/* buttons : */}
-            <div className="justify-between flex mt-2 gap-2">
-              <span className="text-xs text-muted-foreground">
-                You'll stay signed in on this device.
-              </span>
+            <div className="float-right flex mt-2 gap-2">
               <Button
+                disabled={isPasswordLoading}
                 className={`rounded-sm text-xs h-9 bg-customOrange hover:cursor-pointer hover:bg-orange-700 flex item-center gap-1`}
               >
-                <Check />
-                <span>Update Paswword</span>
+                {loading ? (
+                  <div className="flex items-center gap-1 cursor-not-allowed ">
+                    <Loader2 className="animate-spin" />
+                    <span>Please wait ..</span>
+                  </div>
+                ) : (
+                  <div className="flex items-center gap-1">
+                    <Check />
+                    <span>Save changes</span>
+                  </div>
+                )}
               </Button>
             </div>
           </form>
