@@ -1,45 +1,73 @@
-import axios from "axios"
+import axios from "axios";
 import { useEffect } from "react";
-const URL = import.meta.env.VITE_BACKEND_USER_API_URL; 
-import {setCurrentUser} from '../redux/features/currentUser.slice';
-import { useDispatch, useSelector } from "react-redux";
-
-
-
-
+const URL = import.meta.env.VITE_BACKEND_USER_API_URL;
+import {
+  clearCurrentUser,
+  setCurrentUser,
+} from "../redux/features/currentUser.slice";
+import { useDispatch } from "react-redux";
+import {
+  clearCityBasedUserRestaurants,
+  clearCurrentOwnerRestaurant,
+} from "@/redux/features/currentOwnerRestaurants.slice";
+import { clearCurrentCategory } from "@/redux/features/categorySlice";
+import { clearTheme } from "@/redux/features/theme.slice";
 
 const useGetCurrentUser = () => {
-    let dispatch = useDispatch();     
+  let dispatch = useDispatch();
+  let { pathname } = location;
 
-    const {userData} =  useSelector(state => state.currentuserSlice);
-    
-    
-    
+  useEffect(() => {
+    // prevent api from being called in account page :
+    if (pathname === "/account") {
+      return;
+    }
 
-    useEffect(()=> { 
+    const clearAllStates = () => {
+      dispatch(clearCurrentUser());
+      dispatch(clearCurrentCategory());
+      dispatch(clearCityBasedUserRestaurants());
+      dispatch(clearCurrentOwnerRestaurant());
+      dispatch(clearTheme());
+    };
+    const controller = new AbortController();
 
-        if(location.pathname === "/account") { 
-            return ;
+    const getCUrrentUser = async () => {
+      try {
+        const { data } = await axios.get(
+          `${URL}/current-user`,
+          {},
+          { withCredentials: true, signal: controller.signal },
+        );
+
+        if (data?.success && data?.user) {
+          dispatch(setCurrentUser(data?.user));
+        } else {
+          clearAllStates();
         }
-        
-        const getUserInfo = async() => {
-                try {
-                    const {data} = await axios.get(`${URL}/current-user`, {withCredentials : true});   
-                    const resposne = data; 
+      } catch (error) {
+        console.log(error.response.data);
 
-                    if(resposne?.success){ 
-                        dispatch(setCurrentUser(resposne?.user));
-                    }
-                } catch (error) {
-                  dispatch(setCurrentUser(null))
-                  console.log(`Error while fetching user ${error.resposne.data.message}`);
-                }
-            }
+        if (controller.signal.aborted) {
+          return;
+        }
+        // invalid or expired session :
+        if (error?.response?.status === 401) {
+          clearAllStates();
+          return;
+        }
+        console.log(
+          error?.response?.data?.message ||
+            "Could not get user at this momwment!",
+        );
+      }
+    };
+    getCUrrentUser();
 
-            getUserInfo(); 
-    },[dispatch]); 
-   
+    return () => {
+      controller.abort();
+    };
+  }, [dispatch, pathname]);
+};
 
-}
-
-export default useGetCurrentUser; 
+export default useGetCurrentUser;
