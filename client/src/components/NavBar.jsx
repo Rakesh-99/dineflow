@@ -1,9 +1,7 @@
 import {useSelector, useDispatch} from 'react-redux';
-import { MapPin, Search, SearchIcon, ShoppingCart } from 'lucide-react';
+import {  ShoppingCart } from 'lucide-react';
 import { clearTheme, switchTheme } from '../redux/features/theme.slice';
 import {  useState } from 'react';
-import { Input } from './ui/input';
-import { RxCrossCircled } from "react-icons/rx";
 import { Button } from './ui/button';
 import axios from 'axios';
 import { clearCurrentUser } from '../redux/features/currentUser.slice';
@@ -50,7 +48,7 @@ const NavBar = () => {
 
   const dispatch = useDispatch() ; 
   const {theme} = useSelector(state => state.themeSlice); 
-  const {userAddress, userData } = useSelector(state => state.currentuserSlice); 
+  const { userData } = useSelector(state => state.currentuserSlice); 
 
   
   
@@ -65,6 +63,13 @@ const NavBar = () => {
           dispatch(switchTheme(themePreferences))
         }
 
+        const clearAllStates = () => {
+        dispatch(clearCurrentUser());
+        dispatch(clearCurrentOwnerRestaurant());
+        dispatch(clearCityBasedUserRestaurants());
+        dispatch(clearCurrentCategory());
+        dispatch(clearTheme());
+      };
    
 
 
@@ -76,16 +81,12 @@ const NavBar = () => {
               }
             ); 
             if(data.success) { 
-              dispatch(clearCurrentUser());
-              dispatch(clearCurrentOwnerRestaurant());
-              dispatch(clearCityBasedUserRestaurants());
-              dispatch(clearCurrentCategory());
-              dispatch(clearTheme())
+              clearAllStates(); 
               toast.success(data.message);
               setIsLogoutBtnClick(false);
             }
           } catch (error) {
-            toast.error(`Could not logout your account! ${error}`);
+            toast.error(`${error?.response?.data?.message}` || "An unexpected error occurred while logging out!");
           }
         }
 
