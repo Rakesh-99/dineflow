@@ -14,7 +14,7 @@ const useGetCityBasedRestaurants = () => {
     const getRestaurantBasedOnCity = async () => {
       if (!userAddress?.city) return;
 
-      if (userData?.role === "restaurantOwner") {
+      if (userData?.role !== "user") {
         return;
       }
 
