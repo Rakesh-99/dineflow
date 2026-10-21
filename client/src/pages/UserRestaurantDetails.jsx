@@ -1,9 +1,10 @@
 import { Label } from "@/components/ui/label";
-import { BadgeCheck, BadgeIndianRupee, ClockFading, LeafyGreen, MapPinned, Phone } from "lucide-react";
+import { BadgeCheck, BadgeCheckIcon, BadgeIndianRupee, CalendarDays, ClockFading, Contact, Contact2, LeafyGreen, Mail, MapPinned, Phone, PhoneCall, ShieldAlert, User } from "lucide-react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router"
 import { Badge } from "@/components/ui/badge"
 import { Breadcrumb, BreadcrumbItem, BreadcrumbLink, BreadcrumbList, BreadcrumbPage, BreadcrumbSeparator } from "@/components/ui/breadcrumb";
+import { Separator } from "@/components/ui/separator";
 
 
 const UserRestaurantDetails = () => {
@@ -25,7 +26,6 @@ const UserRestaurantDetails = () => {
     return (
         <>
 
-            {/* breadcrumbs :  */}
             {/* breadcrumbs  */}
             <div className=" flex justify-center mt-5">
                 <Breadcrumb className={``}>
@@ -111,48 +111,110 @@ const UserRestaurantDetails = () => {
 
 
                 {/* right section :  */}
-                <div className=" w-fit justify-center  items-center">
+                <div className=" w-fit flex flex-col gap-5">
                     {/* restaurant details card :  */}
 
-                    <div className={`w-96 border px-6 py-3 shadow-xs rounded-md  flex flex-col  ${isDark ? "border-zinc-700" : "border-zinc-100"}`}>
-                        <h2 className="text-base mb-2 font-medium">Restaurant Info</h2>
+                    <div className={`w-96 border px-6 py-3 shadow-xs rounded-md flex flex-col  ${isDark ? "border-zinc-700 text-zinc-400" : "border-zinc-100 text-zinc-500"}`}>
+                        <h2 className={`text-base mb-2 font-medium ${isDark ? "text-zinc-300" : "text-zinc-700"}`}>Restaurant Information</h2>
+                        <Separator className={`my-1 ${isDark ? 'bg-customOrange' : 'bg-zinc-200'}`} />
 
                         {/* Address :  */}
-                        <div className={`flex my-1 text-xs items-center gap-5 ${isDark ? "text-zinc-400" : "text-zinc-500"}`}>
-                            <div className="flex items-center gap-1">
-                                <MapPinned className="size-3" color="red" />
-                                <Label className={`text-xs`}>Address</Label>
+                        <div className={`flex my-1 text-xs items-center `}>
+                            <div className="flex items-start gap-2">
+                                <MapPinned size={15} />
+                                <Label className={`text-xs`}> Location : {getUserRestaurantDetails?.address1}, {getUserRestaurantDetails?.address2}</Label>
                             </div>
                             <p className="font-normal">{getUserRestaurantDetails?.address}</p>
                         </div>
 
                         {/* phone :  */}
-                        <div className={`flex my-1 text-xs items-center gap-5 ${isDark ? "text-zinc-400" : "text-zinc-500"}`}>
-                            <div className="flex items-center gap-1">
-                                <Phone color="green" className="size-3" />
-                                <Label className={`text-xs`}>Phone </Label>
+                        <div className={`flex my-1 text-xs items-center gap-1 `}>
+                            <div className="flex items-center gap-2">
+                                <Phone className="size-3" />
+                                <Label className={`text-xs`}>Phone : </Label>
                             </div>
-                            <p className="font-normal">{getUserRestaurantDetails?.phone ? getUserRestaurantDetails.phone : "NA"}</p>
+                            <p className="font-normal">{getUserRestaurantDetails?.shopContact ? getUserRestaurantDetails.shopContact : "NA"}</p>
                         </div>
 
                         {/* timings  :  */}
-                        <div className={`flex my-1 text-xs items-center gap-5 ${isDark ? "text-zinc-400" : "text-zinc-500"}`}>
-                            <div className="flex items-center gap-1">
+                        <div className={`flex my-1 text-xs items-center gap-1`}>
+                            <div className="flex items-center gap-2">
                                 <ClockFading className="size-3" />
-                                <Label className={`text-xs`}>Timings </Label>
+                                <Label className={`text-xs`}>Time : </Label>
                             </div>
                             <p className="font-normal">9 AM - 9PM</p>
                         </div>
 
                         {/* cost for two  :  */}
-                        <div className={`flex my-1 text-xs items-center gap-5 ${isDark ? "text-zinc-400" : "text-zinc-500"}`} >
-                            <div className="flex items-center gap-1">
-                                <BadgeIndianRupee color="orange" className="size-3" />
-                                <Label className={`text-xs`}>Cost for two </Label>
+                        <div className={`flex my-1 text-xs items-center gap-1`} >
+                            <div className="flex items-center gap-2">
+                                <BadgeIndianRupee className="size-3" />
+                                <Label className={`text-xs`}>Cost for two :</Label>
                             </div>
-                            <p className="font-normal">₹200</p>
+                            <p className="text-xs">₹200</p>
                         </div>
 
+                        {/* restaurant last update :  */}
+
+                        <div className={`flex my-1 text-xs items-center gap-1`} >
+                            <div className="flex items-center gap-2">
+                                <BadgeIndianRupee className="size-3" />
+                                <Label className={`text-xs`}>Restaurant updated on  :</Label>
+                            </div>
+                            <p className="text-xs">{new Date(getUserRestaurantDetails?.updatedAt).toDateString()}</p>
+                        </div>
+                    </div>
+
+                    {/* owener card details :  */}
+                    <div className={`w-96  border px-6 py-3 shadow-xs rounded-md  flex flex-col  ${isDark ? "border-zinc-700 text-zinc-400" : "border-zinc-100 text-zinc-500"}`}>
+                        <div className="">
+                            <h2 className={`text-base mb-2 font-medium ${isDark ? "text-zinc-300" : "text-zinc-700"}`}>Owner infomration</h2>
+                        </div>
+                        <Separator className={`my-1 ${isDark ? 'bg-customOrange' : 'bg-zinc-200'}`} />
+
+                        <div className="flex flex-col gap-3 mt-2">
+                            {/* name :  */}
+                            <div className="flex items-center gap-2">
+                                <User size={15} />
+                                <span className="text-xs">{getUserRestaurantDetails?.owner?.fullname}</span>
+                            </div>
+
+                            {/* email :  */}
+                            <div className="flex items-center gap-2">
+                                <Mail size={15} />
+                                <span className="text-xs">{getUserRestaurantDetails?.owner?.email}</span>
+                            </div>
+
+
+                            {/* contact :  */}
+
+                            <div className="flex items-center gap-2">
+                                <PhoneCall size={15} />
+                                <span className="text-xs">{getUserRestaurantDetails?.owner?.contact}</span>
+                            </div>
+
+                            {/* user verified or not :  */}
+                            <div className="">
+                                {getUserRestaurantDetails?.owner?.isProfileVerified ?
+                                    <div className="flex items-center gap-2">
+                                        <BadgeCheck size={16} color="yellowGreen" />
+                                        <span className="text-xs">Veified : True</span>
+                                    </div>
+                                    :
+                                    <div className="flex items-center gap-2">
+                                        <ShieldAlert size={16} color="red" />
+                                        <span className="text-xs">Veified : False</span>
+                                    </div>
+                                }
+                            </div>
+
+                            {/* profile update date :  */}
+                            <div className="flex items-center gap-2">
+                                <CalendarDays size={15} />
+                                <span className="text-xs">Profile updated on : {new Date(getUserRestaurantDetails?.owner?.updatedAt).toDateString()}</span>
+                            </div>
+
+                        </div>
                     </div>
                 </div>
             </div>
