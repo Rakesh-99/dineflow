@@ -9,6 +9,7 @@ import { MapPin, MapPinned, UserRound } from "lucide-react";
 import { Button } from "./ui/button";
 import useGetShopsOfCurrentOwner from "@/hooks/useGetShopsOfCurrentOwner";
 import NoRestaurantFound from "./NoRestaurantFound";
+import { Separator } from "./ui/separator";
 
 
 
@@ -19,7 +20,7 @@ const RestaurantListings = () => {
     const { restaurants, userCityBasedRestaurants } = useSelector(state => state.currentOwnerRestaurants);
     const { userData } = useSelector(state => state.currentuserSlice);
     const { theme } = useSelector(state => state.themeSlice);
-    const isDark = theme === "dark"; 
+    const isDark = theme === "dark";
     const navigate = useNavigate();
 
 
@@ -32,7 +33,7 @@ const RestaurantListings = () => {
     if (userData.role === "restaurantOwner") {
         if (!restaurants || restaurants?.length < 1) {
             return (
-                <NoRestaurantFound/>
+                <NoRestaurantFound />
             )
         }
     }
@@ -63,13 +64,13 @@ const RestaurantListings = () => {
                                     {/* restaurant glance data :  */}
                                     <div className={`  flex flex-col justify-center items-center  rounded-md py-2 ${theme === 'dark' && 'bg-zinc-800'}`}>
 
-                                       
 
 
 
-                                <div className="grid grid-cols-1 gap-2 text-[10px] md:text-xs  text-gray-400">
 
-                                  
+                                        <div className="grid grid-cols-1 gap-2 text-[10px] md:text-xs  text-gray-400">
+
+
                                             {/* restaurant icon and title :  */}
                                             <div className={`flex items-center gap-1`}>
                                                 <div className={`border rounded-full py-px px-px ${theme === 'light' ? 'bg-orange-50 border-orange-100' : 'bg-customOrange border-orange-700'}`}>
@@ -91,7 +92,7 @@ const RestaurantListings = () => {
 
 
                                             <div className='flex items-center gap-1  '>
-                                                <MapPinned  className="size-4" />
+                                                <MapPinned className="size-4" />
                                                 <span >Address line 1 : {restaurant?.address1}</span>
                                             </div>
 
@@ -104,29 +105,35 @@ const RestaurantListings = () => {
                                                 <MdOutlinePhoneInTalk className="size-4" />
                                                 <span>Contact : {restaurant?.owner.contact}</span>
                                             </div>
-
-                                            <div className='flex items-center gap-1  '>
+                                            <div className='flex items-center gap-1 text-muted-foreground '>
                                                 <SlCalender className="size-3.5" />
                                                 <span>Created : {new Date(restaurant?.createdAt).toLocaleDateString()}</span>
                                             </div>
+                                            <Separator className={`mt-2 ${isDark ? 'bg-customOrange' : 'bg-zinc-200'}`} />
 
-                                            <div className='flex items-center gap-1 '>
-                                                <SlCalender className="size-3.5" />
-                                                <span>Updated : {new Date(restaurant?.updatedAt).toLocaleDateString()}</span>
-                                            </div>
                                         </div>
                                     </div>
 
 
                                     {/* div of arrow btn to navigate to the restaurant details page :  */}
+                                    <div className="flex items-center justify-between px-5 text-[10px] md:text-xs  text-muted-foreground">
 
-                                    <Button
-                                        className=" float-right mr-2 rounded bg-customOrange"
-                                        onClick={() => navigate(`/restaurantinfo/${getRestaurantName(restaurant.shopName)}/${restaurant._id}`)}
-                                    >
-                                        <span className="text-xs font-semibold">View</span>
-                                        <IoIosArrowDropright className="hover:cursor-pointer active:animate-ping size-4" />
-                                    </Button>
+                                        <div className="">
+                                            <div className='flex items-center gap-1 '>
+                                                <SlCalender className="size-3.5" />
+                                                <span>Updated : {new Date(restaurant?.updatedAt).toLocaleDateString()}</span>
+                                            </div>
+                                        </div>
+
+                                        <Button
+                                            className=" float-right mr-2 rounded bg-customOrange"
+                                            onClick={() => navigate(`/restaurantinfo/${getRestaurantName(restaurant.shopName)}/${restaurant._id}`)}
+                                        >
+                                            <span className="text-xs font-semibold">View</span>
+                                            <IoIosArrowDropright className="hover:cursor-pointer active:animate-ping size-4" />
+                                        </Button>
+                                    </div>
+
                                 </div>
 
 
