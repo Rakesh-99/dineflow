@@ -13,6 +13,10 @@ const shopSchema = new mongoose.Schema({
         resources_type: String,
         public_id : String
     }, 
+    shopContact : { 
+        type : String, 
+        required : [true, 'Contact no is required for restaurant!']
+    },
     owner : { 
         type : Schema.Types.ObjectId,
         ref : 'User'

@@ -47,13 +47,13 @@ export const fetchOwnerRestaurants = expressAsyncHandler(async(req, res, next) =
 // Create Shop : 
 export const createShop = expressAsyncHandler(async(req, res, next)=> { 
 
-    const {shopName, city, state, address1,address2,street, description, status, costForTwo, budgetFriendly, isVegRestaurant} = req.body; 
+    const {shopName, city, state, address1,address2,street, description, status, costForTwo, budgetFriendly, isVegRestaurant, shopContact} = req.body; 
     
     const userId = req.userId ; 
 
     const image = req.file ;
 
-    if(!shopName || !city || !state || !address1 || !image || !description || !status || !costForTwo || !budgetFriendly) {
+    if(!shopName || !city || !state || !address1 || !image || !description || !status || !costForTwo || !budgetFriendly || !shopContact) {
         return next(new ErrorHandler(400, 'All fields are required!'));
     }  
 
@@ -70,6 +70,7 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
         shopName,
         city,
         state, 
+        shopContact,
         address1, 
         address2: address2 ? address2 : "",
         street: street ? street : "", 
@@ -98,7 +99,7 @@ export const createShop = expressAsyncHandler(async(req, res, next)=> {
 // edit shop controller :  
 export const updateShop = expressAsyncHandler(async(req, res, next)=> { 
 
-    const { shopName , address1, address2, street, city, state, description, status, costForTwo, budgetFriendly} = req.body ; 
+    const { shopName , address1, address2, street, city, state, description, status, costForTwo, budgetFriendly,shopContact} = req.body ; 
 
     const userId = req.userId; 
     const {shopId} = req.params; 
@@ -128,6 +129,7 @@ export const updateShop = expressAsyncHandler(async(req, res, next)=> {
     if(state) updatedData.state = state; 
     if(costForTwo) updatedData.costForTwo = costForTwo;
     if(budgetFriendly !== undefined) updatedData.budgetFriendly = budgetFriendly;
+    if(shopContact) updatedData.shopContact = shopContact;
     if(file) updatedData.image = {
         "url" : cloudinaryImgURL.url,
         "resource_type" : cloudinaryImgURL.resource_type,

@@ -1,11 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { BsSearch } from "react-icons/bs";
-import { FaKitchenSet } from "react-icons/fa6";
 import RestaurantListings from "@/components/RestaurantListings";
 import { Sheet, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { Label } from "@/components/ui/label";
-import { PiCityLight } from "react-icons/pi";
 import { GiModernCity } from "react-icons/gi";
 import { BiBuildingHouse } from "react-icons/bi";
 import { CiLocationOn } from "react-icons/ci";
@@ -15,7 +13,7 @@ import { toast } from "sonner";
 import axios from "axios";
 const URL = import.meta.env.VITE_BACKEND_SHOP_API_URL;
 import { addNewRestaurant } from "@/redux/features/currentOwnerRestaurants.slice";
-import { Loader, Plus, ShieldCheck, ShieldX } from "lucide-react";
+import { Loader, Phone, Plus, ShieldCheck, ShieldX } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Textarea } from "@/components/ui/textarea";
 
@@ -28,6 +26,7 @@ const OwnerRestaurant = () => {
   
   const [restaurantData, setRestaurantData] = useState({
     shopName: "",
+    shopContact : "", 
     costForTwo: "",
     budgetFriendly: true,
     city: userAddress?.city,
@@ -97,11 +96,12 @@ const budgetTabHandler = (e) => {
   const formSubmitHandler = (restaurantData) => {
    
 
-    const { shopName, city, address1,address2,street,  state, description, status, image, costForTwo, budgetFriendly } = restaurantData;
+    const { shopName, city, address1,address2,street,  state, description, status, image, costForTwo, budgetFriendly, shopContact } = restaurantData;
 
     const formData = new FormData();
     // preparing the formdata :
     formData.append("shopName", shopName);
+    formData.append("shopContact", shopContact)
     formData.append("costForTwo", costForTwo)
     formData.append("budgetFriendly", budgetFriendly)
     formData.append("city", city);
@@ -124,6 +124,7 @@ const budgetTabHandler = (e) => {
           toast.success("Restaurant has been created");
           setRestaurantData({
             shopName: "",
+            shopContact : "",
             costForTwo: "",
             budgetFriendly: true,
             city: "",
@@ -175,6 +176,16 @@ const budgetTabHandler = (e) => {
                   <div className="relative flex items-center">
                     <BiBuildingHouse color="gray" className="absolute ml-2" />
                     <Input className={`rounded outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`} placeholder="Enter your shop name" id="sheet-demo-name" name="shopName" value={restaurantData.shopName} onChange={inputChangeHandler} />
+                  </div>
+                </div>
+
+                  <div className="grid gap-1">
+                  <Label className={`text-xs`} htmlFor="sheet-demo-name">
+                    Restaurant contact number *
+                  </Label>
+                  <div className="relative flex items-center">
+                    <Phone size={14} color="gray" className="absolute ml-2" />
+                    <Input className={`rounded outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`} placeholder="7377089649" id="sheet-demo-name" name="shopContact" value={restaurantData.shopContact} onChange={inputChangeHandler} />
                   </div>
                 </div>
 
