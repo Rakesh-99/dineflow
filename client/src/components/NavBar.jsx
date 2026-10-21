@@ -106,7 +106,7 @@ const NavBar = () => {
                <div className="flex items-center gap-3">
                 <div className="w-3 h-3 rounded-full bg-customOrange shadow-[0_0_12px_rgba(249,115,22,0.6)] shrink-0"></div>
 
-                <div className="flex flex-col">
+                <Link to={'/'} className="flex flex-col" >
                   <h1 className="text-lg md:text-2xl font-extrabold tracking-tight">
                     <span className="bg-gradient-to-r from-orange-500 via-orange-400 to-amber-500 bg-clip-text text-transparent">
                       Dine
@@ -119,7 +119,7 @@ const NavBar = () => {
                   <span className="text-[10px] md:text-xs text-slate-500 tracking-widest uppercase">
                     Food Delivery
                   </span>
-                </div>
+                </Link>
               </div>
 
               
