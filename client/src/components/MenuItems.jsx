@@ -333,7 +333,7 @@ const MenuItems = ({ restaurantData }) => {
                                         <SquareMenu color="gray" className="absolute ml-2 size-4" />
                                         <Input
                                             className={`rounded outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`}
-                                            placeholder="Enter your shop name"
+                                            placeholder="Enter your item name"
                                             id="sheet-demo-name"
                                             name="name"
                                             value={menuData.name}
@@ -426,7 +426,7 @@ const MenuItems = ({ restaurantData }) => {
 
                                     </div>
                                     <div className="flex items-center gap-3">
-                                        <span className="text-xs">Could not find a category or want to create a new one ? </span>
+                                        <span className="text-xs">Could not find a category and want to create a new one ? </span>
                                         <div className="relative group inline-flex">
                                             {/* only show when create category icon is clicked   */}
                                             <AlertDialog >
