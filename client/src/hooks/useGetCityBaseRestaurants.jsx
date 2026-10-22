@@ -25,7 +25,7 @@ const useGetCityBasedRestaurants = () => {
         );
 
         if (data?.success && data?.data) {
-          dispatch(setCityBasedRestaurants(data.data));
+          dispatch(setCityBasedRestaurants(data?.data));
         }
       } catch (error) {
         console.log(
@@ -36,7 +36,7 @@ const useGetCityBasedRestaurants = () => {
       }
     };
     getRestaurantBasedOnCity();
-  }, [dispatch, userAddress?.city]);
+  }, [dispatch, userAddress?.city, userData?.role]);
 };
 
 export default useGetCityBasedRestaurants;
