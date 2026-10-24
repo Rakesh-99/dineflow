@@ -11,7 +11,7 @@ import mongoose from "mongoose";
 // Fetch all Item (for restaurant owner only): 
 export const getAllItems = expressAsyncHandler(async(req, res, next) => { 
     const user = req.userId; 
-    const items = await itemModel.find({owner: user}).populate("shop").populate("owner").populate("category");
+    const items = await itemModel.find({owner: user}).populate([{path: "shop"}, {path: "owner"}, {path : "category"}])
 
     if(!items || items.length < 1){ 
         return next(new ErrorHandler(404, 'No items found!'))
