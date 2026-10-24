@@ -1,5 +1,5 @@
 import express from 'express'; 
-import { createShop, getOwnerRestaurantByID, fetchOwnerRestaurants, deleteRestaurant, getRestaurantBasedOnLocation } from '../../controllers/shop.controller.js';
+import { createShop, getOwnerRestaurantByID, fetchOwnerRestaurants, deleteRestaurant, getRestaurantBasedOnLocation, getAllRestaurants } from '../../controllers/shop.controller.js';
 const shopRoutes = express.Router() ; 
 import multerFileUpload from '../../middlewares/multerFileupload.middleware.js';
 import isUserAuthenticated from '../../middlewares/auth.middleware.js';
@@ -15,6 +15,7 @@ shopRoutes.post(`/create-shop`,isUserAuthenticated, multerFileUpload.single('ima
           .get('/fetch-owner-restaurants', isUserAuthenticated, fetchOwnerRestaurants)
           .get('/get-owner-restaurant/:shopId', isUserAuthenticated, getOwnerRestaurantByID)
           .delete(`/delete-shop/:shopId`, isUserAuthenticated, isRestaurantOwner, deleteRestaurant)
+          .get('/get-all-restaurants', isUserAuthenticated, getAllRestaurants)
 
 
 export default shopRoutes; 

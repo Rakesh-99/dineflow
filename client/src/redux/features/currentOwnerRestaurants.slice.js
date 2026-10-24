@@ -5,7 +5,11 @@ const currentOwnerRestaurants = createSlice({
     name : 'currentOwnerRestaurants', 
     initialState : {
         restaurants: null, 
-        userCityBasedRestaurants : null
+        userCityBasedRestaurants : null, 
+        sampleRestaurants : {
+            sampleResData : null, 
+            isDummyBtnClicked : false
+        }
     }, 
     reducers : { 
 
@@ -15,6 +19,10 @@ const currentOwnerRestaurants = createSlice({
         },
         setCityBasedRestaurants : (state, action) => {  
             state.userCityBasedRestaurants = action.payload
+        },
+        setSampleRestaurants : (state, action) => { 
+          state.sampleRestaurants.sampleResData = action.payload.restaurants; 
+          state.sampleRestaurants.isDummyBtnClicked = action.payload.isDummyBtnClicked; 
         },
         addNewRestaurant : (state, action) => { 
             state.restaurants.push(action.payload);
@@ -33,7 +41,10 @@ const currentOwnerRestaurants = createSlice({
         clearCurrentOwnerRestaurant : (state)=> { 
             state.restaurants = null
         },
-
+        clearSampleRestaurants : (state) => { 
+            state.sampleRestaurants.sampleResData = null, 
+            state.sampleRestaurants.isDummyBtnClicked = false
+        },
         clearCityBasedUserRestaurants : (state) => { 
             state.userCityBasedRestaurants = null; 
         },
@@ -67,5 +78,5 @@ const currentOwnerRestaurants = createSlice({
 
 
 
-export const {setCurrentRestaurantOwnerData, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant, updateMenuItem, clearCurrentOwnerRestaurant, setCityBasedRestaurants, clearCityBasedUserRestaurants} = currentOwnerRestaurants.actions; 
+export const {setCurrentRestaurantOwnerData,setSampleRestaurants, addNewRestaurant, removeRestaurant, addMenuItemToRestaurant, updateRestaurant, deleteMenuFromRestaurant, updateMenuItem, clearCurrentOwnerRestaurant, setCityBasedRestaurants, clearCityBasedUserRestaurants, clearSampleRestaurants} = currentOwnerRestaurants.actions; 
 export default currentOwnerRestaurants.reducer; 

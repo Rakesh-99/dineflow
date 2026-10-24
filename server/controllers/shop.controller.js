@@ -8,6 +8,24 @@ import itemModel from "../models/item.model.js";
 
 
 
+
+// get all restaurants in case the restaunts not found based on current location : 
+
+export const getAllRestaurants = expressAsyncHandler(async (req, res, next) => { 
+
+    const shop = await shopModel.find(); 
+
+    if(!shop || shop.length < 1) { 
+        return next(new ErrorHandler(404, "No restaurants found!")); 
+    }; 
+
+    return res.status(200).json({ 
+        success : true, 
+        message : 'Restaurants have been fetched', 
+        data : shop
+    })
+})
+
 // Fetch shop from the user POV. Because user can see all the restaurants from all the restaurant owners : 
 export const getRestaurantBasedOnLocation = expressAsyncHandler(async(req, res, next) => { 
     const {city} = req.query; 
