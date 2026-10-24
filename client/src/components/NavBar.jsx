@@ -5,7 +5,7 @@ import {  useState } from 'react';
 import { Button } from './ui/button';
 import axios from 'axios';
 import { clearCurrentUser } from '../redux/features/currentUser.slice';
-import { clearCurrentOwnerRestaurant, clearCityBasedUserRestaurants } from '@/redux/features/currentOwnerRestaurants.slice';
+import { clearCurrentOwnerRestaurant, clearCityBasedUserRestaurants, clearSampleRestaurants } from '@/redux/features/currentOwnerRestaurants.slice';
 import { clearCurrentCategory } from '@/redux/features/categorySlice';
 const URL = import.meta.env.VITE_BACKEND_AUTH_API_URL;
 import {
@@ -69,6 +69,7 @@ const NavBar = () => {
         dispatch(clearCityBasedUserRestaurants());
         dispatch(clearCurrentCategory());
         dispatch(clearTheme());
+        dispatch(clearSampleRestaurants());
       };
    
 

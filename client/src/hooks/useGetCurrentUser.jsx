@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import {
   clearCityBasedUserRestaurants,
   clearCurrentOwnerRestaurant,
+  clearSampleRestaurants,
 } from "@/redux/features/currentOwnerRestaurants.slice";
 import { clearCurrentCategory } from "@/redux/features/categorySlice";
 import { clearTheme } from "@/redux/features/theme.slice";
@@ -29,6 +30,7 @@ const useGetCurrentUser = () => {
       dispatch(clearCityBasedUserRestaurants());
       dispatch(clearCurrentOwnerRestaurant());
       dispatch(clearTheme());
+      dispatch(clearSampleRestaurants());
     };
     const controller = new AbortController();
 
