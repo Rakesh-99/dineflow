@@ -4,14 +4,14 @@ import { IoIosArrowDropright } from "react-icons/io";
 import { MdOutlinePhoneInTalk } from "react-icons/md";
 import { PiBuildingApartment } from "react-icons/pi";
 import { SlCalender } from "react-icons/sl";
-import { useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import {
   CookingPot,
+  Drumstick,
+  LeafyGreen,
   MapPin,
   MapPinned,
-  PartyPopper,
   UserRound,
-  UtensilsCrossed,
   X,
 } from "lucide-react";
 import { Button } from "./ui/button";
@@ -45,8 +45,11 @@ const RestaurantListings = () => {
   }
 
   const filterCategory = (data) => {
-    //     console.log("Type => ", typeof data.category);
-    // console.log(data.category);
+    const categoryName = data?.category?.categoryName;
+
+    if (!categoryName) return null;
+
+    return categoryName;
   };
 
   return (
@@ -162,10 +165,13 @@ const RestaurantListings = () => {
 
       {/* rendering user city based restaurant :  */}
       {userCityBasedRestaurants?.length > 0 && userData?.role === "user" && (
-        <div className="grid grid-cols-3 gap-3">
+         <div className="grid grid-cols-3 gap-3">
           {userCityBasedRestaurants?.map((userRestaurants, idx) => {
             return (
-              <div key={idx} className={`flex flex-col border shadow  overflow-hidden rounded-lg ${isDark ? "border-zinc-500" : ""}`}>
+              <div
+                key={idx}
+                className={`flex flex-col border shadow  overflow-hidden rounded-lg ${isDark ? "border-zinc-500" : ""}`}
+              >
                 {/* image :  */}
                 <div className="h-40 w-96">
                   <img
@@ -176,35 +182,113 @@ const RestaurantListings = () => {
                 </div>
                 {/* glance data :  */}
                 <div className="p-2">
-                  <div className="flex items-center">
-                    <CookingPot size={18} />
-                    <div className="">
-                      {/* name :  */}
-                      <h2 className=" text-base font-semibold">
-                        {userRestaurants?.shopName}
-                      </h2>
-                      {/* item available :  */}
-                      <div className="">
-                        {userRestaurants?.item?.length > 0 ? (
-                          <div className="flex flex-wrap">
-                            {userRestaurants?.item.map((data, idx) => {
-                              return (
-                                <ul key={idx} className="">
-                                  <li className="text-xs list-disc">
-                                    {filterCategory(data)}
-                                  </li>
-                                </ul>
-                              );
-                            })}
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-1">
-                            <X size={12} />
-                            <p className="text-xs">No items found</p>
-                          </div>
-                        )}
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-1">
+                        <CookingPot size={18} />
+                        {/* name :  */}
+                        <h2 className=" text-base font-semibold">
+                          {userRestaurants?.shopName}
+                        </h2>
+                      </div>
+
+                      <div className="flex items-center gap-1">
+                        <MapPin size={13} />
+                        <p className={`text-[10px] font-medium`}>
+                          {userRestaurants?.city}
+                        </p>
                       </div>
                     </div>
+
+                    {/* item available :  */}
+                    <div>
+                      {userRestaurants?.item?.length > 0 ? (
+                        <ul className="flex gap-4">
+                          {[
+                            ...new Map(
+                              userRestaurants.item
+                                .filter((data) => data?.category?.categoryName)
+                                .map((data) => [
+                                  data.category.categoryName.toLowerCase(),
+                                  data,
+                                ]),
+                            ).values(),
+                          ].map((data, idx) => {
+                            return (
+                              <li
+                                key={data._id}
+                                className={`text-[10px]  font-medium  ${idx === 0 ? "list-none" : "list-disc"} ${isDark ? "text-gray-400" : "text-gray-500"} `}
+                              >
+                                {filterCategory(data)}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      ) : (
+                        <div className="flex  items-center gap-px">
+                          <X
+                            size={13}
+                            className="font-bold text-customOrange"
+                          />
+                          <p
+                            className={`text-[10px] ${isDark ? "text-gray-400" : "text-gray-500"} `}
+                          >
+                            No items found
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* address :  */}
+                    <div
+                      className={`flex text-[10px] ${isDark ? "border-gray-600 text-gray-300" : "text-gray-600"} `}
+                    >
+                      <span>{userRestaurants?.address1}</span>
+                      <span>{userRestaurants.address2}</span>
+                    </div>
+
+                    {/* is restaurant veg ?  */}
+                    <div className="">
+                      <span>
+                        {userRestaurants?.isVegRestaurant ? (
+                          <div>
+                            <LeafyGreen color="yellowgreen" />
+                            <span
+                              className={`text-[10px] ${isDark ? "border-gray-600 text-gray-300" : "text-gray-400"} `}
+                            >
+                              Pure-Veg
+                            </span>
+                          </div>
+                        ) : (
+                          <div className=" flex items-center  justify-between">
+                            <div
+                              className={`${isDark ? "border-gray-600 text-gray-300" : "text-gray-600"}  px-2 py-px rounded-full gap-1 border inline-flex items-center`}
+                            >
+                              <Drumstick size={12} />
+                              <span className="text-[10px]">Non-veg</span>
+                            </div>
+
+                            <div
+                              className={`${isDark ? "border-gray-600 text-gray-300" : "text-gray-600"}  text-[10px] inline-flex border px-1 py-px rounded-full items-center`}
+                            >
+                              <span>Cost for two : </span>
+                              <span>{userRestaurants?.costForTwo}</span>
+                            </div>
+                          </div>
+                        )}
+                      </span>
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      className={`mt-2 hover:bg-customOrange hover:text-orange-900 cursor-pointer rounded-sm text-xs ${isDark && "bg-zinc-800/50 border-gray-600"}`}
+                    >
+                      <NavLink
+                        to={`/user-restaurant-details/${userRestaurants?.shopName}/${userRestaurants?._id}`}
+                      >
+                        Details
+                      </NavLink>
+                    </Button>
                   </div>
                 </div>
                 {/* name :  */}
@@ -219,7 +303,10 @@ const RestaurantListings = () => {
         <div className="grid grid-cols-3 gap-3">
           {sampleResData?.map((userRestaurants, idx) => {
             return (
-              <div key={idx} className="flex flex-col border overflow-hidden rounded-lg">
+              <div
+                key={idx}
+                className={`flex flex-col border shadow  overflow-hidden rounded-lg ${isDark ? "border-zinc-500" : ""}`}
+              >
                 {/* image :  */}
                 <div className="h-40 w-96">
                   <img
@@ -230,35 +317,113 @@ const RestaurantListings = () => {
                 </div>
                 {/* glance data :  */}
                 <div className="p-2">
-                  <div className="flex items-center">
-                    <CookingPot size={18} />
-                    <div className="">
-                      {/* name :  */}
-                      <h2 className=" text-base font-semibold">
-                        {userRestaurants?.shopName}
-                      </h2>
-                      {/* item available :  */}
-                      <div className="">
-                        {userRestaurants?.item?.length > 0 ? (
-                          <div className="flex flex-wrap">
-                            {userRestaurants?.item.map((data, idx) => {
-                              return (
-                                <ul key={idx} className="">
-                                  <li className="text-xs list-disc">
-                                    {filterCategory(data)}
-                                  </li>
-                                </ul>
-                              );
-                            })}
-                          </div>
-                        ) : (
-                          <div className="flex items-center gap-1">
-                            <X size={12} />
-                            <p className="text-xs">No items found</p>
-                          </div>
-                        )}
+                  <div className="flex flex-col gap-1">
+                    <div className="flex items-center justify-between gap-4">
+                      <div className="flex items-center gap-1">
+                        <CookingPot size={18} />
+                        {/* name :  */}
+                        <h2 className=" text-base font-semibold">
+                          {userRestaurants?.shopName}
+                        </h2>
+                      </div>
+
+                      <div className="flex items-center gap-1">
+                        <MapPin size={13} />
+                        <p className={`text-[10px] font-medium`}>
+                          {userRestaurants?.city}
+                        </p>
                       </div>
                     </div>
+
+                    {/* item available :  */}
+                    <div>
+                      {userRestaurants?.item?.length > 0 ? (
+                        <ul className="flex gap-4">
+                          {[
+                            ...new Map(
+                              userRestaurants.item
+                                .filter((data) => data?.category?.categoryName)
+                                .map((data) => [
+                                  data.category.categoryName.toLowerCase(),
+                                  data,
+                                ]),
+                            ).values(),
+                          ].map((data, idx) => {
+                            return (
+                              <li
+                                key={data._id}
+                                className={`text-[10px]  font-medium  ${idx === 0 ? "list-none" : "list-disc"} ${isDark ? "text-gray-400" : "text-gray-500"} `}
+                              >
+                                {filterCategory(data)}
+                              </li>
+                            );
+                          })}
+                        </ul>
+                      ) : (
+                        <div className="flex  items-center gap-px">
+                          <X
+                            size={13}
+                            className="font-bold text-customOrange"
+                          />
+                          <p
+                            className={`text-[10px] ${isDark ? "text-gray-400" : "text-gray-500"} `}
+                          >
+                            No items found
+                          </p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* address :  */}
+                    <div
+                      className={`flex text-[10px] ${isDark ? "border-gray-600 text-gray-300" : "text-gray-600"} `}
+                    >
+                      <span>{userRestaurants?.address1}</span>
+                      <span>{userRestaurants.address2}</span>
+                    </div>
+
+                    {/* is restaurant veg ?  */}
+                    <div className="">
+                      <span>
+                        {userRestaurants?.isVegRestaurant ? (
+                          <div>
+                            <LeafyGreen color="yellowgreen" />
+                            <span
+                              className={`text-[10px] ${isDark ? "border-gray-600 text-gray-300" : "text-gray-400"} `}
+                            >
+                              Pure-Veg
+                            </span>
+                          </div>
+                        ) : (
+                          <div className=" flex items-center  justify-between">
+                            <div
+                              className={`${isDark ? "border-gray-600 text-gray-300" : "text-gray-600"}  px-2 py-px rounded-full gap-1 border inline-flex items-center`}
+                            >
+                              <Drumstick size={12} />
+                              <span className="text-[10px]">Non-veg</span>
+                            </div>
+
+                            <div
+                              className={`${isDark ? "border-gray-600 text-gray-300" : "text-gray-600"}  text-[10px] inline-flex border px-1 py-px rounded-full items-center`}
+                            >
+                              <span>Cost for two : </span>
+                              <span>{userRestaurants?.costForTwo}</span>
+                            </div>
+                          </div>
+                        )}
+                      </span>
+                    </div>
+
+                    <Button
+                      variant="outline"
+                      className={`mt-2 hover:bg-customOrange hover:text-orange-900 cursor-pointer rounded-sm text-xs ${isDark && "bg-zinc-800/50 border-gray-600"}`}
+                    >
+                      <NavLink
+                        to={`/user-restaurant-details/${userRestaurants?.shopName}/${userRestaurants?._id}`}
+                      >
+                        Details
+                      </NavLink>
+                    </Button>
                   </div>
                 </div>
                 {/* name :  */}
