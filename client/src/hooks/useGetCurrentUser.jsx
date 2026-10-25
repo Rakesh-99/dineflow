@@ -38,7 +38,6 @@ const useGetCurrentUser = () => {
       try {
         const { data } = await axios.get(
           `${URL}/current-user`,
-          {},
           { withCredentials: true, signal: controller.signal },
         );
 
