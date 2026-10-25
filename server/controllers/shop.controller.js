@@ -13,7 +13,7 @@ import itemModel from "../models/item.model.js";
 
 export const getAllRestaurants = expressAsyncHandler(async (req, res, next) => { 
 
-    const shop = await shopModel.find(); 
+    const shop = await shopModel.find().populate([{path : "owner"}, {path : "item" , populate : {path : "category"}}])
 
     if(!shop || shop.length < 1) { 
         return next(new ErrorHandler(404, "No restaurants found!")); 
