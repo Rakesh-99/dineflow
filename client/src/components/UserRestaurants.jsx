@@ -6,8 +6,8 @@ const UserRestaurant = () => {
 
     return (
         <>
-            <div className="mt-14">
-                <h1 className="text-base md:mx-2 mx-5 md:text-2xl font-bold">Restaurants in your City </h1>
+            <div className="mt-20">
+                <h1 className="text-base md:mx-2 mx-5 mb-10 md:text-2xl font-bold">Restaurants in your City </h1>
 
                 <RestaurantListings />
             </div>
