@@ -18,7 +18,7 @@ import categoryRoutes from './routes/category/category.routes.js';
 // global middlewares : 
 app.use(cookieParser());
 app.use(cors({
-    origin : ['http://localhost:5173'],
+    origin : ['http://localhost:5173','https://dineflow-99.vercel.app'],
     credentials : true,
     methods: ['GET','POST','PUT','PATCH','DELETE'],
 }));
