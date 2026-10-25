@@ -29,8 +29,6 @@ const RestaurantListings = () => {
     (state) => state.currentOwnerRestaurants.sampleRestaurants,
   );
 
-  console.log("The dam", sampleResData?.length);
-  
   const { userData } = useSelector((state) => state.currentuserSlice);
   const { theme } = useSelector((state) => state.themeSlice);
   const isDark = theme === "dark";
@@ -50,7 +48,6 @@ const RestaurantListings = () => {
     //     console.log("Type => ", typeof data.category);
     // console.log(data.category);
   };
-
 
   return (
     <>
@@ -165,10 +162,10 @@ const RestaurantListings = () => {
 
       {/* rendering user city based restaurant :  */}
       {userCityBasedRestaurants?.length > 0 && userData?.role === "user" && (
-        <div className="grid grid-cols-3 gap-10">
-          {userCityBasedRestaurants?.map((userRestaurants) => {
+        <div className="grid grid-cols-3 gap-3">
+          {userCityBasedRestaurants?.map((userRestaurants, idx) => {
             return (
-              <div className="flex flex-col border overflow-hidden rounded-lg">
+              <div key={idx} className={`flex flex-col border shadow  overflow-hidden rounded-lg ${isDark ? "border-zinc-500" : ""}`}>
                 {/* image :  */}
                 <div className="h-40 w-96">
                   <img
@@ -190,11 +187,9 @@ const RestaurantListings = () => {
                       <div className="">
                         {userRestaurants?.item?.length > 0 ? (
                           <div className="flex flex-wrap">
-                            {userRestaurants?.item.map((data) => {
-                              console.log("Res", userRestaurants);
-
+                            {userRestaurants?.item.map((data, idx) => {
                               return (
-                                <ul className="">
+                                <ul key={idx} className="">
                                   <li className="text-xs list-disc">
                                     {filterCategory(data)}
                                   </li>
@@ -220,13 +215,11 @@ const RestaurantListings = () => {
       )}
 
       {/* user : fallback : falling back to sample restaurant  when city based restaunt not available  */}
-      {sampleResData?.length > 0 &&
-      userData?.role === "user"
-       ? (
-        <div className="grid grid-cols-3 gap-10">
-          {sampleResData?.map((userRestaurants) => {
+      {sampleResData?.length > 0 && userData?.role === "user" && (
+        <div className="grid grid-cols-3 gap-3">
+          {sampleResData?.map((userRestaurants, idx) => {
             return (
-              <div className="flex flex-col border overflow-hidden rounded-lg">
+              <div key={idx} className="flex flex-col border overflow-hidden rounded-lg">
                 {/* image :  */}
                 <div className="h-40 w-96">
                   <img
@@ -248,9 +241,9 @@ const RestaurantListings = () => {
                       <div className="">
                         {userRestaurants?.item?.length > 0 ? (
                           <div className="flex flex-wrap">
-                            {userRestaurants?.item.map((data) => {
+                            {userRestaurants?.item.map((data, idx) => {
                               return (
-                                <ul className="">
+                                <ul key={idx} className="">
                                   <li className="text-xs list-disc">
                                     {filterCategory(data)}
                                   </li>
@@ -272,23 +265,6 @@ const RestaurantListings = () => {
               </div>
             );
           })}
-        </div>
-      ) : (
-        // if  no dummy restaurant found !
-        <div className="flex flex-col items-center justify-center px-6 py-20 text-center">
-          <div className="relative mb-5">
-            <UtensilsCrossed
-              className="h-14 w-14 text-customOrange"
-              strokeWidth={1.5}
-            />
-            <PartyPopper className="absolute -right-4 -top-3 h-7 w-7 text-yellow-500" />
-          </div>
-
-          <h2 className="text-2xl font-bold">Oops! No restaurants found 🍽️</h2>
-
-          <p className="mt-2 max-w-sm text-sm leading-6 text-muted-foreground">
-            Looks like our kitchen is empty for now. Please try again later!
-          </p>
         </div>
       )}
     </>
