@@ -146,7 +146,7 @@ const Signup = ({setShowEmailVerifyComp, setUserSignupEmail }) => {
          }
       }
     } catch (error) {
-      console.log('An error occurred while login using google -> ', error.response.data);
+      console.log('An error occurred while login using google -> ', error);
       return false; 
     }
   }

@@ -108,7 +108,7 @@ const Login = () => {
          await googleAuthApiCall(data) ; 
       
     } catch (error) {
-      console.log('An error occurred while login using google -> ', error.response);
+      console.log('An error occurred while login using google -> ', error);
     }
   }
 
