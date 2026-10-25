@@ -25,8 +25,6 @@ const RestaurantNotFound = () => {
   );
   const dispatch = useDispatch();
   const dummyResHandler = (data) => {
-    console.log("btn daya ", data);
-
     setLoadDummyRes(data);
   };
 

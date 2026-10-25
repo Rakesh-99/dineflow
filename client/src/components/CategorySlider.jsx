@@ -9,7 +9,7 @@ const CategorySlider = () => {
   const { categories } = useSelector((state) => state.categorySlice);
   let isDark = theme === "dark";
 
-  console.log("The categories => ", categories);
+
 
   const sliderRef = useRef(null);
 
