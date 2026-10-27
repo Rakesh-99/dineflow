@@ -131,12 +131,18 @@ const Signup = ({setShowEmailVerifyComp, setUserSignupEmail }) => {
       else{
       const provider = new GoogleAuthProvider(); 
       const apiResponse = await signInWithPopup(auth, provider); 
-      const {displayName : fullname , email } = apiResponse.user; 
+   
+      
+      const {displayName : fullname , email, photoURL } = apiResponse.user; 
+      const avatar  = apiResponse._tokenResponse; 
+
   
         // here I am preparing the body for google auth : 
         const data = { 
           fullname , 
+          avatar : avatar?.photoURL, 
           email, 
+          photoURL, 
           role : userData.role, 
         }
         // Api call : 

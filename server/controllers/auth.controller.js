@@ -130,7 +130,7 @@ export const logoutUser = asyncHandler(async(req , res, next)=> {
 // google login : 
 export const googleSignIn = asyncHandler(async(req, res, next)=> {
 
-    const {fullname , email , role, contact} = req.body ; 
+    const {fullname , email , role, contact, photoURL} = req.body ;     
     
     const user = await userModel.findOne({email}); 
 
@@ -138,6 +138,7 @@ export const googleSignIn = asyncHandler(async(req, res, next)=> {
         const newUser = new userModel ({ 
             fullname, 
             email, 
+            avatar : photoURL ? photoURL : null, 
             role, 
             contact, 
             isProfileVerified : true,

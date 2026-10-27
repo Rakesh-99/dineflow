@@ -98,11 +98,17 @@ const Login = () => {
     
       const provider = new GoogleAuthProvider(); 
       const apiResponse = await signInWithPopup(auth, provider); 
+      
+      
       const { email } = apiResponse.user; 
+      const avatar  = apiResponse._tokenResponse; 
+   
+      
   
         // here I am preparing the body for google auth : 
         const data = { 
           email, 
+          photoURL : avatar?.photoUrl
         }
         // Api call : 
          await googleAuthApiCall(data) ; 
