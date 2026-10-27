@@ -20,7 +20,7 @@ const Sidebar = () => {
     <>
     <div className="relative">
 
-    <div onMouseEnter={()=> setShowSidebarMenu(true)} onMouseLeave={()=>setShowSidebarMenu(false)} className={`w-16 hover:w-20 duration-300 ease-in-out min-h-screen border-r shadow-xs ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-100'} `}>
+    <div onMouseEnter={()=> setShowSidebarMenu(true)} onMouseLeave={()=>setShowSidebarMenu(false)} className={`w-16 hover:w-20 duration-300 ease-in-out min-h-screen border-r  ${theme === 'dark' ? 'border-zinc-700' : 'border-zinc-50'} `}>
         {
             sidebarItems.map((item)=> { 
                 const {label, icon : Icon, path } = item; 

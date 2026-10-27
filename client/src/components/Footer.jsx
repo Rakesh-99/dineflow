@@ -8,7 +8,7 @@ const Footer = () => {
   const { theme } = useSelector((state) => state.themeSlice);
   const isDark = theme === "dark";
   return (
-    <div className={`mt-20 border py-10 shadow ${isDark ? 'border-zinc-700' : 'border-zinc-200'} `}>
+    <div className={`mt-20 border py-10  ${isDark ? 'border-zinc-700' : 'border-zinc-100'} `}>
      
       <div className="grid lg:grid-cols-4 md:grid-cols-3 sm:grid-cols-2 grid-cols-1  px-5  w-fit mx-auto gap-10">
         {/* first section :  */}
@@ -88,7 +88,7 @@ const Footer = () => {
 
       <div className="w-[80%]  m-auto">
         <Separator
-          className={`${isDark ? "bg-zinc-500" : "bg-zinc-300"} my-5`}
+          className={`${isDark ? "bg-zinc-700" : "bg-zinc-50"} my-5`}
         />
       </div>
 

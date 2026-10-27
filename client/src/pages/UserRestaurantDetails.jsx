@@ -377,7 +377,7 @@ const UserRestaurantDetails = () => {
                 Restaurant Information
               </h2>
               <Separator
-                className={`my-1 ${isDark ? "bg-customOrange" : "bg-zinc-200"}`}
+                className={`my-1 bg-customOrange/50`}
               />
 
               {/* Address :  */}
@@ -449,7 +449,7 @@ const UserRestaurantDetails = () => {
                 </h2>
               </div>
               <Separator
-                className={`my-1 ${isDark ? "bg-customOrange" : "bg-zinc-200"}`}
+                className={`my-1 bg-customOrange/50`}
               />
 
               <div className="flex flex-col gap-3 mt-2">

@@ -305,7 +305,7 @@ const RestaurantListings = () => {
             return (
               <div
                 key={idx}
-                className={`flex flex-col border shadow  overflow-hidden rounded-lg ${isDark ? "border-zinc-500" : ""}`}
+                className={`flex flex-col border   overflow-hidden rounded-lg ${isDark ? "border-zinc-700" : "border-zinc-100"}`}
               >
                 {/* image :  */}
                 <div className="lg:h-40 lg:w-96 md:w-full w-full h-60">
@@ -416,7 +416,7 @@ const RestaurantListings = () => {
 
                     <Button
                       variant="outline"
-                      className={`mt-2 hover:bg-customOrange hover:text-orange-900 cursor-pointer rounded-sm text-xs ${isDark && "bg-zinc-800/50 border-gray-600"}`}
+                      className={`mt-2 hover:bg-customOrange hover:text-orange-900 cursor-pointer rounded-sm text-xs ${isDark && "bg-zinc-700/50 border-zinc-600"}`}
                     >
                       <NavLink
                         to={`/user-restaurant-details/${userRestaurants?.shopName}/${userRestaurants?._id}`}
