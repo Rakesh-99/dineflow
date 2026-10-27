@@ -165,7 +165,7 @@ const RestaurantListings = () => {
 
       {/* rendering user city based restaurant :  */}
       {userCityBasedRestaurants?.length > 0 && userData?.role === "user" && (
-         <div className="grid grid-cols-3 gap-3">
+         <div className="grid lg:px-0  lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5 sm:px-5 px-5">
           {userCityBasedRestaurants?.map((userRestaurants, idx) => {
             return (
               <div
@@ -173,7 +173,7 @@ const RestaurantListings = () => {
                 className={`flex flex-col border shadow  overflow-hidden rounded-lg ${isDark ? "border-zinc-500" : ""}`}
               >
                 {/* image :  */}
-                <div className="h-40 w-96">
+                <div className="lg:h-40 lg:w-96 md:w-full w-full h-60">
                   <img
                     src={userRestaurants?.image?.url}
                     alt="Restaurant image"

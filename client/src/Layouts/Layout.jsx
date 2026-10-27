@@ -12,27 +12,23 @@ const Layout = () => {
   return (
     <div
       className={`flex flex-col h-screen transition-all duration-1000 ${
-        theme === "light"
-          ? "bg-white text-gray-900"
-          : "bg-zinc-800 text-white"
+        theme === "light" ? "bg-white text-gray-900" : "bg-zinc-800 text-white"
       }`}
     >
       {/* Navbar */}
       <NavBar />
 
       {/* Main Content */}
-      <main className="flex flex-1 overflow-hidden">
+      <main className="flex flex-1  overflow-hidden">
         {userData?.role === "restaurantOwner" && <Sidebar />}
 
         {/* Only this section scrolls */}
         <section className="flex-1 overflow-y-auto">
           <Outlet />
+          {/* Footer */}
+          <Footer />
         </section>
       </main>
-
-      {/* Footer */}
-      <Footer />
-
       <Toaster />
     </div>
   );

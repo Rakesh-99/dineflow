@@ -19,12 +19,12 @@ const FoodAndLocation = () => {
     return (
         <>
              
-                <div className="mt-20 flex w-full">
+                <div className="mt-20 w-full">
                     {
                         userData?.role === 'user' &&
 
                         <>
-                            <div className="flex gap-2 mx-3 lg:mx-0  rounded-xs justify-between w-full ">
+                            <div className="flex  lg:flex-row md:flex-row sm:flex-row  flex-col gap-5 mx-3 lg:mx-0  rounded-xs justify-between w-full ">
                                 {/* City location :  */}
                                 <div className={`${theme === "dark" ? "border-zinc-700" : "border-zinc-100"} border rounded-md px-2 flex items-center`}>
                                     <MapPin color='#F54927' className='lg:size-7 size-4' />
@@ -32,7 +32,7 @@ const FoodAndLocation = () => {
                                         type="text"
                                         disabled
                                         value={userAddress?.address2}
-                                        className=' text-sm p-3 rounded-sm lg:w-90 w-32  '
+                                        className=' text-sm p-3 rounded-sm lg:w-90 w-full  '
                                     />
                                 </div>
 
@@ -44,7 +44,7 @@ const FoodAndLocation = () => {
                                         value={searchFoodData}
                                         onChange={inputFoodDataHandler}
                                         placeholder='Search food, restaurants ..'
-                                        className='  text-sm placeholder:text-[10px] lg:placeholder:text-sm outline-none ml-5 py-1 rounded-md  lg:w-90 w-30' />
+                                        className='  text-sm placeholder:text-[10px] w-full lg:placeholder:text-sm outline-none ml-5 py-1 rounded-md  lg:w-90 w-30' />
 
 
                                          <Search color='gray' className='lg:size-6 size-4 absolute  md:right-5 lg:cursor-default cursor-pointer' onClick={() => setIsShowSearchBar(!isShowSearchBar)} />

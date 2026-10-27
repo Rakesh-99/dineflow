@@ -44,7 +44,7 @@ const CategorySlider = () => {
                   <div key={category?._id} className="flex flex-col gap-1 ">
 
                     <div
-                      className="md:w-28 md:h-28 w-24 h-24  shrink-0 rounded-full overflow-hidden">
+                      className="md:w-28 md:h-28 sm:w-20 sm:h-20  w-16 h-16  shrink-0 rounded-full overflow-hidden">
                       <img
                         src={category?.image?.url}
                         alt="categoryImg"
