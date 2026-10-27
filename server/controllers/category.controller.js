@@ -8,11 +8,19 @@ import mongoose, { mongo } from "mongoose";
 // create category :
 export const createCategory = expressAsyncHandler(async (req, res, next) => {
   const { categoryName } = req.body;
+
+  const file = req.file;
+  const userId = req.userId;
+
   if (!categoryName) {
     return next(new ErrorHandler(404, "Category name is required!"));
   }
-  const file = req.file;
-  const userId = req.userId;
+
+  const isCatExist = await categoryModel.findOne({categoryName : {$regex: new RegExp(`^${categoryName}$`, 'i')}}); 
+  if(isCatExist) { 
+    return next(new ErrorHandler(400, "Category already exist!") ); 
+  }
+  
 
   let cloudinaryImg;
   if (!file) {
