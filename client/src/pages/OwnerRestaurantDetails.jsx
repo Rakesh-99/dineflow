@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate, useParams } from "react-router"
+import { Link, useNavigate, useParams } from "react-router"
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -10,7 +10,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { useDispatch, useSelector } from "react-redux"
 import axios from "axios"
-import { Loader, Pencil, ShieldCheck, ShieldX, Trash2 } from "lucide-react"
+import { Loader, Pencil, Phone, ShieldCheck, ShieldX, Trash2 } from "lucide-react"
 import RestaurantOwnerBannerRes from "@/components/RestaurantOwnerBannerRes"
 import RestaurantDescription from "@/components/RestaurantDescription"
 import RestaurantOwnerBriefInfo from "@/components/RestaurantOwnerBriefInfo"
@@ -60,7 +60,6 @@ const OwnerRestaurantDetails = () => {
 
   const { id } = useParams();
   const { theme } = useSelector(state => state.themeSlice);
-  const location = useLocation();
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { restaurants } = useSelector(state => state.currentOwnerRestaurants);
@@ -72,7 +71,11 @@ const OwnerRestaurantDetails = () => {
     shopName: "",
     city: "",
     state: "",
-    address: "",
+    street : "", 
+    shopContact: "",
+    address1: "",
+    address2 : "",
+    costForTwo: "",
     description: "",
     status: true,
     image: null,
@@ -138,7 +141,20 @@ const OwnerRestaurantDetails = () => {
       image : file
     }))
   }
-
+ 
+const budgetTabHandler = (e) => {
+ if (e === "yes") {
+      setShopData((prev) => ({
+        ...prev,
+        budgetFriendly: true
+      }))
+    } else {
+      setShopData((prev) => ({
+        ...prev,
+        budgetFriendly: false
+      }))
+    }
+};
   const formSubmitHandler = async(shopData) => { 
       const {shopName,city,address,state,description,status,image} = shopData; 
 
@@ -177,8 +193,12 @@ const OwnerRestaurantDetails = () => {
         ...prev, 
         shopName : restaurantData?.shopName, 
         city : restaurantData?.city,
+        shopContact: restaurantData?.shopContact,
         state : restaurantData?.state,
-        address : restaurantData?.address,
+        street: restaurantData?.street,
+        costForTwo : restaurantData?.costForTwo,
+        address1 : restaurantData?.address1,
+        address2 : restaurantData?.address2,
         description : restaurantData?.description,
         status : restaurantData?.status, 
         image: null
@@ -250,17 +270,50 @@ const OwnerRestaurantDetails = () => {
                       <Input className={`rounded outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`} placeholder="Enter your shop name" id="sheet-demo-name" name="shopName" value={shopData.shopName} onChange={inputChangeHandler} />
                     </div>
                   </div>
-                  <div className="grid gap-1">
-                    <Label className={`text-xs`} htmlFor="sheet-demo-username">
-                      City *
-                    </Label>
-                    <div className="relative flex items-center">
-                      <PiCityLight color="gray" className="absolute ml-2" />
-                      <Input className={`rounded outline-none placeholder:text-xs px-8 ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`} placeholder="Enter City" id="sheet-demo-username" name="city" value={shopData.city} onChange={inputChangeHandler} />
-                    </div>
-                  </div>
 
-                  <div className="grid gap-1">
+                 <div className="grid gap-1">
+                  <Label className={`text-xs`} htmlFor="sheet-demo-name">
+                    Restaurant contact number *
+                  </Label>
+                  <div className="relative flex items-center">
+                    <Phone size={14} color="gray" className="absolute ml-2" />
+                    <Input className={`rounded outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`} placeholder="7377089649"  id="sheet-demo-name" name="shopContact" value={shopData.shopContact} onChange={inputChangeHandler}  />
+                  </div>
+                </div>
+
+                <div className="grid gap-1">
+                  <Label className={`text-xs`} htmlFor="sheet-demo-name">
+                    Cost for two *
+                  </Label>
+                  <div className="relative flex items-center">
+                    <BiBuildingHouse color="gray" className="absolute ml-2" />
+                    <Input className={`rounded outline-none placeholder:text-xs px-8  ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`} placeholder="Enter your shop name" id="sheet-demo-name" name="costForTwo" value={shopData.costForTwo} onChange={inputChangeHandler} />
+                  </div>
+                </div>
+
+                 <div className="grid gap-1">
+                  <Label className={`text-xs`} htmlFor="sheet-demo-username">
+                    Budget Friendly ?  *
+                  </Label>
+
+                  <div className="relative flex items-center">
+                    <CiLocationOn color="gray" className="absolute ml-2" />
+                    <Tabs defaultValue="yes" onValueChange={budgetTabHandler} >
+                      <TabsList className={`${theme === "dark" ? "bg-zinc-700" : "bg-zinc-200"}`}>
+                        <TabsTrigger value="yes">
+                          <ShieldCheck />
+                          Yes
+                        </TabsTrigger>
+                        <TabsTrigger value="no">
+                          <ShieldX />
+                          No
+                        </TabsTrigger>
+                      </TabsList>
+                    </Tabs>
+                  </div>
+                </div>
+
+                   <div className="grid gap-1">
                     <Label className={`text-xs`} htmlFor="sheet-demo-username">
                       State *
                     </Label>
@@ -272,14 +325,45 @@ const OwnerRestaurantDetails = () => {
 
                   <div className="grid gap-1">
                     <Label className={`text-xs`} htmlFor="sheet-demo-username">
-                      Address *
+                      City *
                     </Label>
-
                     <div className="relative flex items-center">
-                      <CiLocationOn color="gray" className="absolute ml-2" />
-                      <Input className={`rounded outline-none placeholder:text-xs px-8 ${theme === "light" ? "border-gray-200 " : "border-zinc-600"}`} placeholder="Enter the address" id="sheet-demo-username" name="address" value={shopData.address} onChange={inputChangeHandler} />
+                      <PiCityLight color="gray" className="absolute ml-2" />
+                      <Input className={`rounded outline-none placeholder:text-xs px-8 ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`} placeholder="Enter City" id="sheet-demo-username" name="city" value={shopData.city} onChange={inputChangeHandler} />
                     </div>
                   </div>
+
+                    <div className="grid gap-1">
+                  <Label className={`text-xs`} htmlFor="sheet-demo-username">
+                    Street *
+                  </Label>
+                  <div className="relative flex items-center">
+                    <GiModernCity color="gray" className="absolute ml-2" />
+                    <Input className={`rounded outline-none placeholder:text-xs px-8 ${theme === "light" ? "border-gray-200" : "border-zinc-600"}`} placeholder="Enter State" id="sheet-demo-username" name="street" value={shopData?.street} onChange={inputChangeHandler} />
+                  </div>
+                </div>
+
+                     <div className="grid gap-1">
+                  <Label className={`text-xs`} htmlFor="sheet-demo-username">
+                    Address line 1 *
+                  </Label>
+
+                  <div className="relative flex items-center">
+                    <CiLocationOn color="gray" className="absolute ml-2" />
+                    <Input className={`rounded outline-none placeholder:text-xs px-8 ${theme === "light" ? "border-gray-200 " : "border-zinc-600"}`} placeholder="Enter the address" id="sheet-demo-username" name="address1" value={shopData?.address1} onChange={inputChangeHandler} />
+                  </div>
+                </div>
+
+                 <div className="grid gap-1">
+                  <Label className={`text-xs`} htmlFor="sheet-demo-username">
+                    Address line 2 *
+                  </Label>
+
+                  <div className="relative flex items-center">
+                    <CiLocationOn color="gray" className="absolute ml-2" />
+                    <Input className={`rounded outline-none placeholder:text-xs px-8 ${theme === "light" ? "border-gray-200 " : "border-zinc-600"}`} placeholder="Enter the address" id="sheet-demo-username" name="address2" value={shopData?.address2} onChange={inputChangeHandler} />
+                  </div>
+                </div>
 
                   <div className="grid gap-1">
                     <Label className={`text-xs`} htmlFor="sheet-demo-username">
