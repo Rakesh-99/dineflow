@@ -16,6 +16,7 @@ const URL = import.meta.env.VITE_BACKEND_SHOP_API_URL;
 import { setSampleRestaurants } from "@/redux/features/currentOwnerRestaurants.slice";
 import { useDispatch, useSelector } from "react-redux";
 import RestaurantListings from "./RestaurantListings";
+import CategorySlider from "./CategorySlider";
 const RestaurantNotFound = () => {
   const [loadDummyRes, setLoadDummyRes] = useState(false);
   const { theme } = useSelector((state) => state.themeSlice);
@@ -51,11 +52,17 @@ const RestaurantNotFound = () => {
     <div className="">
       {isDummyBtnClicked ? (
         <div className="flex flex-col gap-5 mt-20 ">
-          <div className="flex items-center justify-center text-muted-foreground text-xs gap-1">
+          <div className="flex lg:items-center items-start px-5 justify-center text-muted-foreground text-xs gap-1 lg:flex-row md:flex-row sm:flex-col flex-col">
             <span className="text-red-500 font-semibold">Note :</span>
-            <p>You are currently you are exploring sample restaurants, cuzz we dont have nearby restaurants based on your current location!</p>
+            <p>
+              You are currently you are exploring sample restaurants, cuzz we
+              dont have nearby restaurants based on your current location!
+            </p>
           </div>
-          <RestaurantListings />
+          <div className="flex flex-col lg:gap-20 md:gap-16 gap-10">
+            <CategorySlider />
+            <RestaurantListings />
+          </div>
         </div>
       ) : (
         <div className="mt-20 flex flex-col items-center justify-center  px-6 text-center">
