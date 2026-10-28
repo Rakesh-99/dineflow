@@ -24,9 +24,9 @@ const FoodAndLocation = () => {
                         userData?.role === 'user' &&
 
                         <>
-                            <div className="flex  lg:flex-row md:flex-row sm:flex-row  flex-col gap-5 mx-3 lg:mx-0  rounded-xs justify-between w-full ">
+                            <div className="flex  lg:flex-row md:flex-row sm:flex-row  flex-col gap-5 px-5 lg:mx-0  rounded-xs justify-between w-full ">
                                 {/* City location :  */}
-                                <div className={`${theme === "dark" ? "border-zinc-700" : "border-zinc-100"} border rounded-md px-2 flex items-center gap-2`}>
+                                <div className={`${theme === "dark" ? "border-zinc-700" : "border-zinc-100"} border rounded-md p-2  flex items-center gap-2`}>
                                     <MapPin color='#F54927' className='lg:size-7 size-4!' />
                                     <input
                                         type="text"
@@ -44,7 +44,7 @@ const FoodAndLocation = () => {
                                         value={searchFoodData}
                                         onChange={inputFoodDataHandler}
                                         placeholder='Search food, restaurants ..'
-                                        className='  text-sm placeholder:text-sm! w-full lg:placeholder:text-sm outline-none ml-5 py-1 rounded-md  lg:w-90 ' />
+                                        className='  text-sm placeholder:text-sm! w-full lg:placeholder:text-sm outline-none ml-7  rounded-md  lg:w-90 ' />
 
 
                                          <Search color='gray' className=' size-4! absolute  md:right-5 lg:cursor-default cursor-pointer' onClick={() => setIsShowSearchBar(!isShowSearchBar)} />
