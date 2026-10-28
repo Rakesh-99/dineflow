@@ -48,19 +48,7 @@ const useGetCurrentUser = () => {
         }
       } catch (error) {
         console.log(error.response.data);
-
-        if (controller.signal.aborted) {
-          return;
-        }
-        // invalid or expired session :
-        if (error?.response?.status === 401) {
-          clearAllStates();
-          return;
-        }
-        console.log(
-          error?.response?.data?.message ||
-            "Could not get user at this momwment!",
-        );
+        clearAllStates();
       }
     };
     getCUrrentUser();
