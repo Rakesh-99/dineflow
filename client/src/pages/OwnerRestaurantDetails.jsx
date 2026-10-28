@@ -156,11 +156,12 @@ const budgetTabHandler = (e) => {
     }
 };
   const formSubmitHandler = async(shopData) => { 
-      const {shopName,city,address,state,description,status,image} = shopData; 
+      const {shopName,city,address,state,description,status,image, shopContact} = shopData; 
 
       const formData = new FormData();
 
       shopName && formData.append("shopName", shopName);
+      shopContact && formData.append("shopContact", shopContact); 
       city && formData.append("city", city);
       address && formData.append("address", address);
       state && formData.append("state", state);
@@ -171,8 +172,6 @@ const budgetTabHandler = (e) => {
 
       // api call : 
         try {
-          console.log(formData);
-          
           setLoading(true)
           const {data} = await axios.put(`${URL}/update-shop/${id}`, formData, {withCredentials : true}); 
           if(data.success) { 
