@@ -4,47 +4,50 @@ import { useSelector } from "react-redux";
 import { Label } from "./ui/label";
 
 const CategorySlider = () => {
-
   const { theme } = useSelector((state) => state.themeSlice);
   const { categories } = useSelector((state) => state.categorySlice);
   let isDark = theme === "dark";
 
-
-
   const sliderRef = useRef(null);
-
 
   const sliderBtnHandler = (val) => {
     if (!val) {
-      return
-    };
-    sliderRef.current.scrollBy({ left: val * 150, behavior: "smooth" })
+      return;
+    }
+    sliderRef.current.scrollBy({ left: val * 150, behavior: "smooth" });
   };
 
   return (
     <>
-
       <div className="w-full m-auto mt-14">
-        <h1 className="text-base md:mx-2 mx-5 md:text-2xl font-bold">What are you craving ? </h1>
+        <h1 className="text-base md:mx-2 mx-5 md:text-2xl font-bold">
+          What are you craving ?{" "}
+        </h1>
 
         <div className="w-full px-1  m-auto flex items-center mt-10  justify-center">
-
-
-          {/* right scroll bar btn :  */}
-          <div className="mr-5">
-            <CircleChevronRight className={`cursor-pointer md:size-7 size-6 ${isDark ? "text-zinc-600" : "text-zinc-400"}`} onClick={() => sliderBtnHandler(-1)} />
+          {/* right slider btn :  */}
+          <div className="mr-5 ">
+            <CircleChevronLeft
+              className={` cursor-pointer md:size-7 size-6 ${isDark ? "text-zinc-600" : "text-zinc-400"}`}
+              onClick={() => sliderBtnHandler(-1)}
+            />
           </div>
 
           {/* category section :  */}
-          <div ref={sliderRef} className="hide-scrollbar   flex gap-5 overflow-auto">
-            {
-
-              categories && categories.map((category) => {
+          <div
+            ref={sliderRef}
+            className="hide-scrollbar   flex gap-5 overflow-auto"
+          >
+            {categories &&
+              categories.map((category) => {
                 return (
-                  <div key={category?._id} className="flex flex-col gap-1 ">
-
+                  <div
+                    key={category?._id}
+                    className="flex  flex-col gap-1 cursor-pointer  transition-all duration-2  00 active:scale-[98%] "
+                  >
                     <div
-                      className="md:w-28 md:h-28 sm:w-20 sm:h-20  w-16 h-16  shrink-0 rounded-full overflow-hidden">
+                      className={`md:w-28 md:h-28 border-3 sm:w-20 sm:h-20  w-16 h-16  shrink-0 rounded-full overflow-hidden ${isDark ? "border-zinc-600" : "border-zinc-300"}`}
+                    >
                       <img
                         src={category?.image?.url}
                         alt="categoryImg"
@@ -52,26 +55,28 @@ const CategorySlider = () => {
                       />
                     </div>
                     <div className="flex justify-center">
-                      <Label className={`text-xs ${isDark ? "text-zinc-400" : "text-zinc-500"}`}>{category?.categoryName}</Label>
+                      <Label
+                        className={`text-xs ${isDark ? "text-zinc-400" : "text-zinc-500"}`}
+                      >
+                        {category?.categoryName}
+                      </Label>
                     </div>
                   </div>
-
-                )
-              })
-            }
+                );
+              })}
           </div>
 
-          {/* right slider btn :  */}
-          <div className="ml-5 ">
-            <CircleChevronLeft className={` cursor-pointer md:size-7 size-6 ${isDark ? "text-zinc-600" : "text-zinc-400"}`} onClick={() => sliderBtnHandler(1)} />
+          {/* right scroll bar btn :  */}
+          <div className="ml-5">
+            <CircleChevronRight
+              className={`cursor-pointer md:size-7 size-6 ${isDark ? "text-zinc-600" : "text-zinc-400"}`}
+              onClick={() => sliderBtnHandler(+1)}
+            />
           </div>
         </div>
       </div>
-
-
     </>
-  )
+  );
 };
 
-
-export default CategorySlider; 
+export default CategorySlider;
