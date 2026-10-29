@@ -4,10 +4,15 @@ import Footer from "../components/Footer";
 import { Toaster } from "../components/ui/sonner";
 import { useSelector } from "react-redux";
 import Sidebar from "@/components/Sidebar";
+import ScrollToTop from "@/utils/ScrollToTop";
+import { useRef } from "react";
+
 
 const Layout = () => {
   const { theme } = useSelector((state) => state.themeSlice);
   const { userData } = useSelector((state) => state.currentuserSlice);
+
+  const scrollRef = useRef(null); 
 
   return (
     <div
@@ -23,13 +28,14 @@ const Layout = () => {
         {userData?.role === "restaurantOwner" && <Sidebar />}
 
         {/* Only this section scrolls */}
-        <section className="flex-1 overflow-y-auto">
+        <section ref={scrollRef} className="flex-1 overflow-y-auto">
           <Outlet />
           {/* Footer */}
           <Footer />
         </section>
       </main>
       <Toaster />
+      <ScrollToTop scrollRef = {scrollRef}/>
     </div>
   );
 };
