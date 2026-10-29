@@ -85,19 +85,19 @@ const RestaurantNotFound = () => {
           </Button>
 
           {/* show popup :  */}
-          <AlertDialog open={loadDummyRes}>
+          <AlertDialog open={loadDummyRes} >
             <AlertDialogTrigger
               render={<Button variant="outline">Show Dialog</Button>}
             />
-            <AlertDialogContent>
+            <AlertDialogContent className={`border ${isDark ? 'bg-zinc-800 border-zinc-600 text-zinc-200' : 'border-zinc-200 bg-zinc-100 text-zinc-700'} `}>
               <AlertDialogHeader>
                 <AlertDialogTitle className={"text-xs"}>
                   Should we proceed with sample Restaurants ?{" "}
                 </AlertDialogTitle>
               </AlertDialogHeader>
-              <AlertDialogFooter>
+              <AlertDialogFooter className={`${isDark ? 'bg-zinc-800 text-zinc-200' : 'bg-zinc-100 text-zinc-700'} `}>
                 <AlertDialogCancel
-                  className={`cursor-pointer text-xs! rounded!`}
+                  className={`cursor-pointer text-xs! rounded! ${isDark ? 'bg-zinc-800 border-zinc-600 text-zinc-200' : 'border-zinc-200 bg-zinc-100 text-zinc-700'}`}
                   onClick={() => dummyResHandler(false)}
                 >
                   Cancel
