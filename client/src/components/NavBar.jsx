@@ -47,7 +47,7 @@ const NavBar = () => {
   const { userData } = useSelector((state) => state.currentuserSlice);
 
   const isDark = theme === "dark";
-
+  
   const [isLogoutBtnClicked, setIsLogoutBtnClick] = useState(false);
 
   const themeChangeHandle = (themePreferences) => {
@@ -138,7 +138,7 @@ const NavBar = () => {
                   </DropdownMenuTrigger>
 
                   <DropdownMenuContent
-                    className={`w-60 border ${theme === "light" ? "bg-white border-zinc-50 text-zinc-800 " : "bg-zinc-800 border-zinc-600  text-zinc-100"}`}
+                    className={`w-40 border ${theme === "light" ? "bg-white border-zinc-50 text-zinc-800 " : "bg-zinc-800 border-zinc-600  text-zinc-100"}`}
                   >
                     <DropdownMenuGroup>
                       <DropdownMenuLabel>My Account</DropdownMenuLabel>
@@ -157,7 +157,7 @@ const NavBar = () => {
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
 
-                    <DropdownMenuSeparator className={'bg-customOrange/75'}/>
+                    <DropdownMenuSeparator />
 
                     <DropdownMenuSub>
                       <DropdownMenuSubTrigger  className={`rounded-md px-5 cursor-pointer ${isDark ? "hover:bg-zinc-700!   mb-1 hover:text-zinc-200! " : "hover:bg-gray-100!"}`}>
@@ -165,10 +165,10 @@ const NavBar = () => {
                       </DropdownMenuSubTrigger>
 
                       <DropdownMenuSubContent
-                        className={`border rounded-md ${theme === "light" ? "bg-white text-zinc-800" : "bg-zinc-700 text-zinc-100 "}`}
+                        className={`border rounded-md ${theme === "light" ? "bg-white text-zinc-800" : "bg-zinc-700 text-zinc-100 border-zinc-500"}`}
                       >
                         <DropdownMenuItem
-                          className={`flex items-center  `}
+                          className={`flex items-center `}
                           onClick={() => themeChangeHandle("light")}
                         >
                           <TiWeatherSunny className="size-4" />
