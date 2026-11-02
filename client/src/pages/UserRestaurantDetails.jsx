@@ -3,6 +3,7 @@ import {
   BadgeCheck,
   BadgeIndianRupee,
   CalendarDays,
+  CircleDot,
   ClockFading,
   LeafyGreen,
   Mail,
@@ -33,7 +34,7 @@ const UserRestaurantDetails = () => {
   );
   const getUserRestaurantCityBased = userCityBasedRestaurants?.filter(
     (restaurant) => restaurant._id === restaurantId,
-  )[0];
+  )[0]; 
 
   const { sampleResData } = useSelector(
     (state) => state.currentOwnerRestaurants.sampleRestaurants,
@@ -141,7 +142,7 @@ const UserRestaurantDetails = () => {
                     <Label
                       className={`text-[11px] ${isDark ? "text-gray-400" : "text-zinc-600"}`}
                     >
-                      {getUserRestaurantCityBased?.budgetFriendly && "Veg"}
+                      {getUserRestaurantCityBased?.isVegRestaurant ? "Pure Veg" : "Veg and Non-Veg"}
                     </Label>
                   </Badge>
                 </div>
@@ -355,11 +356,11 @@ const UserRestaurantDetails = () => {
                     variant={`${isDark ? "outline" : "secondary"}`}
                     className={`border-2 flex py-px items-center ${isDark ? "border-zinc-600" : "border-zinc-100"}`}
                   >
-                    <LeafyGreen className="size-5 text-green-400" />
+                    <CircleDot  className={`rounded-full ${isDark ? 'bg-red-800 text-red-400' : 'bg-red-200 text-red-500'} `}/>
                     <Label
                       className={`text-[11px] ${isDark ? "text-gray-400" : "text-zinc-600"}`}
                     >
-                      {filterSampleRes?.budgetFriendly && "Veg"}
+                    {filterSampleRes?.isVegRestaurant ? "Pure Veg" : "Veg and Non-Veg"}
                     </Label>
                   </Badge>
                 </div>
