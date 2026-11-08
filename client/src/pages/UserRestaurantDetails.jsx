@@ -91,7 +91,7 @@ const UserRestaurantDetails = () => {
             {/* left section :  */}
             <div className="w-full">
               {/* image container :  */}
-              <div className=" h-96 ">
+              <div className="sm:h-52 h-60 md:h-96">
                 <img
                   className="w-full h-full object-cover rounded-lg"
                   src={getUserRestaurantCityBased?.image.url}
@@ -312,7 +312,7 @@ const UserRestaurantDetails = () => {
             {/* left section :  */}
             <div className="w-full">
               {/* image container :  */}
-              <div className=" h-96 ">
+              <div className=" sm:h-52 h-60 md:h-96 ">
                 <img
                   className="w-full h-full object-cover rounded-lg"
                   src={filterSampleRes?.image.url}
@@ -365,18 +365,14 @@ const UserRestaurantDetails = () => {
                   </Badge>
                 </div>
               </div>
-
-              {/* menu items :  */}
-
-              <div className=""></div>
             </div>
 
             {/* right section :  */}
-            <div className=" w-fit flex flex-col gap-5">
+            <div className="flex gap-5 md:flex-col sm:flex-row flex-col">
               {/* restaurant details card :  */}
 
               <div
-                className={`w-96 border px-6 py-3 shadow-xs rounded-md flex flex-col  ${isDark ? "border-zinc-700 text-zinc-400" : "border-zinc-100 text-zinc-500"}`}
+                className={`w-full md:w-96 h-fit border px-6 py-3 shadow-xs rounded-md flex flex-col  ${isDark ? "border-zinc-700 text-zinc-400" : "border-zinc-100 text-zinc-500"}`}
               >
                 <h2
                   className={`text-base mb-2 font-medium ${isDark ? "text-zinc-300" : "text-zinc-700"}`}
@@ -444,7 +440,7 @@ const UserRestaurantDetails = () => {
 
               {/* owener card details :  */}
               <div
-                className={`w-96  border px-6 py-3 shadow-xs rounded-md  flex flex-col  ${isDark ? "border-zinc-700 text-zinc-400" : "border-zinc-100 text-zinc-500"}`}
+                className={`md:w-96 w-full h-fit  border px-6 py-3 shadow-xs rounded-md  flex flex-col  ${isDark ? "border-zinc-700 text-zinc-400" : "border-zinc-100 text-zinc-500"}`}
               >
                 <div className="">
                   <h2

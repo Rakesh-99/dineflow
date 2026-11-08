@@ -1,4 +1,4 @@
-import { Check, CircleDot, ShoppingCart, X } from "lucide-react";
+import { Check, CircleDot, X } from "lucide-react";
 import { FaCartPlus } from "react-icons/fa6";
 import { useSelector } from "react-redux";
 
@@ -7,7 +7,7 @@ const UserMenuList = ({ menu }) => {
   const isDark = theme === "dark";
   return (
     <>
-      <div className="grid sm:grid-cols-2 grid-cols-1 gap-5 lg:grid-cols-4 md:grid-cols-3 ">
+      <div className="grid sm:grid-cols-2 min-[450px]:grid-cols-2 grid-cols-1 px-5 lg:px-0 gap-5 lg:grid-cols-5 md:grid-cols-3 ">
         {menu.map((item) => {
           return (
             <div
@@ -15,12 +15,14 @@ const UserMenuList = ({ menu }) => {
               className={`rounded-md border-2 overflow-hidden p-px ${isDark ? "border-zinc-700" : "border-zinc-200"}`}
             >
               {/* img : */}
-              <div className="w-full h-32">
+              <div className="w-full md:h-28 relative sm:h-32 h-36">
+
                 <img
                   src={item?.image?.url}
                   alt="menu image"
                   className="w-full rounded-tl-md rounded-tr-md h-full! object-cover"
                 />
+                <div className="bg-zinc-950/40 absolute bottom-0 w-full h-10 blur-lg  "></div>
               </div>
               <div className={`p-3 ${isDark ? "bg-zinc-800" : "bg-zinc-50"} `}>
                 {/* menu name :  */}
