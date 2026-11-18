@@ -22,7 +22,7 @@ const UserMenuList = ({ menu }) => {
                   alt="menu image"
                   className="w-full rounded-tl-md rounded-tr-md h-full! object-cover"
                 />
-                <div className="bg-zinc-950/40 absolute bottom-0 w-full h-10 blur-lg  "></div>
+                <div className={`${isDark ? 'bg-zinc-950/30 blur-xs' : 'bg-zinc-950/20 blur-xs'} absolute bottom-0 w-full h-10  `}></div>
               </div>
               <div className={`p-3 ${isDark ? "bg-zinc-800" : "bg-zinc-50"} `}>
                 {/* menu name :  */}
