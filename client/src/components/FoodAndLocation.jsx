@@ -16,10 +16,7 @@ const FoodAndLocation = () => {
     (state) => state.currentOwnerRestaurants,
   );
 
-  console.log({
-    "city based res ": userCityBasedRestaurants,
-    "sample res ": sampleRestaurants,
-  });
+
 
   const inputFoodDataHandler = (e) => {
     const { value } = e.target;
@@ -47,26 +44,27 @@ const FoodAndLocation = () => {
 
               {/* Search food and restaurants :  */}
               <div className="">
-                {userCityBasedRestaurants ||
-                  (sampleRestaurants?.sampleResData && (
-                    <div
-                      className={` border p-2 rounded-sm flex relative  items-center ${theme === "dark" ? "border-zinc-700" : "border-zinc-100"}`}
-                    >
-                      <input
-                        type="text"
-                        value={searchFoodData}
-                        onChange={inputFoodDataHandler}
-                        placeholder="Search food, restaurants .."
-                        className="  text-sm placeholder:text-sm! w-full lg:placeholder:text-sm outline-none ml-7  rounded-md  lg:w-90 "
-                      />
+                {userCityBasedRestaurants || sampleRestaurants ?
+                  <div
+                    className={` border p-2 rounded-sm flex relative  items-center ${theme === "dark" ? "border-zinc-700" : "border-zinc-100"}`}
+                  >
+                    <input
+                      type="text"
+                      value={searchFoodData}
+                      onChange={inputFoodDataHandler}
+                      placeholder="Search food, restaurants .."
+                      className="  text-sm placeholder:text-sm! w-full lg:placeholder:text-sm outline-none ml-7  rounded-md  lg:w-90 "
+                    />
 
-                      <Search
-                        color="gray"
-                        className=" size-4! absolute  md:right-5 lg:cursor-default cursor-pointer"
-                        onClick={() => setIsShowSearchBar(!isShowSearchBar)}
-                      />
-                    </div>
-                  ))}
+                    <Search
+                      color="gray"
+                      className=" size-4! absolute  md:right-5 lg:cursor-default cursor-pointer"
+                      onClick={() => setIsShowSearchBar(!isShowSearchBar)}
+                    />
+                  </div>
+                  :
+                  <></>
+                }
               </div>
             </div>
           </>
