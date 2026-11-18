@@ -166,7 +166,7 @@ const RestaurantListings = () => {
 
       {/* rendering user city based restaurant :  */}
       {userCityBasedRestaurants?.length > 0 && userData?.role === "user" && (
-         <div className="grid lg:px-0  lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5 sm:px-5 px-5">
+         <div className="grid lg:px-0  lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5 sm:px-5 px-5">
           {userCityBasedRestaurants?.map((userRestaurants, idx) => {
             return (
               <div
