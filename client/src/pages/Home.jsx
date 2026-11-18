@@ -15,7 +15,7 @@ const Home = () => {
 
   return (
     <>
-      <div className="max-w-5xl m-auto">
+      <div className="max-w-6xl m-auto">
 
         {/* hero content component :  */}
         <HeroContents />
@@ -30,8 +30,8 @@ const Home = () => {
         {
           !userCityBasedRestaurants ?
 
-            <> 
-            <RestaurantNotFound/>
+            <>
+              <RestaurantNotFound />
             </>
             :
 
@@ -39,7 +39,7 @@ const Home = () => {
 
               <CategorySlider />
               {/* user restaurant :  */}
-              <UserRestaurant/>
+              <UserRestaurant />
             </>
         }
 
