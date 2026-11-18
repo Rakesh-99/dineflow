@@ -16,10 +16,7 @@ const FoodAndLocation = () => {
     (state) => state.currentOwnerRestaurants,
   );
 
-  console.log({
-    "city based res ": userCityBasedRestaurants,
-    "sample res ": sampleRestaurants,
-  });
+
 
   const inputFoodDataHandler = (e) => {
     const { value } = e.target;
