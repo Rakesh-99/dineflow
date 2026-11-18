@@ -6,6 +6,7 @@ import { PiBuildingApartment } from "react-icons/pi";
 import { SlCalender } from "react-icons/sl";
 import { NavLink, useNavigate } from "react-router";
 import {
+  ChevronRight,
   CookingPot,
   Drumstick,
   LeafyGreen,
@@ -300,7 +301,9 @@ const RestaurantListings = () => {
 
       {/* user : fallback : falling back to sample restaurant  when city based restaunt not available  */}
       {sampleResData?.length > 0 && userData?.role === "user" && (
-        <div className="grid lg:px-0  lg:grid-cols-3 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5 sm:px-5 px-5">
+       <div className="flex flex-col gap-14">
+        <h2 className="text-base md:mx-2 mx-5 md:text-2xl font-bold ">Discover best restaurants on Dineflow</h2>
+         <div className="grid lg:px-0  lg:grid-cols-4 md:grid-cols-2 sm:grid-cols-2 grid-cols-1 gap-5 sm:px-5 px-5">
           {sampleResData?.map((userRestaurants, idx) => {
             return (
               <div
@@ -419,9 +422,11 @@ const RestaurantListings = () => {
                       className={`mt-2 hover:bg-customOrange hover:text-orange-900 cursor-pointer rounded-sm text-xs ${isDark && "bg-zinc-700/50 border-zinc-600"}`}
                     >
                       <NavLink
+                      className={`flex gap-2 items-center`}
                         to={`/user-restaurant-details/${userRestaurants?.shopName}/${userRestaurants?._id}`}
                       >
-                        Details
+                        <p>Details</p>
+                        <ChevronRight className="size-3" />
                       </NavLink>
                     </Button>
                   </div>
@@ -431,6 +436,7 @@ const RestaurantListings = () => {
             );
           })}
         </div>
+       </div>
       )}
     </>
   );
