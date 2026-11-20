@@ -6,6 +6,7 @@ const FoodAndLocation = () => {
   const [isShowSearchBar, setIsShowSearchBar] = useState(false);
   const [searchFoodData, setSearchFoodData] = useState("");
   const { theme } = useSelector((state) => state.themeSlice);
+  const isDark = theme === 'dark' ;
   const { userAddress, userData } = useSelector(
     (state) => state.currentuserSlice,
   );
@@ -15,8 +16,6 @@ const FoodAndLocation = () => {
   const { sampleRestaurants } = useSelector(
     (state) => state.currentOwnerRestaurants,
   );
-
-
 
   const inputFoodDataHandler = (e) => {
     const { value } = e.target;
@@ -31,40 +30,39 @@ const FoodAndLocation = () => {
             <div className="flex  lg:flex-row md:flex-row sm:flex-row  flex-col gap-5 px-5 lg:mx-0  rounded-xs justify-between w-full ">
               {/* City location :  */}
               <div
-                className={`${theme === "dark" ? "border-zinc-700" : "border-zinc-100"} border rounded-md p-2  flex items-center gap-2`}
+                className={`py-2 ${theme === "dark" ? "border-zinc-600" : "border-zinc-200"} border px-5  rounded-full pl-5  flex items-center gap-2`}
               >
                 <MapPin color="#F54927" className="lg:size-7 size-4!" />
                 <input
                   type="text"
                   disabled
                   value={userAddress?.address2}
-                  className="cursor-not-allowed text-xs lg:w-90 w-full  "
+                  className={`cursor-not-allowed text-xs lg:w-90 w-full ${isDark ? 'text-zinc-400' : 'text-zinc-500'} `}
                 />
               </div>
 
               {/* Search food and restaurants :  */}
               <div className="">
-                {userCityBasedRestaurants || sampleRestaurants ?
+                {userCityBasedRestaurants || sampleRestaurants ? (
                   <div
-                    className={` border p-2 rounded-sm flex relative  items-center ${theme === "dark" ? "border-zinc-700" : "border-zinc-100"}`}
+                    className={` border py-1.5 px-5 md:px-0 rounded-full flex relative  items-center ${theme === "dark" ? "border-zinc-600" : "border-zinc-200"}`}
                   >
+                    <Search
+                      color="gray"
+                      className=" size-4.5! absolute  md:left-5 lg:cursor-default cursor-pointer"
+                      onClick={() => setIsShowSearchBar(!isShowSearchBar)}
+                    />
                     <input
                       type="text"
                       value={searchFoodData}
                       onChange={inputFoodDataHandler}
                       placeholder="Search food, restaurants .."
-                      className="  text-sm placeholder:text-sm! w-full lg:placeholder:text-sm outline-none ml-7  rounded-md  lg:w-90 "
-                    />
-
-                    <Search
-                      color="gray"
-                      className=" size-4! absolute  md:right-5 lg:cursor-default cursor-pointer"
-                      onClick={() => setIsShowSearchBar(!isShowSearchBar)}
+                      className="  text-sm  w-full outline-none ml-7 md:ml-12 rounded-md  lg:w-90 "
                     />
                   </div>
-                  :
+                ) : (
                   <></>
-                }
+                )}
               </div>
             </div>
           </>
