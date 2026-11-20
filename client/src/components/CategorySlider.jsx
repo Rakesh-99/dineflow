@@ -2,6 +2,7 @@ import { CircleChevronLeft, CircleChevronRight } from "lucide-react";
 import { useRef } from "react";
 import { useSelector } from "react-redux";
 import { Label } from "./ui/label";
+import { NavLink } from "react-router";
 
 const CategorySlider = () => {
   const { theme } = useSelector((state) => state.themeSlice);
@@ -20,9 +21,7 @@ const CategorySlider = () => {
   return (
     <>
       <div className="w-full m-auto mt-14">
-        <h1 className="text-base md:mx-2 mx-5 md:text-2xl font-bold">
-          What are you craving ?{" "}
-        </h1>
+        <h1 className="text-base md:mx-2 mx-5 md:text-2xl font-bold">What are you craving ?</h1>
 
         <div className="w-full px-1  m-auto flex items-center mt-10  justify-center">
           {/* right slider btn :  */}
@@ -34,16 +33,14 @@ const CategorySlider = () => {
           </div>
 
           {/* category section :  */}
-          <div
-            ref={sliderRef}
-            className="hide-scrollbar   flex gap-5 overflow-auto"
-          >
+          <div ref={sliderRef} className="hide-scrollbar   flex gap-5 overflow-auto">
             {categories &&
               categories.map((category) => {
                 return (
-                  <div
+                  <NavLink
+                    to={`category-result/${category?.categoryName.toLowerCase().replaceAll(" ", "-")}/${category?._id}`}
                     key={category?._id}
-                    className="flex  flex-col gap-1 cursor-pointer  transition-all duration-2  00 active:scale-[98%] "
+                    className="flex  flex-col gap-1 cursor-pointer  transition-all duration-200 active:scale-[98%] "
                   >
                     <div
                       className={`md:w-28 md:h-28 border-3 sm:w-20 sm:h-20  w-16 h-16  shrink-0 rounded-full overflow-hidden ${isDark ? "border-zinc-600" : "border-zinc-300"}`}
@@ -55,13 +52,11 @@ const CategorySlider = () => {
                       />
                     </div>
                     <div className="flex justify-center">
-                      <Label
-                        className={`text-xs ${isDark ? "text-zinc-400" : "text-zinc-500"}`}
-                      >
+                      <Label className={`text-xs ${isDark ? "text-zinc-400" : "text-zinc-500"}`}>
                         {category?.categoryName}
                       </Label>
                     </div>
-                  </div>
+                  </NavLink>
                 );
               })}
           </div>

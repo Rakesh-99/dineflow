@@ -14,6 +14,7 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
   const Home = lazy (()=> import("@/pages/Home")); 
   const UserRestaurantDetails = lazy(()=> import("@/pages/UserRestaurantDetails")); 
   const Profile = lazy(()=> import("@/pages/Profile"));
+  const CategoryResult = lazy (()=> import('@/pages/CategoryResult')); 
   // Restaurant owner routes : 
   const RestaurantMenu = lazy(()=> import("@/pages/RestaurantMenu"));
   const Settings = lazy(()=> import("@/pages/Settings")); 
@@ -34,6 +35,8 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
           </Suspense>
         ),
         children: [
+
+          // user routes : 
           {
             index : true,
             element : ( 
@@ -55,29 +58,35 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
             )
           }, 
           {
-            path : "about-profile",
-            element : ( 
-              <>
-              <Suspense fallback={<>Loading..</>}>
-                <RestaurantOwnerRoutes>
-                  <Profile/>
-                </RestaurantOwnerRoutes>
-              </Suspense>
-              
-              </>
-            )
-          },
-          {
             path : "about-profile-info",
             element : ( 
-              <>
               <Suspense fallback={<>Loading..</>}>
                 <ProtectedRoutes>
                   <Profile/>
                 </ProtectedRoutes>
               </Suspense>
-              
-              </>
+            )
+          },
+          {
+            path : 'category-result/:categoryname/:categoryid', 
+            element : ( 
+             <Suspense fallback = {<>Loading ..</>}> 
+                <ProtectedRoutes>
+                  <CategoryResult/>
+                </ProtectedRoutes>
+             </Suspense>
+            )
+          },
+
+          // Restaurant owner routes : 
+          {
+            path : "about-profile",
+            element : ( 
+              <Suspense fallback={<>Loading..</>}>
+                <RestaurantOwnerRoutes>
+                  <Profile/>
+                </RestaurantOwnerRoutes>
+              </Suspense>
             )
           },
           {
@@ -161,6 +170,7 @@ import useGetCityBasedRestaurants from "./hooks/useGetCityBaseRestaurants";
               </Suspense>
             )
           },
+          // Guest routes : 
           {
             path: "account",
             element: (
