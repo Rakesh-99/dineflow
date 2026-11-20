@@ -17,6 +17,12 @@ const FoodAndLocation = () => {
     (state) => state.currentOwnerRestaurants,
   );
 
+  console.log({
+    "city res" : userCityBasedRestaurants,
+    "sample" : sampleRestaurants
+  });
+
+
   const inputFoodDataHandler = (e) => {
     const { value } = e.target;
     setSearchFoodData(value);
@@ -43,7 +49,7 @@ const FoodAndLocation = () => {
 
               {/* Search food and restaurants :  */}
               <div className="">
-                {userCityBasedRestaurants || sampleRestaurants ? (
+                {userCityBasedRestaurants || sampleRestaurants?.sampleResData ? (
                   <div
                     className={` border py-1.5 px-5 md:px-0 rounded-full flex relative  items-center ${theme === "dark" ? "border-zinc-600" : "border-zinc-200"}`}
                   >
